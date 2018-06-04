@@ -1,6 +1,9 @@
-import React, { Component } from "react";
-import logo from "./logo.svg";
-import "./App.css";
+import React, { Component } from 'react';
+import './App.css';
+
+import Navigation from './navigation';
+import Timeline from './timeline';
+import Footer from './footer';
 
 class App extends Component {
     constructor(props) {
@@ -10,9 +13,9 @@ class App extends Component {
         }
     }
     componentDidMount() {
-        this.callServer();
+        this.serverSaysHi();
     }
-    callServer = async () => {
+    serverSaysHi = async () => {
         try {
             const response = await fetch('/api/hello');
             const body = await response.json();
@@ -28,15 +31,14 @@ class App extends Component {
     }
     render() {
         return (
-            <div className="App">
-                <header className="App-header">
-                    <img src={logo} className="App-logo" alt="logo" />
-                    <h1 className="App-title">Welcome to React</h1>
-                </header>
-                <p className="App-intro">
+            <main>
+                <Navigation />
+                <Timeline />
+                <Footer />
+                <p className="server_greeting">
                     {this.state.server_message}
                 </p>
-            </div>
+            </main>
         );
     }
 }

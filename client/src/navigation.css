@@ -1,0 +1,16 @@
+.nav_frame {
+    justify-self: center;
+    align-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 12vh;
+    width: 98vw;
+    border: .1vh solid lightgray;
+    border-radius: 1vh;
+    background-color: white;
+}
+
+.nav_frame p {
+    color: red;
+}
