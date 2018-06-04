@@ -9,8 +9,8 @@ app.get('/api/hello', (req, res) => res.send({
 
 if (process.env.NODE_ENV === 'production') {
     console.log('This is the production build.');
-    app.use(express.static(`${__dirname}/build`));
-    app.get('*', (req, res) => res.sendFile(`${__dirname}/build/index.html`));
+    app.use(express.static(`${__dirname}/client/build`));
+    app.get('*', (req, res) => res.sendFile(`${__dirname}/client/build/index.html`));
 }
 
 app.listen(PORT, () => console.log(`I'm listening on port ${PORT}`));
