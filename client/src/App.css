@@ -1,8 +1,11 @@
+* {
+    box-sizing: border-box;
+}
+
 main {
     position: relative;
     display: grid;
-    grid-template-rows: 13vh 80vh 6vh;
-    margin: .5vh 0;
+    grid-template-rows: 13vh 82vh 5vh;
 }
 
 .server_greeting {
@@ -15,6 +18,7 @@ main {
     border: .1vh solid lightgray;
     border-radius: 1vh;
     color: darkblue;
+    background-color: white;
 }
 
 @keyframes spin {

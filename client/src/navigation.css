@@ -1,16 +1,29 @@
 .nav_frame {
     justify-self: center;
     align-self: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 12vh;
-    width: 98vw;
-    border: .1vh solid lightgray;
-    border-radius: 1vh;
+    display: grid;
+    grid-template-columns: 8fr 8fr 2fr;
+    height: 13vh;
+    width: 100vw;
     background-color: white;
 }
 
-.nav_frame p {
-    color: red;
+.logo {
+    align-self: center;
+}
+
+.logo p {
+    font-size: 3vh;
+    margin-left: 5vw;
+    color: gray;
+}
+
+.site_menu {
+    align-self: center;
+}
+
+.site_menu_icon {
+    cursor: pointer;
+    width: 12vw;
+    margin-right: 1vw;
 }

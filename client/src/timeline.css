@@ -4,11 +4,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 79.5vh;
-    width: 98vw;
-    border: .1vh solid lightgray;
-    border-radius: 1vh;
-    background-color: white;
+    height: 82vh;
+    width: 100vw;
+    background-color: rgb(252, 252, 252);
 }
 
 .timeline_frame p {

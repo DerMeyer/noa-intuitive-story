@@ -5,9 +5,7 @@
     justify-content: center;
     align-items: center;
     height: 5vh;
-    width: 98vw;
-    border: .1vh solid lightgray;
-    border-radius: 1vh;
+    width: 100vw;
     background-color: white;
 }
 

@@ -5,6 +5,8 @@ import Navigation from './navigation';
 import Timeline from './timeline';
 import Footer from './footer';
 
+import Architypes from './architypes';
+
 class App extends Component {
     constructor(props) {
         super(props);
@@ -35,6 +37,7 @@ class App extends Component {
                 <Navigation />
                 <Timeline />
                 <Footer />
+                <Architypes />
                 <p className="server_greeting">
                     {this.state.server_message}
                 </p>

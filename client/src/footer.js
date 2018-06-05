@@ -1,13 +1,25 @@
 import React, { Component } from "react";
-import "./footer.css";
+
+const frame = {
+    display: 'flex',
+    alignItems: 'center',
+    height: '5vh',
+    width: '100vh',
+    padding: '0 5vw'
+}
+
+const p = {
+    marginRight: '2vw',
+    color: 'gray'
+}
 
 class Footer extends Component {
     render() {
         return (
-            <section className="footer_frame">
-                <p>
-                    Hi, I'm the Footer Component.
-                </p>
+            <section style={frame}>
+                <p style={p}>&copy; Noa Golan</p>
+                <p style={p}>Impressum</p>
+                <p style={p}>Contact</p>
             </section>
         );
     }
