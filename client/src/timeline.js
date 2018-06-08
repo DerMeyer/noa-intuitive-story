@@ -4,10 +4,14 @@ import "./timeline.css";
 class Timeline extends Component {
     render() {
         return (
-            <section className="timeline_frame">
-                <p>
-                    Hi, I'm the Timeline Component.
-                </p>
+            <section id="scroll_container" ref={elem => this.elem = elem} onScroll={() => console.log(this.elem.scrollTop)}>
+                <section className="scroll_sled">
+                    <section className="timeline_container">
+                        <section id="timeline_sled">
+                            <img src="/images/timeline.jpg" alt="Timeline" id="timeline"/>
+                        </section>
+                    </section>
+                </section>
             </section>
         );
     }

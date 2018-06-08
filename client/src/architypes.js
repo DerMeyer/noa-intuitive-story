@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 const frame = {
     position: 'absolute',
-    top: '20vh',
+    top: '17vh',
     left: '27vw',
     display: 'flex',
     justifyContent: 'space-around',
