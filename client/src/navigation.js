@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from 'react-redux';
 import "./navigation.css";
 
 import ProfileMenu from './profile-menu';
@@ -21,4 +22,8 @@ class Navigation extends Component {
     }
 }
 
-export default Navigation;
+const mapStateToProps = state => state;
+
+const ConnectedNavigation = connect(mapStateToProps)(Navigation);
+
+export default ConnectedNavigation;
