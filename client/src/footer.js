@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 
 const frame = {
+    position: 'absolute',
+    top: '95vh',
+    left: '0',
     display: 'flex',
     alignItems: 'center',
     height: '5vh',

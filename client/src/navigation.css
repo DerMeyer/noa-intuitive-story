@@ -1,6 +1,7 @@
 .nav_frame {
-    justify-self: center;
-    align-self: center;
+    position: absolute;
+    top: 0;
+    left: 0;
     display: grid;
     grid-template-columns: 8fr 8fr 2fr;
     height: 13vh;
