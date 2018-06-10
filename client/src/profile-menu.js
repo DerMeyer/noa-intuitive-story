@@ -1,22 +1,23 @@
-import React, { Component } from "react";
-
-const frame = {
-    justifySelf: 'center',
-    alignSelf: 'center'
-}
-
-const user = {
-    width: '5vh'
-}
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 class ProfileMenu extends Component {
     render() {
+        const style = {
+            user: {
+                width: '5vh'
+            }
+        }
         return (
-            <section style={frame}>
-                <img src="https://use.fontawesome.com/releases/v5.0.13/svgs/regular/user.svg" alt="User" style={user}/>
+            <section className="profile_menu">
+                <img style={style.user} src="https://use.fontawesome.com/releases/v5.0.13/svgs/regular/user.svg" alt="User" />
             </section>
         );
     }
 }
 
-export default ProfileMenu;
+const mapStateToProps = state => state;
+
+const ConnectedProfileMenu = connect(mapStateToProps)(ProfileMenu);
+
+export default ConnectedProfileMenu;

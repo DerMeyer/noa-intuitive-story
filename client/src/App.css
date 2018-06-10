@@ -23,7 +23,40 @@ main {
     background-color: white;
 }
 
-/* @keyframes spin {
+header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    height: 13vh;
+    width: 100vw;
+    background-color: white;
+}
+
+.logo {
+    align-self: center;
+    margin-left: 5vw;
+}
+
+nav {
+    justify-self: center;
+    align-self: center;
+}
+
+nav .button {
+    cursor: pointer;
+    width: 12vw;
+    margin-right: 1vw;
+}
+
+.profile_menu {
+    justify-self: end;
+    align-self: center;
+    margin-right: 5vw;
+}
+
+@keyframes spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
-} */
+}

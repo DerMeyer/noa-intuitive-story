@@ -8,11 +8,8 @@ import Footer from './footer';
 import Architypes from './architypes';
 
 class App extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            server_message: ''
-        }
+    state = {
+        server_message: ''
     }
     componentDidMount() {
         this.serverSaysHi();
