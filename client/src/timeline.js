@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-let timelineSled;
-
 const SLED_WIDTH = 253;
+const SCROLL_FACTOR = (window.innerWidth * ((SLED_WIDTH - 100) / 200)) / window.innerHeight;
 
 class Timeline extends Component {
     state = {
@@ -13,7 +12,6 @@ class Timeline extends Component {
     isDragging = false;
     previousLeft = 0;
     componentDidMount() {
-        timelineSled = document.getElementById('timeline_sled');
         window.addEventListener('scroll', () => this.setTimelinePosition());
         window.scroll(0, window.innerHeight);
     }
@@ -28,7 +26,7 @@ class Timeline extends Component {
             return;
         }
         const left = this.extractLeftDelta(event);
-        window.scroll(0, (- timelineSled.offsetLeft - left) / (window.innerWidth * ((SLED_WIDTH - 100) / 200)) / window.innerHeight);
+        window.scroll(0, (- document.getElementById('timeline_sled').offsetLeft - left) / SCROLL_FACTOR);
     };
     onUp = event => this.isDragging = false;
     onGotCapture = event => this.setState({ hasCapture: true });
@@ -41,7 +39,7 @@ class Timeline extends Component {
         return delta;
     };
     setTimelinePosition = () => this.setState({
-        timelineLeft: `-${window.scrollY * (window.innerWidth * ((SLED_WIDTH - 100) / 200)) / window.innerHeight}px`
+        timelineLeft: `-${window.scrollY * SCROLL_FACTOR}px`
     })
     render() {
         const { timelineLeft } = this.state;
