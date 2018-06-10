@@ -5,8 +5,7 @@ const SLED_WIDTH = 253;
 
 class Timeline extends Component {
     state = {
-            hasCapture: false,
-            timelineLeft: window.innerWidth * (SLED_WIDTH - 100) / 200
+        timelineLeft: window.innerWidth * (SLED_WIDTH - 100) / 200
     }
     isDragging = false;
     previousLeft = 0;
@@ -42,8 +41,6 @@ class Timeline extends Component {
         window.addEventListener('scroll', this.setTimelineLeft);
         this.isDragging = false;
     }
-    onGotCapture = event => this.setState({ hasCapture: true });
-    onLostCapture = event => this.setState({ hasCapture: false });
     extractLeftDelta = event => {
         const left = event.pageX;
         const delta = left - this.previousLeft;
@@ -61,8 +58,7 @@ class Timeline extends Component {
                 justifyContent: 'center',
                 alignItems: 'center',
                 height: '82vh',
-                width: `${SLED_WIDTH}vw`,
-                transform: this.hasCapture ? 'skew(.5)' : 'skew(1)'
+                width: `${SLED_WIDTH}vw`
             },
             timeline: {
                 width: '260vw'
