@@ -36,7 +36,7 @@ class Timeline extends Component {
             timelineLeft: timelineLeft - left
         }));
     };
-    onUp = event => {
+    onUp = () => {
         window.scroll(0, - document.getElementById('timeline_sled').offsetLeft / this.scrollFactor);
         window.addEventListener('scroll', this.setTimelineLeft);
         this.isDragging = false;
