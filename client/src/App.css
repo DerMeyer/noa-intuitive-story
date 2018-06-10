@@ -10,24 +10,6 @@ main {
     width: 100vw;
 }
 
-#timeline_container {
-    position: absolute;
-    top: 13vh;
-    left: 0;
-    height: 82vh;
-    width: 100vw;
-}
-
-#timeline_sled {
-    position: absolute;
-    top: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 82vh;
-    overflow: hidden;
-}
-
 .server_greeting {
     position: absolute;
     top: 85vh;
