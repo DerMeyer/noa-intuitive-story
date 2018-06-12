@@ -5,13 +5,15 @@ const frame = {
     top: '95vh',
     left: '0',
     display: 'flex',
+    justifyContent: 'flex-end',
     alignItems: 'center',
     height: '5vh',
-    width: '100vh',
-    padding: '0 5vw'
+    width: '100vw',
+    padding: '0 3vw'
 }
 
 const p = {
+    fontSize: '1vw',
     marginRight: '2vw',
     color: 'gray'
 }

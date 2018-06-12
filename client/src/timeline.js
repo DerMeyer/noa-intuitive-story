@@ -143,7 +143,7 @@ class Timeline extends Component {
             timelineSled: {
                 position: 'absolute',
                 left: `-${timelineLeft}px`,
-                top: '13vh',
+                top: '11vh',
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',

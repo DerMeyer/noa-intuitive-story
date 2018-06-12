@@ -1,5 +1,17 @@
-export const firstAction = () => {
+export const toggleNavigation = () => {
     return {
-        type: 'FIRST_ACTION'
+        type: 'TOGGLE_NAVIGATION'
+    }
+}
+
+export const showNavigation = () => {
+    return {
+        type: 'SHOW_NAVIGATION'
+    }
+}
+
+export const hideNavigation = () => {
+    return {
+        type: 'HIDE_NAVIGATION'
     }
 }

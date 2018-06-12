@@ -5,7 +5,7 @@ class ProfileMenu extends Component {
     render() {
         const style = {
             user: {
-                width: '5vh'
+                width: '2.5vw'
             }
         }
         return (

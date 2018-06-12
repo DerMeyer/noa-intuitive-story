@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { BrowserRouter, Route } from 'react-router-dom';
 import './App.css';
 
 import Navigation from './navigation';
+import ProfileMenu from './profile-menu';
 import Timeline from './timeline';
 import Footer from './footer';
 import Architypes from './architypes';
+
+import { showNavigation, hideNavigation } from './actions';
 
 class App extends Component {
     state = {
@@ -28,21 +32,47 @@ class App extends Component {
             });
         }
     }
+    toggleNavigation = () => {
+        if (this.props.navigation && this.props.navigation.left === '0') {
+            this.props.dispatch(hideNavigation());
+        } else {
+            this.props.dispatch(showNavigation());
+        }
+    }
     render() {
+        const style = {
+            logoP: {
+                fontSize: '3vh',
+                padding: '1vw',
+                border: '.1vw solid whitesmoke',
+                borderRadius: '.5vw',
+                color: 'white',
+                backgroundColor: 'lightgray'
+            }
+        }
         return (
             <BrowserRouter>
                 <main>
+                    <section className="logo" onClick={this.toggleNavigation} >
+                        <p style={style.logoP}>Intuitive Story</p>
+                    </section>
                     <Navigation />
+                    <ProfileMenu />
                     <Route exact path="/" component={Timeline} />
                     <Route path="/arch" component={Architypes} />
                     <Footer />
-                    <p className="server_greeting">
-                        {this.state.server_message}
-                    </p>
                 </main>
             </BrowserRouter>
         );
     }
 }
 
-export default App;
+// <p className="server_greeting">
+//     {this.state.server_message}
+// </p>
+
+const mapStateToProps = state => state;
+
+const ConnectedApp = connect(mapStateToProps)(App);
+
+export default ConnectedApp;
