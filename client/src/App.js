@@ -16,6 +16,7 @@ class App extends Component {
         server_message: ''
     }
     componentDidMount() {
+        this.props.dispatch(hideNavigation());
         this.serverSaysHi();
     }
     serverSaysHi = async () => {
@@ -47,7 +48,7 @@ class App extends Component {
                 border: '.1vw solid whitesmoke',
                 borderRadius: '.5vw',
                 color: 'white',
-                backgroundColor: 'lightgray'
+                backgroundColor: 'rgb(211, 59, 122)'
             }
         }
         return (
@@ -58,8 +59,8 @@ class App extends Component {
                     </section>
                     <Navigation />
                     <ProfileMenu />
-                    <Route exact path="/" component={Timeline} />
-                    <Route path="/arch" component={Architypes} />
+                    <Route path="/souls" component={Architypes} />
+                    <Route path="/" component={Timeline} />
                     <Footer />
                 </main>
             </BrowserRouter>
