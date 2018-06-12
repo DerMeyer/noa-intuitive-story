@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 const SLED_WIDTH = 253;
+const TIMELINE_WIDTH = 260;
 const TIMELINE_MAP = [
     [0, -80000],
     [45, -70000],
@@ -107,7 +108,7 @@ class Timeline extends Component {
         }
         const left = this.extractLeftDelta(event);
         this.setState(({ timelineLeft }) => ({
-            timelineLeft: timelineLeft - left
+            timelineLeft: timelineLeft < window.innerWidth * (SLED_WIDTH - 100) / 100 ? timelineLeft - left : timelineLeft
         }));
     };
     onUp = () => {
@@ -132,7 +133,9 @@ class Timeline extends Component {
                 }
             }
         });
-        return Math.floor(timelineSection[0][1] + ((timelineSection[1][1] - timelineSection[0][1]) * ((timelineSection[0][0] - timelineX) / (timelineSection[0][0] - timelineSection[1][0]))));
+        const exactYear = Math.floor(timelineSection[0][1] + ((timelineSection[1][1] - timelineSection[0][1]) * ((timelineSection[0][0] - timelineX) / (timelineSection[0][0] - timelineSection[1][0]))));
+        console.log(exactYear);
+        return exactYear;
     }
     render() {
         const { timelineLeft } = this.state;
@@ -148,7 +151,7 @@ class Timeline extends Component {
                 width: `${SLED_WIDTH}vw`
             },
             timeline: {
-                width: '260vw'
+                width: `${TIMELINE_WIDTH}vw`
             }
         }
         return (
