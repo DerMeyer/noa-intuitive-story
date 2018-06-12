@@ -3,12 +3,12 @@ import React, { Component } from "react";
 const frame = {
     position: 'absolute',
     top: '1vh',
-    left: '27vw',
+    left: '35vw',
     display: 'flex',
     justifyContent: 'space-around',
     alignItems: 'center',
     height: '10vh',
-    width: '46vw',
+    width: '30vw',
     borderRadius: '.5vh',
     zIndex: '50'
 }

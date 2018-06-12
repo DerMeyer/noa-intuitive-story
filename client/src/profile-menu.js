@@ -5,7 +5,11 @@ class ProfileMenu extends Component {
     render() {
         const style = {
             user: {
-                width: '2.5vw'
+                width: '4.5vw',
+                padding: '.8vw 1vw',
+                border: '.1vw solid whitesmoke',
+                borderRadius: '.5vw',
+                backgroundColor: 'rgb(211, 59, 122)'
             }
         }
         return (
