@@ -166,7 +166,7 @@ class Timeline extends Component {
                 onLostPointerCapture={this.onLostCapture}
                 onClick={this.mapPixelToTimeline}
                 >
-                <img id="timeline" style={style.timeline} src="/images/timeline.jpg" alt="Timeline" />
+                <img id="timeline" style={style.timeline} src="/images/timeline.png" alt="Timeline" />
             </section>
         );
     }

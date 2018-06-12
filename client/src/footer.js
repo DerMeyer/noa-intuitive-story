@@ -13,7 +13,7 @@ const frame = {
 }
 
 const p = {
-    fontSize: '1vw',
+    fontSize: '.9vw',
     marginRight: '2vw',
     color: 'gray'
 }
