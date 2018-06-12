@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import GroupBox from './group-box';
+
 const SLED_WIDTH = 253;
 const TIMELINE_WIDTH = 260;
 const TIMELINE_MAP = [
@@ -167,6 +169,7 @@ class Timeline extends Component {
                 onClick={this.mapPixelToTimeline}
                 >
                 <img id="timeline" style={style.timeline} src="/images/timeline.png" alt="Timeline" />
+                <GroupBox />
             </section>
         );
     }
