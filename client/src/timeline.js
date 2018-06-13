@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import GroupBox from './group-box';
+import HistoryBox from './history-box';
 
 const SLED_WIDTH = 253;
 const TIMELINE_WIDTH = 260;
@@ -136,7 +137,7 @@ class Timeline extends Component {
             }
         });
         const exactYear = Math.floor(timelineSection[0][1] + ((timelineSection[1][1] - timelineSection[0][1]) * ((timelineSection[0][0] - timelineX) / (timelineSection[0][0] - timelineSection[1][0]))));
-        // console.log(exactYear);
+        console.log(exactYear);
         return exactYear;
     }
     render() {
@@ -166,10 +167,11 @@ class Timeline extends Component {
                 onPointerCancel={this.onUp}
                 onGotPointerCapture={this.onGotCapture}
                 onLostPointerCapture={this.onLostCapture}
-                onClick={this.mapPixelToTimeline}
+                onMouseMove={this.mapPixelToTimeline}
                 >
                 <img id="timeline" style={style.timeline} src="/images/timeline.png" alt="Timeline" />
                 <GroupBox />
+                <HistoryBox />
             </section>
         );
     }

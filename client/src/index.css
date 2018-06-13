@@ -12,4 +12,5 @@ body {
     background-image: url('/images/honey_background.jpeg');
     background-size: cover;
     background-position: 0 20%;
+    background-attachment: fixed;
 }

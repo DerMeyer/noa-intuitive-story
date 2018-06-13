@@ -6,7 +6,7 @@ const style = {
         cursor: 'pointer',
         position: 'absolute',
         top: '13vh',
-        left: '50vw'
+        left: '195vw'
     },
     headline: {
         position: 'absolute',
@@ -123,7 +123,7 @@ class GroupBox extends Component {
     }
     render() {
         return (
-            <section className="profile_menu">
+            <section>
                 <section style={style.groupBoxContainer} className="group_box">
                     <p style={style.headline} >Florence 1592</p>
                     <img style={style.groupBox} src="/images/box_s.png" alt="Group Box" />
