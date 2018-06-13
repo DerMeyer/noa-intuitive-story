@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 
 import GroupBox from './group-box';
 
-const SLED_WIDTH = 253;
-const TIMELINE_WIDTH = 260;
 const TIMELINE_MAP = [
     [0, -80000],
     [45, -70000],
@@ -149,11 +147,10 @@ class Timeline extends Component {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                height: '82vh',
-                width: `${SLED_WIDTH}vw`
+                height: '82vh'
             },
             timeline: {
-                width: `${TIMELINE_WIDTH}vw`
+                height: '82vh'
             }
         }
         return (

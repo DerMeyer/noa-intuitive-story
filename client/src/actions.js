@@ -1,9 +1,3 @@
-export const toggleNavigation = () => {
-    return {
-        type: 'TOGGLE_NAVIGATION'
-    }
-}
-
 export const showNavigation = () => {
     return {
         type: 'SHOW_NAVIGATION'
