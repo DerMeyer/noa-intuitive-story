@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 
 import GroupBox from './group-box';
 
-const SLED_WIDTH = 253;
-const TIMELINE_WIDTH = 260;
 const TIMELINE_MAP = [
     [0, -80000],
     [45, -70000],
@@ -82,25 +80,30 @@ const TIMELINE_MAP = [
 
 class Timeline extends Component {
     state = {
-        timelineLeft: window.innerWidth * (SLED_WIDTH - 100) / 200
-    }
+        timelineLeft: 0
+    };
     isDragging = false;
     previousLeft = 0;
-    scrollFactor = window.innerWidth / window.innerHeight * ((SLED_WIDTH - 100) / 200);
+    scrollFactor = 0;
     componentDidMount() {
-        window.scroll(0, window.innerHeight);
+        this.scrollFactor = window.innerWidth / window.innerHeight * (document.getElementById('timeline_sled').offsetWidth - window.innerWidth) / (2 * window.innerWidth);
+        setTimeout(() => {
+            window.scroll(0, window.innerHeight);
+            console.log(this.scrollFactor, this.state.timelineLeft);
+        }, 50);
         window.addEventListener('scroll', this.setTimelineLeft);
     }
     setTimelineLeft = () => {
+        console.log('go');
         this.setState({
-            timelineLeft: window.scrollY * this.scrollFactor
-        })
+            timelineLeft: - window.scrollY * this.scrollFactor
+        });
     }
     onDown = event => {
         event.target.setPointerCapture(event.pointerId);
         window.removeEventListener('scroll', this.setTimelineLeft);
         this.isDragging = true;
-        this.scrollFactor = window.innerWidth / window.innerHeight * ((SLED_WIDTH - 100) / 200);
+        this.scrollFactor = window.innerWidth / window.innerHeight * (document.getElementById('timeline_sled').offsetWidth - window.innerWidth) / (2 * window.innerWidth);
         this.extractLeftDelta(event);
     };
     onMove = event => {
@@ -109,8 +112,12 @@ class Timeline extends Component {
             return;
         }
         const left = this.extractLeftDelta(event);
+        console.log(window.innerWidth - document.getElementById('timeline_sled').offsetWidth, this.state.timelineLeft);
+        // this.setState(({ timelineLeft }) => ({
+        //     timelineLeft: timelineLeft < document.getElementById('timeline_sled').offsetWidth - window.innerWidth ? timelineLeft - left : timelineLeft
+        // }));
         this.setState(({ timelineLeft }) => ({
-            timelineLeft: timelineLeft < window.innerWidth * (SLED_WIDTH - 100) / 100 ? timelineLeft - left : timelineLeft
+            timelineLeft: timelineLeft - left
         }));
     };
     onUp = () => {
@@ -136,7 +143,7 @@ class Timeline extends Component {
             }
         });
         const exactYear = Math.floor(timelineSection[0][1] + ((timelineSection[1][1] - timelineSection[0][1]) * ((timelineSection[0][0] - timelineX) / (timelineSection[0][0] - timelineSection[1][0]))));
-        // console.log(exactYear);
+        console.log(exactYear);
         return exactYear;
     }
     render() {
@@ -149,11 +156,10 @@ class Timeline extends Component {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                height: '82vh',
-                width: `${SLED_WIDTH}vw`
+                height: '82vh'
             },
             timeline: {
-                width: `${TIMELINE_WIDTH}vw`
+                height: '82vh'
             }
         }
         return (
