@@ -30,7 +30,7 @@ const style = {
     }
 }
 
-class HistoryBox extends Component {
+class History extends Component {
     state = {
         box_1: <div style={style.placeHolder}></div>,
         editingName: false
@@ -54,6 +54,6 @@ class HistoryBox extends Component {
 
 const mapStateToProps = state => state;
 
-const ConnectedHistoryBox = connect(mapStateToProps)(HistoryBox);
+const ConnectedHistory = connect(mapStateToProps)(History);
 
-export default ConnectedHistoryBox;
+export default ConnectedHistory;

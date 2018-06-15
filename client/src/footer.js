@@ -5,7 +5,7 @@ const frame = {
     top: '95vh',
     left: '0',
     display: 'flex',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
     alignItems: 'center',
     height: '5vh',
     width: '100vw',
@@ -13,9 +13,15 @@ const frame = {
 }
 
 const p = {
+    position: 'relative',
     fontSize: '.9vw',
     marginRight: '2vw',
-    color: 'gray'
+    color: 'gray',
+    zIndex: '75'
+}
+
+const div = {
+    display: 'flex'
 }
 
 class Footer extends Component {
@@ -23,8 +29,10 @@ class Footer extends Component {
         return (
             <section style={frame}>
                 <p style={p}>&copy; Noa Golan</p>
-                <p style={p}>Impressum</p>
-                <p style={p}>Contact</p>
+                <div style={div}>
+                    <p style={p}>Impressum</p>
+                    <p style={p}>Contact</p>
+                </div>
             </section>
         );
     }

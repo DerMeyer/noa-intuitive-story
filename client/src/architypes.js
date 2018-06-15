@@ -1,21 +1,21 @@
 import React, { Component } from "react";
 
 const frame = {
-    position: 'absolute',
-    top: '1vh',
-    left: '35vw',
+    position: 'fixed',
+    top: '13vh',
+    left: '39vw',
     display: 'flex',
     justifyContent: 'space-around',
     alignItems: 'center',
     height: '10vh',
-    width: '30vw',
+    width: '22vw',
     borderRadius: '.5vh',
     zIndex: '50'
 }
 
 const icon = {
     cursor: 'pointer',
-    width: '6vw'
+    width: '4vw'
 }
 
 class Architypes extends Component {
@@ -31,11 +31,5 @@ class Architypes extends Component {
         );
     }
 }
-
-// <img src="/images/gul_s.png" alt="Gul" style={icon} />
-// <img src="/images/grun_s.png" alt="Grun" style={icon} />
-// <img src="/images/vermel_s.png" alt="Vermel" style={icon} />
-// <img src="/images/bezrechu_s.png" alt="Bezrechu" style={icon} />
-// <img src="/images/sagol_s.png" alt="Sagol" style={icon} />
 
 export default Architypes;

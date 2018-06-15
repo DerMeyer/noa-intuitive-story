@@ -85,7 +85,7 @@ const roleColorBoxes = [
     <div style={style.placeHolder}></div>
 ]
 
-class GroupBox extends Component {
+class Group extends Component {
     state = {
         box_1: <div style={style.placeHolder}></div>,
         editingName: false
@@ -163,9 +163,7 @@ class GroupBox extends Component {
                     </section>
                     <section style={style.nameBox} className="soul_box">
                         <div style={style.colorContainer} className="color_container">
-                            {this.state.editingName
-                                ? <input style={style.name} name="name_1" type="text" onChange={this.getName} onKeyDown={this.setName} />
-                            : <p style={style.name} onClick={this.editName} >{this.name_1}</p>}
+                            {this.state.editingName ? <input style={style.name} name="name_1" type="text" onChange={this.getName} onKeyDown={this.setName} /> : <p style={style.name} onClick={this.editName} >{this.name_1}</p>}
                         </div>
                         <div style={style.colorContainer} className="color_container">
                             <p style={style.name} >Noa</p>
@@ -188,6 +186,6 @@ class GroupBox extends Component {
 
 const mapStateToProps = state => state;
 
-const ConnectedGroupBox = connect(mapStateToProps)(GroupBox);
+const ConnectedGroup = connect(mapStateToProps)(Group);
 
-export default ConnectedGroupBox;
+export default ConnectedGroup;

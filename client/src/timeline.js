@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import GroupBox from './group-box';
-import HistoryBox from './history-box';
+import Architypes from './architypes';
+import Group from './group';
+import History from './history';
 
 class Timeline extends Component {
     constructor(props) {
@@ -113,8 +114,9 @@ class Timeline extends Component {
                 onClick={this.mapPixelToTimeline}
                 >
                 <img style={style.timeline} src="/images/timeline.png" alt="Timeline" />
-                <GroupBox />
-                <HistoryBox />
+                <Architypes />
+                <Group />
+                <History />
             </section>
         );
     }

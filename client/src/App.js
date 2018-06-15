@@ -7,7 +7,7 @@ import Navigation from './navigation';
 import ProfileMenu from './profile-menu';
 import Timeline from './timeline';
 import Footer from './footer';
-import Architypes from './architypes';
+import GroupComponent from './group-component';
 
 import { showNavigation, hideNavigation } from './actions';
 
@@ -59,8 +59,8 @@ class App extends Component {
                     </section>
                     <Navigation />
                     <ProfileMenu />
-                    <Route path="/souls" component={Architypes} />
-                    <Route path="/" component={Timeline} />
+                    <Route exact path="/" component={Timeline} />
+                    <Route path="/group" component={GroupComponent} />
                     <Footer />
                 </main>
             </BrowserRouter>
