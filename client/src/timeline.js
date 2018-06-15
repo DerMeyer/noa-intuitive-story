@@ -30,13 +30,15 @@ class Timeline extends Component {
         window.scroll(0, window.innerHeight);
         window.addEventListener('scroll', this.setTimelineLeft);
     }
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.setTimelineLeft);
+    }
     setTimelineLeft = () => {
         this.setState({
             timelineLeft: window.scrollY * this.scrollFactor
         })
     }
     onDown = event => {
-        event.target.setPointerCapture(event.pointerId);
         window.removeEventListener('scroll', this.setTimelineLeft);
         this.isDragging = true;
         this.scrollFactor = window.innerWidth / window.innerHeight * ((this.SLED_WIDTH - 100) / 200);
@@ -99,12 +101,9 @@ class Timeline extends Component {
             <section
                 ref={this.timelineSled}
                 style={style.timelineSled}
-                onPointerDown={this.onDown}
-                onPointerMove={this.onMove}
-                onPointerUp={this.onUp}
-                onPointerCancel={this.onUp}
-                onGotPointerCapture={this.onGotCapture}
-                onLostPointerCapture={this.onLostCapture}
+                onMouseDown={this.onDown}
+                onMouseMove={this.onMove}
+                onMouseUp={this.onUp}
                 onClick={this.mapPixelToTimeline}
                 >
                 <img id="timeline" style={style.timeline} src="/images/timeline.png" alt="Timeline" />
