@@ -8,9 +8,9 @@ body {
     width: 100vw;
     margin: 0;
     padding: 0;
-    /* background-color: rgb(230, 230, 230); */
-    background-image: url('/images/honey_background.jpeg');
+    background-color: rgb(230, 230, 230);
+    /* background-image: url('/images/honey_background.jpeg');
     background-size: cover;
     background-position: 0 20%;
-    background-attachment: fixed;
+    background-attachment: fixed; */
 }

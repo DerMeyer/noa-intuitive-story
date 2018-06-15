@@ -7,8 +7,6 @@ import HistoryBox from './history-box';
 class Timeline extends Component {
     constructor(props) {
         super(props);
-        this.SLED_WIDTH = 253;
-        this.TIMELINE_WIDTH = 260;
         this.TIMELINE_MAP = [
             [0, -80000], [45, -70000], [90, -60000], [133, -50000], [178, -40000], [222, -30000], [267, -20000], [310, -10000], [343, -9000], [376, -8000], [410, -7000],
             [443, -6000], [477, -5000], [510, -4800], [543, -4600], [576, -4400], [609, -4200], [642, -4000], [675, -3800], [708, -3600], [741, -3400], [775, -3200],
@@ -19,16 +17,21 @@ class Timeline extends Component {
             [2806, 2500], [2873, 3000], [2958, 4000], [2980, 5000]
         ]
         this.state = {
-            timelineLeft: window.innerWidth * (this.SLED_WIDTH - 100) / 200
+            timelineLeft: window.innerWidth * (window.innerWidth / (2 * window.innerHeight))
         };
         this.timelineSled = React.createRef();
         this.isDragging = false;
         this.previousLeft = 0;
-        this.scrollFactor = window.innerWidth / window.innerHeight * ((this.SLED_WIDTH - 100) / 200);
     }
     componentDidMount() {
-        window.scroll(0, window.innerHeight);
+        this.scrollFactor = (this.timelineSled.current.offsetWidth - window.innerWidth) / (2 * window.innerHeight);
         window.addEventListener('scroll', this.setTimelineLeft);
+        setTimeout(() => {
+            window.scroll(0, window.innerHeight);
+        }, 50);
+    }
+    componentDidUpdate() {
+        this.scrollFactor = (this.timelineSled.current.offsetWidth - window.innerWidth) / (2 * window.innerHeight);
     }
     componentWillUnmount() {
         window.removeEventListener('scroll', this.setTimelineLeft);
@@ -39,10 +42,9 @@ class Timeline extends Component {
         })
     }
     onDown = event => {
-        window.removeEventListener('scroll', this.setTimelineLeft);
         this.isDragging = true;
-        this.scrollFactor = window.innerWidth / window.innerHeight * ((this.SLED_WIDTH - 100) / 200);
         this.extractLeftDelta(event);
+        window.removeEventListener('scroll', this.setTimelineLeft);
     };
     onMove = event => {
         event.preventDefault();
@@ -51,10 +53,15 @@ class Timeline extends Component {
         }
         const left = this.extractLeftDelta(event);
         this.setState(({ timelineLeft }) => ({
-            timelineLeft: timelineLeft < window.innerWidth * (this.SLED_WIDTH - 100) / 100 ? timelineLeft - left : timelineLeft
+            timelineLeft: timelineLeft <= (this.timelineSled.current.offsetWidth - window.innerWidth) ? timelineLeft - left : timelineLeft
         }));
     };
     onUp = () => {
+        if (this.state.timelineLeft > (this.timelineSled.current.offsetWidth - window.innerWidth)) {
+            this.setState({
+                timelineLeft: this.timelineSled.current.offsetWidth - window.innerWidth
+            });
+        }
         window.scroll(0, - this.timelineSled.current.offsetLeft / this.scrollFactor);
         window.addEventListener('scroll', this.setTimelineLeft);
         this.isDragging = false;
@@ -90,11 +97,10 @@ class Timeline extends Component {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                height: '82vh',
-                width: `${this.SLED_WIDTH}vw`
+                height: '82vh'
             },
             timeline: {
-                width: `${this.TIMELINE_WIDTH}vw`
+                height: '82vh'
             }
         }
         return (
@@ -106,7 +112,7 @@ class Timeline extends Component {
                 onMouseUp={this.onUp}
                 onClick={this.mapPixelToTimeline}
                 >
-                <img id="timeline" style={style.timeline} src="/images/timeline.png" alt="Timeline" />
+                <img style={style.timeline} src="/images/timeline.png" alt="Timeline" />
                 <GroupBox />
                 <HistoryBox />
             </section>
