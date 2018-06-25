@@ -52,8 +52,8 @@ class App extends Component {
                     <section className="logo" onClick={this.toggleNavigation} >
                         <img style={style.logo} src="images/logo.png" alt="Galaxy Logo"/>
                     </section>
-                    <Navigation />
-                    <ProfileMenu />
+                    <Route exact path="/" component={Navigation} />
+                    <Route exact path="/" component={ProfileMenu} />
                     <Route exact path="/" component={Timeline} />
                     <Route path="/group" component={GroupComponent} />
                     <Footer />
