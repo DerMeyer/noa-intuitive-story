@@ -102,7 +102,7 @@ class Group extends Component {
             box_1: roleColorBoxes[this.toggleRoleColorCount]
         });
     }
-    name_1 = 'Fabricio'
+    name_1 = 'Marta'
     userInput = {}
     getName = event => {
         this.userInput[event.target.name] = event.target.value;
@@ -166,16 +166,16 @@ class Group extends Component {
                             {this.state.editingName ? <input style={style.name} name="name_1" type="text" onChange={this.getName} onKeyDown={this.setName} /> : <p style={style.name} onClick={this.editName} >{this.name_1}</p>}
                         </div>
                         <div style={style.colorContainer} className="color_container">
-                            <p style={style.name} >Noa</p>
+                            <p style={style.name} >Anna</p>
                         </div>
                         <div style={style.colorContainer} className="color_container">
-                            <p style={style.name} >Meyer</p>
+                            <p style={style.name} >Karla</p>
                         </div>
                         <div style={style.colorContainer} className="color_container">
-                            <p style={style.name} >Real One</p>
+                            <p style={style.name} >Mario</p>
                         </div>
                         <div style={style.colorContainer} className="color_container">
-                            <p style={style.name} >Names</p>
+                            <p style={style.name} >Josef</p>
                         </div>
                     </section>
                 </section>
