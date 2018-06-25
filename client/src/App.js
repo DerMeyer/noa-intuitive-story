@@ -42,20 +42,15 @@ class App extends Component {
     }
     render() {
         const style = {
-            logoP: {
-                fontSize: '3vh',
-                padding: '1vw',
-                border: '.1vw solid whitesmoke',
-                borderRadius: '.5vw',
-                color: 'white',
-                backgroundColor: 'rgb(211, 59, 122)'
+            logo: {
+                width: '5vw'
             }
         }
         return (
             <BrowserRouter>
                 <main>
                     <section className="logo" onClick={this.toggleNavigation} >
-                        <p style={style.logoP}>Intuitive Story</p>
+                        <img style={style.logo} src="images/logo.png" alt="Galaxy Logo"/>
                     </section>
                     <Navigation />
                     <ProfileMenu />

@@ -9,3 +9,5 @@ export const hideNavigation = () => {
         type: 'HIDE_NAVIGATION'
     }
 }
+
+// export const showNavigation = () => ({ type: 'SHOW_NAVIGATION' });

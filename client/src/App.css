@@ -24,12 +24,9 @@ main {
 }
 
 header {
-    position: absolute;
-    top: 0;
     display: grid;
-    height: 100vh;
-    width: 17vw;
-    background-color: rgb(233, 236, 77);
+    height: 12vh;
+    width: 50vw;
     z-index: 50;
     transition: .5s;
 }
@@ -37,24 +34,22 @@ header {
 .logo {
     cursor: pointer;
     position: absolute;
-    top: -.5vh;
+    top: 1.3vh;
     left: 2vw;
-    z-index: 100;
 }
 
 nav {
     justify-self: center;
     align-self: center;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
 nav .button {
     cursor: pointer;
-    width: 15vw;
-    margin: .5vw 0;
+    width: 10vw;
+    margin: 0 1vw 0 0;
 }
 
 .profile_menu {

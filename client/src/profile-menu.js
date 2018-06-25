@@ -9,7 +9,7 @@ class ProfileMenu extends Component {
                 padding: '.8vw 1vw',
                 border: '.1vw solid whitesmoke',
                 borderRadius: '.5vw',
-                backgroundColor: 'rgb(211, 59, 122)'
+                backgroundColor: 'whitesmoke'
             }
         }
         return (
