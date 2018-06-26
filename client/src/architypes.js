@@ -43,11 +43,11 @@ class Architypes extends Component {
     animateSouls() {
         this.setState({
             soulsX: [
-                this.getTranslateX(),
-                this.getTranslateX(),
-                this.getTranslateX(),
-                this.getTranslateX(),
-                this.getTranslateX()
+                this.getTranslateX(this.state.soulsX[0], .5, this.state.soulsX[1]),
+                this.getTranslateX(this.state.soulsX[1], this.state.soulsX[0], this.state.soulsX[2]),
+                this.getTranslateX(this.state.soulsX[2], this.state.soulsX[1], this.state.soulsX[3]),
+                this.getTranslateX(this.state.soulsX[3], this.state.soulsX[2], this.state.soulsX[4]),
+                this.getTranslateX(this.state.soulsX[4], this.state.soulsX[3], .5)
             ],
             soulsY: [
                 this.getTranslateY(),
@@ -81,10 +81,10 @@ class Architypes extends Component {
         return (
             <section id="architypes" style={frame}>
                 <img src="/images/color_gul.png" alt="Gul" style={{ ...icon, transform: `translate(${((.5 - this.state.soulsX[0] * 30)).toFixed(0)}%, ${this.state.soulsY[0]}%)` }} />
-            <img src="/images/color_grun.png" alt="Grun" style={{ ...icon, transform: `translate(${((.5 - this.state.soulsX[1] * 30)).toFixed(0)}%, ${this.state.soulsY[1]}%)` }} />
-        <img src="/images/color_vermel.png" alt="Vermel" style={{ ...icon, transform: `translate(${((.5 - this.state.soulsX[2] * 30)).toFixed(0)}%, ${this.state.soulsY[2]}%)` }} />
-    <img src="/images/color_bezrechu.png" alt="Bezrechu" style={{ ...icon, transform: `translate(${((.5 - this.state.soulsX[3] * 30)).toFixed(0)}%, ${this.state.soulsY[3]}%)` }} />
-<img src="/images/color_sagol.png" alt="Sagol" style={{ ...icon, transform: `translate(${((.5 - this.state.soulsX[4] * 30)).toFixed(0)}%, ${this.state.soulsY[4]}%)` }} />
+                <img src="/images/color_grun.png" alt="Grun" style={{ ...icon, transform: `translate(${((.5 - this.state.soulsX[1] * 30)).toFixed(0)}%, ${this.state.soulsY[1]}%)` }} />
+                <img src="/images/color_vermel.png" alt="Vermel" style={{ ...icon, transform: `translate(${((.5 - this.state.soulsX[2] * 30)).toFixed(0)}%, ${this.state.soulsY[2]}%)` }} />
+                <img src="/images/color_bezrechu.png" alt="Bezrechu" style={{ ...icon, transform: `translate(${((.5 - this.state.soulsX[3] * 30)).toFixed(0)}%, ${this.state.soulsY[3]}%)` }} />
+                <img src="/images/color_sagol.png" alt="Sagol" style={{ ...icon, transform: `translate(${((.5 - this.state.soulsX[4] * 30)).toFixed(0)}%, ${this.state.soulsY[4]}%)` }} />
             </section>
         );
     }
