@@ -1,30 +1,30 @@
 import React, { Component } from "react";
 
-const frame = {
-    position: 'fixed',
-    top: '13vh',
-    left: '39vw',
-    display: 'flex',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    height: '10vh',
-    width: '22vw',
-    borderRadius: '.5vh',
-    zIndex: '50'
-}
-
-const icon = {
-    cursor: 'pointer',
-    width: '4vw',
-    transitionDuration: '.3s'
-}
-
 class Architypes extends Component {
     constructor(props) {
         super(props);
         this.state = {
             soulsX: Array(5).fill(.5),
             soulsY: Array(5).fill(0)
+        };
+        this.style = {
+            frame: {
+                position: 'fixed',
+                top: '13vh',
+                left: '39vw',
+                display: 'flex',
+                justifyContent: 'space-around',
+                alignItems: 'center',
+                height: '10vh',
+                width: '22vw',
+                borderRadius: '.5vh',
+                zIndex: '50'
+            },
+            soul: {
+                cursor: 'pointer',
+                width: '4vw',
+                transitionDuration: '.3s'
+            }
         };
     }
     componentDidMount() {
@@ -60,12 +60,12 @@ class Architypes extends Component {
     }
     render() {
         return (
-            <section id="architypes" style={frame}>
-                <img src="/images/color_gul.png" alt="Gul" style={{ ...icon, transform: this.getTransformValue(0) }} />
-                <img src="/images/color_grun.png" alt="Grun" style={{ ...icon, transform: this.getTransformValue(1) }} />
-                <img src="/images/color_vermel.png" alt="Vermel" style={{ ...icon, transform: this.getTransformValue(2) }} />
-                <img src="/images/color_bezrechu.png" alt="Bezrechu" style={{ ...icon, transform: this.getTransformValue(3) }} />
-                <img src="/images/color_sagol.png" alt="Sagol" style={{ ...icon, transform: this.getTransformValue(4) }} />
+            <section style={this.style.frame} id="architypes">
+                <img style={{ ...this.style.soul, transform: this.getTransformValue(0) }} src="/images/color_gul.png" alt="Gul" />
+                <img style={{ ...this.style.soul, transform: this.getTransformValue(1) }} src="/images/color_grun.png" alt="Grun" />
+                <img style={{ ...this.style.soul, transform: this.getTransformValue(2) }} src="/images/color_vermel.png" alt="Vermel" />
+                <img style={{ ...this.style.soul, transform: this.getTransformValue(3) }} src="/images/color_bezrechu.png" alt="Bezrechu" />
+                <img style={{ ...this.style.soul, transform: this.getTransformValue(4) }} src="/images/color_sagol.png" alt="Sagol" />
             </section>
         );
     }
