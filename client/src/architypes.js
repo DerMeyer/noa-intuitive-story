@@ -23,45 +23,23 @@ class Architypes extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            soulsX: [
-                this.getTranslateX(),
-                this.getTranslateX(),
-                this.getTranslateX(),
-                this.getTranslateX(),
-                this.getTranslateX()
-            ],
-            soulsY: [
-                this.getTranslateY(),
-                this.getTranslateY(),
-                this.getTranslateY(),
-                this.getTranslateY(),
-                this.getTranslateY()
-            ]
+            soulsX: Array(5).fill(.5),
+            soulsY: Array(5).fill(0)
         };
+    }
+    componentDidMount() {
         this.animateSouls();
     }
     animateSouls() {
         this.setState({
-            soulsX: [
-                this.getTranslateX(this.state.soulsX[0], .5, this.state.soulsX[1]),
-                this.getTranslateX(this.state.soulsX[1], this.state.soulsX[0], this.state.soulsX[2]),
-                this.getTranslateX(this.state.soulsX[2], this.state.soulsX[1], this.state.soulsX[3]),
-                this.getTranslateX(this.state.soulsX[3], this.state.soulsX[2], this.state.soulsX[4]),
-                this.getTranslateX(this.state.soulsX[4], this.state.soulsX[3], .5)
-            ],
-            soulsY: [
-                this.getTranslateY(),
-                this.getTranslateY(),
-                this.getTranslateY(),
-                this.getTranslateY(),
-                this.getTranslateY()
-            ]
+            soulsX: this.state.soulsX.map((x, i) => this.getTranslateX(this.state.soulsX[i], this.state.soulsX[i - 1], this.state.soulsX[i + 1])),
+            soulsY: this.state.soulsY.map(y => this.getTranslateY())
         });
         setTimeout(() => {
             this.animateSouls();
         }, 200);
     }
-    getTranslateX = (x = .5, left = .5, right = .5) => {
+    getTranslateX(x, left = .5, right = .5) {
         const leftPush = (left - .5) > 0 ? left - .5 : 0
         const rightPush = (.5 - right) > 0 ? .5 - right : 0
         const randomX = () => {
@@ -75,16 +53,19 @@ class Architypes extends Component {
         return randomX();
     }
     getTranslateY() {
-        return (Math.random() * 10).toFixed(0);
+        return Math.random() * 10;
+    }
+    getTransformValue(i) {
+        return `translate(${((.5 - this.state.soulsX[i] * 30)).toFixed(0)}%, ${this.state.soulsY[i].toFixed(0)}%)`
     }
     render() {
         return (
             <section id="architypes" style={frame}>
-                <img src="/images/color_gul.png" alt="Gul" style={{ ...icon, transform: `translate(${((.5 - this.state.soulsX[0] * 30)).toFixed(0)}%, ${this.state.soulsY[0]}%)` }} />
-                <img src="/images/color_grun.png" alt="Grun" style={{ ...icon, transform: `translate(${((.5 - this.state.soulsX[1] * 30)).toFixed(0)}%, ${this.state.soulsY[1]}%)` }} />
-                <img src="/images/color_vermel.png" alt="Vermel" style={{ ...icon, transform: `translate(${((.5 - this.state.soulsX[2] * 30)).toFixed(0)}%, ${this.state.soulsY[2]}%)` }} />
-                <img src="/images/color_bezrechu.png" alt="Bezrechu" style={{ ...icon, transform: `translate(${((.5 - this.state.soulsX[3] * 30)).toFixed(0)}%, ${this.state.soulsY[3]}%)` }} />
-                <img src="/images/color_sagol.png" alt="Sagol" style={{ ...icon, transform: `translate(${((.5 - this.state.soulsX[4] * 30)).toFixed(0)}%, ${this.state.soulsY[4]}%)` }} />
+                <img src="/images/color_gul.png" alt="Gul" style={{ ...icon, transform: this.getTransformValue(0) }} />
+                <img src="/images/color_grun.png" alt="Grun" style={{ ...icon, transform: this.getTransformValue(1) }} />
+                <img src="/images/color_vermel.png" alt="Vermel" style={{ ...icon, transform: this.getTransformValue(2) }} />
+                <img src="/images/color_bezrechu.png" alt="Bezrechu" style={{ ...icon, transform: this.getTransformValue(3) }} />
+                <img src="/images/color_sagol.png" alt="Sagol" style={{ ...icon, transform: this.getTransformValue(4) }} />
             </section>
         );
     }
