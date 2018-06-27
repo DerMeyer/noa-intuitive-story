@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './group-component.css';
 
-import Group from './group';
-
 class GroupComponent extends Component {
     constructor(props) {
         super(props);

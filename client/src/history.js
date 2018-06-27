@@ -37,7 +37,7 @@ class History extends Component {
         return (
             <section>
                 <section style={style.historyBoxContainer} className="group_box">
-                    <a style={style.a} href="https://de.wikipedia.org/wiki/Isaac_Newton" target="_blank"><p style={style.headline} ><span style={style.span}>Newton</span><br/>1643 - 1727<br/>England</p></a>
+                    <a style={style.a} href="https://de.wikipedia.org/wiki/Isaac_Newton" target="_blank" rel="noopener noreferrer"><p style={style.headline} ><span style={style.span}>Newton</span><br/>1643 - 1727<br/>England</p></a>
                 </section>
             </section>
         );

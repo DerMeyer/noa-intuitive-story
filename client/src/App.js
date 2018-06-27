@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Link } from 'react-router-dom';
 import './App.css';
 
-import Navigation from './navigation';
-import ProfileMenu from './profile-menu';
+import { ConnectedNavigation, ProfileMenu, Footer } from './navigation';
 import Timeline from './timeline';
-import Footer from './footer';
 import GroupComponent from './group-component';
 
 class App extends Component {
@@ -31,18 +29,13 @@ class App extends Component {
         }
     }
     render() {
-        const style = {
-            logo: {
-                width: '5vw'
-            }
-        }
         return (
             <BrowserRouter>
                 <main>
-                    <section className="logo" onClick={this.toggleNavigation} >
-                        <img style={style.logo} src="images/logo.png" alt="Galaxy Logo"/>
-                    </section>
-                    <Route exact path="/" component={Navigation} />
+                    <Link to="/" className="logo">
+                        <img src="images/logo.png" alt="Galaxy Logo"/>
+                    </Link>
+                    <Route exact path="/" component={ConnectedNavigation} />
                     <Route exact path="/" component={ProfileMenu} />
                     <Route exact path="/" component={Timeline} />
                     <Route path="/group" component={GroupComponent} />

@@ -15,7 +15,7 @@ class Timeline extends Component {
         this.style = {
             timelineContainer: {
                 position: 'fixed',
-                top: '11vh',
+                top: '12vh',
                 left: '0',
                 height: '82vh',
                 width: '100vw'

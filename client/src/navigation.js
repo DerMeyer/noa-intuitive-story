@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+// import { Link } from 'react-router-dom';
 
 class Navigation extends Component {
     render() {
@@ -17,6 +18,52 @@ class Navigation extends Component {
 
 const mapStateToProps = state => state.navigation || {};
 
-const ConnectedNavigation = connect(mapStateToProps)(Navigation);
+export const ConnectedNavigation = connect(mapStateToProps)(Navigation);
 
-export default ConnectedNavigation;
+export class ProfileMenu extends Component {
+    render() {
+        return (
+            <section className="profile_menu">
+                <img src="images/profile_menu.png" alt="User" />
+            </section>
+        );
+    }
+}
+
+const frame = {
+    position: 'fixed',
+    top: '95vh',
+    left: '0',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    height: '5vh',
+    width: '100vw',
+    padding: '0 3vw'
+}
+
+const p = {
+    position: 'relative',
+    fontSize: '2vh',
+    marginRight: '2vw',
+    color: 'gray',
+    zIndex: '75'
+}
+
+const div = {
+    display: 'flex'
+}
+
+export class Footer extends Component {
+    render() {
+        return (
+            <section style={frame}>
+                <p style={p}>&copy; Noa Golan</p>
+                <div style={div}>
+                    <p style={p}>Impressum</p>
+                    <p style={p}>Contact</p>
+                </div>
+            </section>
+        );
+    }
+}
