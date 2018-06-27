@@ -8,8 +8,29 @@ import History from './history';
 class Timeline extends Component {
     constructor(props) {
         super(props);
+        this.timelineImageQuotient = 4.4383;
         this.state = {
-            timelineLeft: ((window.innerHeight * 4.4383) - window.innerWidth) / 2
+            timelineLeft: ((window.innerHeight * this.timelineImageQuotient) - window.innerWidth) / 2
+        };
+        this.style = {
+            timelineContainer: {
+                position: 'fixed',
+                top: '11vh',
+                left: '0',
+                height: '82vh',
+                width: '100vw'
+            },
+            timelineSled: {
+                position: 'absolute',
+                top: '0',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: '82vh'
+            },
+            timeline: {
+                height: '82vh'
+            }
         };
         this.timelineMap = [
             [0, -80000], [45, -70000], [90, -60000], [133, -50000], [178, -40000], [222, -30000], [267, -20000], [310, -10000], [343, -9000], [376, -8000], [410, -7000],
@@ -25,12 +46,12 @@ class Timeline extends Component {
         this.previousLeft = 0;
     }
     componentDidMount() {
-        this.scrollFactor = ((window.innerHeight * 4.4383) - window.innerWidth) / (2 * window.innerHeight);
+        this.scrollFactor = ((window.innerHeight * this.timelineImageQuotient) - window.innerWidth) / (2 * window.innerHeight);
         window.addEventListener('scroll', this.setTimelineLeft);
         window.scroll(0, window.innerHeight);
     }
     componentDidUpdate() {
-        this.scrollFactor = ((window.innerHeight * 4.4383) - window.innerWidth) / (2 * window.innerHeight);
+        this.scrollFactor = ((window.innerHeight * this.timelineImageQuotient) - window.innerWidth) / (2 * window.innerHeight);
     }
     componentWillUnmount() {
         window.removeEventListener('scroll', this.setTimelineLeft);
@@ -40,7 +61,7 @@ class Timeline extends Component {
             timelineLeft: window.scrollY * this.scrollFactor
         })
     }
-    onDown = event => {
+    onDown(event) {
         this.isDragging = true;
         this.extractLeftDelta(event);
         window.removeEventListener('scroll', this.setTimelineLeft);
@@ -52,13 +73,13 @@ class Timeline extends Component {
         }
         const left = this.extractLeftDelta(event);
         this.setState(({ timelineLeft }) => ({
-            timelineLeft: timelineLeft <= ((window.innerHeight * 4.4383) - window.innerWidth) ? timelineLeft - left : timelineLeft
+            timelineLeft: timelineLeft <= ((window.innerHeight * this.timelineImageQuotient) - window.innerWidth) ? timelineLeft - left : timelineLeft
         }));
     };
     onUp = () => {
-        if (this.state.timelineLeft > ((window.innerHeight * 4.4383) - window.innerWidth)) {
+        if (this.state.timelineLeft > ((window.innerHeight * this.timelineImageQuotient) - window.innerWidth)) {
             this.setState({
-                timelineLeft: (window.innerHeight * 4.4383) - window.innerWidth
+                timelineLeft: (window.innerHeight * this.timelineImageQuotient) - window.innerWidth
             });
         }
         window.scroll(0, - this.timelineSled.current.offsetLeft / this.scrollFactor);
@@ -72,7 +93,7 @@ class Timeline extends Component {
         return delta;
     };
     mapPixelToTimeline = event => {
-        const currentTimelineScale = 2980 / (window.innerHeight * 4.4383);
+        const currentTimelineScale = 2980 / (window.innerHeight * this.timelineImageQuotient);
         const timelineX = (event.pageX - this.timelineSled.current.offsetLeft) * currentTimelineScale;
         let timelineSection;
         this.timelineMap.forEach((v, i, a) => {
@@ -87,34 +108,21 @@ class Timeline extends Component {
         return exactYear;
     }
     render() {
-        const { timelineLeft } = this.state;
-        const style = {
-            timelineSled: {
-                position: 'absolute',
-                left: `-${timelineLeft}px`,
-                top: '11vh',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: '82vh'
-            },
-            timeline: {
-                height: '82vh'
-            }
-        }
         return (
-            <section
-                ref={this.timelineSled}
-                style={style.timelineSled}
-                onMouseDown={this.onDown}
-                onMouseMove={this.onMove}
-                onMouseUp={this.onUp}
-                onClick={this.mapPixelToTimeline}
-                >
-                <img style={style.timeline} src="/images/timeline.png" alt="Timeline" />
-                <Architypes />
-                <Group />
-                <History />
+            <section style={this.style.timelineContainer} >
+                <section
+                    ref={this.timelineSled}
+                    style={{ ...this.style.timelineSled, left: `-${this.state.timelineLeft}px`, }}
+                    onMouseDown={this.onDown}
+                    onMouseMove={this.onMove}
+                    onMouseUp={this.onUp}
+                    onClick={this.mapPixelToTimeline}
+                    >
+                    <img style={this.style.timeline} src="/images/timeline.png" alt="Timeline" />
+                    <Architypes />
+                    <Group />
+                    <History />
+                </section>
             </section>
         );
     }

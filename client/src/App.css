@@ -2,13 +2,13 @@
     box-sizing: border-box;
 }
 
-main {
+/* main {
     position: fixed;
     top: 0;
     left: 0;
     height: 100vh;
     width: 100vw;
-}
+} */
 
 .server_greeting {
     position: absolute;
@@ -33,7 +33,7 @@ header {
 
 .logo {
     cursor: pointer;
-    position: absolute;
+    position: fixed;
     top: 1.3vh;
     left: 2vw;
 }
