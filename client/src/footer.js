@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 const frame = {
-    position: 'absolute',
+    position: 'fixed',
     top: '95vh',
     left: '0',
     display: 'flex',

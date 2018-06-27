@@ -47,24 +47,35 @@ class Timeline extends Component {
     }
     componentDidMount() {
         this.scrollFactor = ((window.innerHeight * this.timelineImageQuotient) - window.innerWidth) / (2 * window.innerHeight);
-        window.addEventListener('scroll', this.setTimelineLeft);
+        // window.addEventListener('scroll', this.setTimelineLeft);
+        // Polling for Scroll
+        this.setTimelineLeft();
         window.scroll(0, window.innerHeight);
     }
     componentDidUpdate() {
         this.scrollFactor = ((window.innerHeight * this.timelineImageQuotient) - window.innerWidth) / (2 * window.innerHeight);
     }
     componentWillUnmount() {
-        window.removeEventListener('scroll', this.setTimelineLeft);
+        // Polling for Scroll
+        // window.removeEventListener('scroll', this.setTimelineLeft);
     }
     setTimelineLeft = () => {
         this.setState({
             timelineLeft: window.scrollY * this.scrollFactor
-        })
+        });
+        // Polling for Scroll
+        if (!this.isDragging) {
+            setTimeout(() => {
+                this.setTimelineLeft();
+            }, 30);
+        }
     }
-    onDown(event) {
+    onDown = event => {
+        event.preventDefault();
         this.isDragging = true;
         this.extractLeftDelta(event);
-        window.removeEventListener('scroll', this.setTimelineLeft);
+        // Polling for Scroll
+        // window.removeEventListener('scroll', this.setTimelineLeft);
     };
     onMove = event => {
         event.preventDefault();
@@ -82,9 +93,13 @@ class Timeline extends Component {
                 timelineLeft: (window.innerHeight * this.timelineImageQuotient) - window.innerWidth
             });
         }
-        window.scroll(0, - this.timelineSled.current.offsetLeft / this.scrollFactor);
-        window.addEventListener('scroll', this.setTimelineLeft);
-        this.isDragging = false;
+        if (this.isDragging) {
+            window.scroll(0, - this.timelineSled.current.offsetLeft / this.scrollFactor);
+            this.isDragging = false;
+            // window.addEventListener('scroll', this.setTimelineLeft);
+            // Polling for Scroll
+            this.setTimelineLeft();
+        }
     }
     extractLeftDelta = event => {
         const left = event.pageX;
@@ -116,6 +131,7 @@ class Timeline extends Component {
                     onMouseDown={this.onDown}
                     onMouseMove={this.onMove}
                     onMouseUp={this.onUp}
+                    onMouseLeave={this.onUp}
                     onClick={this.mapPixelToTimeline}
                     >
                     <img style={this.style.timeline} src="/images/timeline.png" alt="Timeline" />

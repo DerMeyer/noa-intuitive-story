@@ -9,14 +9,11 @@ import Timeline from './timeline';
 import Footer from './footer';
 import GroupComponent from './group-component';
 
-import { showNavigation, hideNavigation } from './actions';
-
 class App extends Component {
     state = {
         server_message: ''
     }
     componentDidMount() {
-        this.props.dispatch(hideNavigation());
         this.serverSaysHi();
     }
     serverSaysHi = async () => {
@@ -31,13 +28,6 @@ class App extends Component {
             this.setState({
                 server_message: 'The server did not respond.'
             });
-        }
-    }
-    toggleNavigation = () => {
-        if (this.props.navigation && this.props.navigation.left === '0') {
-            this.props.dispatch(hideNavigation());
-        } else {
-            this.props.dispatch(showNavigation());
         }
     }
     render() {

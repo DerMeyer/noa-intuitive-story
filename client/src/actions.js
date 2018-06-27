@@ -4,10 +4,4 @@ export const showNavigation = () => {
     }
 }
 
-export const hideNavigation = () => {
-    return {
-        type: 'HIDE_NAVIGATION'
-    }
-}
-
 // export const showNavigation = () => ({ type: 'SHOW_NAVIGATION' });
