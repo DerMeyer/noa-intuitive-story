@@ -10,7 +10,7 @@ import GroupComponent from './group-component';
 
 class App extends Component {
     state = {
-        server_message: 'There has been no request.'
+        server_message: 'There has been no request from my side.'
     }
     componentDidMount() {
         this.serverSaysHi();
