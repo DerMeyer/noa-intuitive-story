@@ -7,6 +7,7 @@ import axios from './axios';
 import { ConnectedNavigation, ProfileMenu, Footer } from './navigation';
 import Timeline from './timeline';
 import GroupComponent from './group-component';
+import Login from './login';
 import Admin from './admin';
 
 class App extends Component {
@@ -18,10 +19,10 @@ class App extends Component {
     }
     serverSaysHi = async () => {
         try {
-            const response = await axios.get('/api/hello');
-            if (response.data.success) {
+            const resp = await axios.get('/api/hello');
+            if (resp.data.success) {
                 this.setState({
-                    server_message: response.data.message
+                    server_message: resp.data.message
                 });
             } else {
                 this.setState({
@@ -46,6 +47,7 @@ class App extends Component {
                     <Route exact path="/" component={ProfileMenu} />
                     <Route exact path="/" component={Timeline} />
                     <Route path="/group" component={GroupComponent} />
+                    <Route path="/login" component={Login} />
                     <Route path="/avira" component={Admin} />
                     <Footer />
                     <p className="server_greeting">

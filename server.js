@@ -55,6 +55,10 @@ app.get('/api/logout', (req, res) => {
     res.end();
 });
 
+app.post('/api/login', (req, res) => res.json({
+    success: true
+}));
+
 app.get('/api/hello', (req, res) => res.json({
     success: true,
     message: `Hi, I'm Noa's Server. Node express proxy on port ${PORT}.`

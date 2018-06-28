@@ -1,0 +1,8 @@
+DROP TABLE IF EXISTS seen_by;
+
+CREATE TABLE seen_by (
+    id SERIAL PRIMARY KEY,
+    message_id INTEGER NOT NULL,
+    user_id INTEGER NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
