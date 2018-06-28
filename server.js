@@ -3,7 +3,8 @@ const app = express();
 
 const PORT = process.env.PORT || 5000;
 
-app.get('/api/hello', (req, res) => res.send({
+app.get('/api/hello', (req, res) => res.json({
+    success: true,
     message: `Hi, I'm Noa's Server. Node express proxy on port ${PORT}.`
 }));
 

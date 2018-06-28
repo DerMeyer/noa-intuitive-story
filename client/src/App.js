@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import './App.css';
 import { connect } from 'react-redux';
 import { BrowserRouter, Route, Link } from 'react-router-dom';
-import './App.css';
+import axios from './axios';
 
 import { ConnectedNavigation, ProfileMenu, Footer } from './navigation';
 import Timeline from './timeline';
@@ -9,22 +10,27 @@ import GroupComponent from './group-component';
 
 class App extends Component {
     state = {
-        server_message: ''
+        server_message: 'There has been no request.'
     }
     componentDidMount() {
         this.serverSaysHi();
     }
     serverSaysHi = async () => {
         try {
-            const response = await fetch('/api/hello');
-            const body = await response.json();
-            this.setState({
-                server_message: body.message
-            });
+            const response = await axios.get('/api/hello');
+            if (response.data.success) {
+                this.setState({
+                    server_message: response.data.message
+                });
+            } else {
+                this.setState({
+                    server_message: 'I could not get the requested data.'
+                });
+            }
         } catch (err) {
             console.log(err);
             this.setState({
-                server_message: 'The server did not respond.'
+                server_message: 'The server did not respond with a 200.'
             });
         }
     }
@@ -40,15 +46,14 @@ class App extends Component {
                     <Route exact path="/" component={Timeline} />
                     <Route path="/group" component={GroupComponent} />
                     <Footer />
+                    <p className="server_greeting">
+                        {this.state.server_message}
+                    </p>
                 </main>
             </BrowserRouter>
         );
     }
 }
-
-// <p className="server_greeting">
-//     {this.state.server_message}
-// </p>
 
 const mapStateToProps = state => state;
 

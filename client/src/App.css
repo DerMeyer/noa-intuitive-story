@@ -2,6 +2,15 @@
     box-sizing: border-box;
 }
 
+.server_greeting {
+    position: fixed;
+    top: 50vh;
+    left: 20vw;
+    font-size: 10vh;
+    color: red;
+    z-index: 150;
+}
+
 header {
     position: fixed;
     top: 0.5vh;
