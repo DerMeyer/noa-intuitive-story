@@ -7,6 +7,7 @@ import axios from './axios';
 import { ConnectedNavigation, ProfileMenu, Footer } from './navigation';
 import Timeline from './timeline';
 import GroupComponent from './group-component';
+import Admin from './admin';
 
 class App extends Component {
     state = {
@@ -45,6 +46,7 @@ class App extends Component {
                     <Route exact path="/" component={ProfileMenu} />
                     <Route exact path="/" component={Timeline} />
                     <Route path="/group" component={GroupComponent} />
+                    <Route path="/avira" component={Admin} />
                     <Footer />
                     <p className="server_greeting">
                         {this.state.server_message}

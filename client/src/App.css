@@ -4,10 +4,10 @@
 
 .server_greeting {
     position: fixed;
-    top: 50vh;
-    left: 20vw;
-    font-size: 10vh;
-    color: red;
+    top: 94vh;
+    left: 40vw;
+    font-size: 2vh;
+    color: whitesmoke;
     z-index: 150;
 }
 

@@ -5,6 +5,6 @@ CREATE TABLE intuitive_notes (
     user_id INTEGER NOT NULL,
     img_url VARCHAR(128),
     headline TEXT,
-    body TEXT,
+    note TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
