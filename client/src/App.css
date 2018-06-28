@@ -45,5 +45,6 @@ nav .button {
 }
 
 .profile_menu img {
+    cursor: pointer;
     height: 9vh;
 }

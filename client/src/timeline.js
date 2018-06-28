@@ -48,9 +48,9 @@ class Timeline extends Component {
     componentDidMount() {
         this.scrollFactor = ((window.innerHeight * this.timelineImageQuotient) - window.innerWidth) / (2 * window.innerHeight);
         // window.addEventListener('scroll', this.setTimelineLeft);
+        window.scroll(0, window.innerHeight);
         // Polling for Scroll
         this.setTimelineLeft();
-        window.scroll(0, window.innerHeight);
     }
     componentDidUpdate() {
         this.scrollFactor = ((window.innerHeight * this.timelineImageQuotient) - window.innerWidth) / (2 * window.innerHeight);

@@ -32,7 +32,7 @@ export class ProfileMenu extends Component {
 
 const frame = {
     position: 'fixed',
-    top: '95vh',
+    top: '94vh',
     left: '0',
     display: 'flex',
     justifyContent: 'space-between',
@@ -43,6 +43,7 @@ const frame = {
 }
 
 const p = {
+    cursor: 'pointer',
     position: 'relative',
     fontSize: '2vh',
     marginRight: '2vw',
