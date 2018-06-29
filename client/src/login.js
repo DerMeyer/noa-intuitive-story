@@ -7,37 +7,72 @@ class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            message: 'Please log in to the Intuitive Story.'
+            message: 'Please log in to the Intuitive Story.',
+            messageRed: {},
+            alias: '',
+            aliasRed: {},
+            pw: ''
         };
-        this.userInput = {};
+        this.firstInput = React.createRef();
+    }
+    componentDidMount() {
+        this.firstInput.current.focus();
     }
     compileData = event => {
-        this.userInput[event.target.name] = event.target.value;
+        this.setState({
+            [event.target.name]: event.target.value
+        });
     }
     login = async event => {
+        console.log(this.state);
         event.preventDefault();
-        if (this.userInput.mail && this.userInput.pw) {
+        if (this.state.alias && this.state.pw) {
+            const { alias, pw } = this.state;
             try {
-                const resp = await axios.post('/api/login', this.userInput);
+                const resp = await axios.post('/api/login', { alias, pw });
                 if (resp.data.success) {
-                    this.setState({ message: `You're now logged in.` })
+                    this.setState({
+                        message: `You're now logged in.`,
+                        messageRed: {}
+                    });
                 } else {
-                    this.setState({ message: 'Wrong mail or password. Please try again.' })
+                    this.setState({
+                        message: 'Wrong mail or password. Please try again.',
+                        messageRed: { color: 'red' }
+                    });
                 }
             } catch (err) {
                 console.log(err);
-                this.setState({ message: `Something went wrong. The server didn't respond.` });
+                this.setState({
+                    message: `Something went wrong. The server didn't respond.`,
+                    messageRed: { color: 'red' }
+                });
             }
         } else {
-            this.setState({ message: 'Please fill out every field.' });
+            this.state.alias || this.setState({
+                alias: 'Please enter a user name',
+                aliasRed: { color: 'red' }
+            });
+            this.state.pw || this.setState({
+                message: 'Please enter a password.',
+                messageRed: { color: 'red' }
+            });
         }
     }
-    forgotPW = () => {}
+    emptyField = event => {
+        this.setState({
+            [event.target.name]: '',
+            [`${event.target.name}Red`]: {}
+        });
+    }
+    forgotPW = () => {
+        this.setState({ message: `We're working to send you a new password.` });
+    }
     render() {
         return (
             <section className="login_component_frame">
-                <h1>{this.state.message}</h1>
-                <input name="mail" type="text" placeholder="mail" onChange={this.compileData} />
+                <h1 style={this.state.messageRed}>{this.state.message}</h1>
+                <input ref={this.firstInput} style={this.state.aliasRed} name="alias" type="text" value={this.state.alias} placeholder="user name" onClick={this.emptyField} onChange={this.compileData} />
                 <input name="pw" type="password" placeholder="password" onChange={this.compileData} />
                 <button onClick={this.login}>Log in</button>
                 <button onClick={this.forgotPW}>Forgot your password?</button>

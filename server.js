@@ -55,9 +55,12 @@ app.get('/api/logout', (req, res) => {
     res.end();
 });
 
-app.post('/api/login', (req, res) => res.json({
-    success: true
-}));
+app.post('/api/login', (req, res) => {
+    console.log(req.body);
+    res.json({
+        success: true
+    });
+});
 
 app.get('/api/hello', (req, res) => res.json({
     success: true,

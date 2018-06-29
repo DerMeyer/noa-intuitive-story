@@ -8,16 +8,39 @@ class Register extends Component {
         super(props);
         this.state = {
             message: 'Please register for the Intuitive Story.',
+            messageRed: {},
+            first: '',
+            firstRed: {},
+            last: '',
+            lastRed: {},
+            alias: '',
+            aliasRed: {},
+            mail: '',
+            mailRed: {},
+            phone: '',
+            phoneRed: {},
+            pw: '',
+            repeat: '',
             aliasModal: false
         };
-        this.userInput = {};
+        this.firstInput = React.createRef();
+    }
+    componentDidMount() {
+        this.firstInput.current.focus();
     }
     compileData = event => {
-        this.userInput[event.target.name] = event.target.value;
+        this.setState({
+            [event.target.name]: event.target.value
+        });
     }
     register = async event => {
         event.preventDefault();
-        console.log(this.userInput);
+        console.log(this.state);
+        this.state.first || this.setErrorMessage('first', 'first name');
+        this.state.last || this.setErrorMessage('last', 'last name');
+        this.state.alias || this.setErrorMessage('alias', 'user name');
+        this.state.mail || this.setErrorMessage('mail', 'mail address');
+        this.state.phone || this.setErrorMessage('phone', 'phone number');
         // if (this.userInput.mail && this.userInput.pw) {
         //     try {
         //         const resp = await axios.post('/api/login', this.userInput);
@@ -34,6 +57,18 @@ class Register extends Component {
         //     this.setState({ message: 'Please fill out every field.' });
         // }
     }
+    setErrorMessage(field, name) {
+        this.setState({
+            [field]: `Please enter a ${name}`,
+            [`${field}Red`]: { color: 'red' }
+        });
+    }
+    emptyField = event => {
+        this.setState({
+            [event.target.name]: '',
+            [`${event.target.name}Red`]: {}
+        });
+    }
     toggleAliasModal = () => {
         if (this.state.aliasModal) {
             this.setState({
@@ -48,17 +83,17 @@ class Register extends Component {
     render() {
         return (
             <section className="login_component_frame">
-                <h1>{this.state.message}</h1>
+                <h1 style={this.state.messageRed}>{this.state.message}</h1>
                 <h3>( All fields are required )</h3>
-                <input name="first" type="text" placeholder="first name" onChange={this.compileData} />
-                <input name="last" type="text" placeholder="last name" onChange={this.compileData} />
+                <input ref={this.firstInput} style={this.state.firstRed} name="first" type="text" value={this.state.first} placeholder="first name" onClick={this.emptyField} onChange={this.compileData} />
+                <input style={this.state.lastRed} name="last" type="text" value={this.state.last} placeholder="last name" onClick={this.emptyField} onChange={this.compileData} />
                 <div className="login_question">
-                    <input name="alias" type="text" placeholder="user name" onChange={this.compileData} />
+                    <input style={this.state.aliasRed} name="alias" type="text" value={this.state.alias} placeholder="user name" onClick={this.emptyField} onChange={this.compileData} />
                     <p onClick={this.toggleAliasModal}>?</p>
-                    {this.state.aliasModal && <h2>This can be any name you like!<br/>Your user name will be the only data we show in the site.<br/>All your data will be hadled securely and only accessed by staff of The Intuitive Story.</h2>}
+                    {this.state.aliasModal && <h2>This can be any name you like!<br/>Your user name will be the only data we show in the site.<br/>All your data will be handled securely and only ever accessed by staff of The Intuitive Story.</h2>}
                 </div>
-                <input name="mail" type="text" placeholder="mail" onChange={this.compileData} />
-                <input name="phone" type="text" placeholder="phone" onChange={this.compileData} />
+                <input style={this.state.mailRed} name="mail" type="text" value={this.state.mail} placeholder="mail" onClick={this.emptyField} onChange={this.compileData} />
+                <input style={this.state.phoneRed} name="phone" type="text" value={this.state.phone} placeholder="phone" onClick={this.emptyField} onChange={this.compileData} />
                 <input name="pw" type="password" placeholder="password" onChange={this.compileData} />
                 <input name="repeat" type="password" placeholder="repeat password" onChange={this.compileData} />
                 <button onClick={this.register}>Sign up</button>
