@@ -13,3 +13,23 @@ CREATE TABLE groups (
     bezrechu_user_id INTEGER,
     sagol_user_id INTEGER
 );
+
+INSERT INTO groups (
+    name,
+    time_period,
+    story,
+    gul_user_id,
+    grun_user_id,
+    vermel_user_id,
+    bezrechu_user_id,
+    sagol_user_id
+) VALUES (
+    'Florence',
+    1592,
+    'This is the first group story to come out of Noas database.',
+    2,
+    3,
+    4,
+    5,
+    6
+);
