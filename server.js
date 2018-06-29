@@ -12,7 +12,7 @@ const uidSafe = require('uid-safe');
 const path = require('path');
 const diskStorage = multer.diskStorage({
     destination: function (req, file, callback) {
-        callback(null, __dirname + '/uploads');
+        callback(null, `${__dirname}/uploads`);
     },
     filename: function (req, file, callback) {
       uidSafe(24).then(function(uid) {

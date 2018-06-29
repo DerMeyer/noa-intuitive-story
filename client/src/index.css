@@ -1,10 +1,7 @@
 body {
-    position: relative;
     font-family: 'NTR', sans-serif;
     /* font-family: 'Marvel', sans-serif; */
     /* font-family: 'Pontano Sans', sans-serif; */
-    min-height: 300vh;
-    width: 100vw;
     margin: 0;
     padding: 0;
     background-color: rgb(7, 40, 64);

@@ -2,6 +2,12 @@
     box-sizing: border-box;
 }
 
+main {
+    position: relative;
+    min-height: 100vh;
+    min-width: 100vw;
+}
+
 .server_greeting {
     position: fixed;
     top: 94vh;

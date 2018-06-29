@@ -13,6 +13,9 @@ class Timeline extends Component {
             timelineLeft: ((window.innerHeight * this.timelineImageQuotient) - window.innerWidth) / 2
         };
         this.style = {
+            expander: {
+                height: '300vh'
+            },
             timelineContainer: {
                 position: 'fixed',
                 top: '12vh',
@@ -124,20 +127,22 @@ class Timeline extends Component {
     }
     render() {
         return (
-            <section style={this.style.timelineContainer} >
-                <section
-                    ref={this.timelineSled}
-                    style={{ ...this.style.timelineSled, left: `-${this.state.timelineLeft}px`, }}
-                    onMouseDown={this.onDown}
-                    onMouseMove={this.onMove}
-                    onMouseUp={this.onUp}
-                    onMouseLeave={this.onUp}
-                    onClick={this.mapPixelToTimeline}
-                    >
-                    <img style={this.style.timeline} src="/images/timeline.png" alt="Timeline" />
-                    <Architypes />
-                    <Group />
-                    <History />
+            <section style={this.style.expander}>
+                <section style={this.style.timelineContainer} >
+                    <section
+                        ref={this.timelineSled}
+                        style={{ ...this.style.timelineSled, left: `-${this.state.timelineLeft}px`, }}
+                        onMouseDown={this.onDown}
+                        onMouseMove={this.onMove}
+                        onMouseUp={this.onUp}
+                        onMouseLeave={this.onUp}
+                        onClick={this.mapPixelToTimeline}
+                        >
+                        <img style={this.style.timeline} src="/images/timeline.png" alt="Timeline" />
+                        <Architypes />
+                        <Group />
+                        <History />
+                    </section>
                 </section>
             </section>
         );

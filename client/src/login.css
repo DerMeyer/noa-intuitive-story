@@ -6,7 +6,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 70vh;
+    height: 65vh;
     width: 66vw;
 }
 
@@ -30,9 +30,19 @@
     font-size: 3vh;
     line-height: 1;
     height: 4.5vh;
-    width: 20vw;
+    min-width: 20vw;
+    padding: 0 2vw;
     border-radius: 1vh;
     margin-top: 2vh;
     color: whitesmoke;
+    background-color: darkgray;
+    transition-duration: .15s;
+}
+
+.login_component_frame button:nth-child(4) {
     background-color: gray;
+}
+
+.login_component_frame button:hover {
+    background-color: lightgray;
 }
