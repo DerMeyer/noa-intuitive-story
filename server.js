@@ -55,6 +55,13 @@ app.get('/api/logout', (req, res) => {
     res.end();
 });
 
+app.post('/api/register', (req, res) => {
+    console.log(req.body);
+    res.json({
+        success: true
+    });
+});
+
 app.post('/api/login', (req, res) => {
     console.log(req.body);
     res.json({

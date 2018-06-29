@@ -24,17 +24,20 @@ class Login extends Component {
         });
     }
     login = async event => {
-        console.log(this.state);
+        if (event.type !== 'click' && event.keyCode !== 13) {
+            return;
+        }
         event.preventDefault();
-        if (this.state.alias && this.state.pw) {
+        this.setState({
+            message: 'Please log in to the Intuitive Story.',
+            messageRed: {}
+        });
+        if (this.state.alias && !this.state.aliasRed.color && this.state.pw) {
             const { alias, pw } = this.state;
             try {
                 const resp = await axios.post('/api/login', { alias, pw });
                 if (resp.data.success) {
-                    this.setState({
-                        message: `You're now logged in.`,
-                        messageRed: {}
-                    });
+                    this.setState({ message: `You're now logged in.` });
                 } else {
                     this.setState({
                         message: 'Wrong mail or password. Please try again.',
@@ -72,8 +75,17 @@ class Login extends Component {
         return (
             <section className="login_component_frame">
                 <h1 style={this.state.messageRed}>{this.state.message}</h1>
-                <input ref={this.firstInput} style={this.state.aliasRed} name="alias" type="text" value={this.state.alias} placeholder="user name" onClick={this.emptyField} onChange={this.compileData} />
-                <input name="pw" type="password" placeholder="password" onChange={this.compileData} />
+                <input
+                    ref={this.firstInput}
+                    style={this.state.aliasRed}
+                    name="alias" type="text"
+                    value={this.state.alias}
+                    placeholder="user name"
+                    onFocus={this.emptyField}
+                    onChange={this.compileData}
+                    onKeyDown={this.login}
+                    />
+                <input name="pw" type="password" placeholder="password" onChange={this.compileData} onKeyDown={this.login} />
                 <button onClick={this.login}>Log in</button>
                 <button onClick={this.forgotPW}>Forgot your password?</button>
                 <Link to="/register"><button>Not a member yet?</button></Link>

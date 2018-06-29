@@ -34,28 +34,57 @@ class Register extends Component {
         });
     }
     register = async event => {
+        if (event.type !== 'click' && event.keyCode !== 13) {
+            return;
+        }
         event.preventDefault();
-        console.log(this.state);
-        this.state.first || this.setErrorMessage('first', 'first name');
-        this.state.last || this.setErrorMessage('last', 'last name');
-        this.state.alias || this.setErrorMessage('alias', 'user name');
-        this.state.mail || this.setErrorMessage('mail', 'mail address');
-        this.state.phone || this.setErrorMessage('phone', 'phone number');
-        // if (this.userInput.mail && this.userInput.pw) {
-        //     try {
-        //         const resp = await axios.post('/api/login', this.userInput);
-        //         if (resp.data.success) {
-        //             this.setState({ message: `You're now logged in.` })
-        //         } else {
-        //             this.setState({ message: 'Wrong mail or password. Please try again.' })
-        //         }
-        //     } catch (err) {
-        //         console.log(err);
-        //         this.setState({ message: `Something went wrong. The server didn't respond.` });
-        //     }
-        // } else {
-        //     this.setState({ message: 'Please fill out every field.' });
-        // }
+        this.setState({
+            message: 'Please register for the Intuitive Story.',
+            messageRed: {}
+        });
+        if (
+            this.state.first && !this.state.firstRed.color
+            && this.state.last && !this.state.lastRed.color
+            && this.state.alias && !this.state.aliasRed.color
+            && this.state.mail && !this.state.mailRed.color
+            && this.state.phone && !this.state.phoneRed.color
+            && this.state.pw
+            && this.state.pw === this.state.repeat
+        ) {
+            const { first, last, alias, mail, phone, pw } = this.state;
+            try {
+                const resp = await axios.post('/api/register', { first, last, alias, mail, phone, pw });
+                if (resp.data.success) {
+                    this.setState({ message: `You're now registered.` });
+                } else {
+                    this.setState({
+                        message: 'That user name or mail already exists.',
+                        messageRed: { color: 'red' }
+                    });
+                }
+            } catch (err) {
+                console.log(err);
+                this.setState({
+                    message: `Something went wrong. The server didn't respond.`,
+                    messageRed: { color: 'red' }
+                });
+            }
+        } else {
+            this.state.first || this.setErrorMessage('first', 'first name');
+            this.state.last || this.setErrorMessage('last', 'last name');
+            this.state.alias || this.setErrorMessage('alias', 'user name');
+            this.state.mail || this.setErrorMessage('mail', 'mail address');
+            this.state.phone || this.setErrorMessage('phone', 'phone number');
+            this.state.pw === this.state.repeat || this.setState({
+                message: `The two passwords you entered don't match.`,
+                messageRed: { color: 'red' }
+            });
+            this.state.repeat || this.setState({
+                message: 'Please enter your password a second time.',
+                messageRed: { color: 'red' }
+            });
+            this.state.pw || this.setErrorMessage('message', 'password.');
+        }
     }
     setErrorMessage(field, name) {
         this.setState({
@@ -85,17 +114,26 @@ class Register extends Component {
             <section className="login_component_frame">
                 <h1 style={this.state.messageRed}>{this.state.message}</h1>
                 <h3>( All fields are required )</h3>
-                <input ref={this.firstInput} style={this.state.firstRed} name="first" type="text" value={this.state.first} placeholder="first name" onClick={this.emptyField} onChange={this.compileData} />
-                <input style={this.state.lastRed} name="last" type="text" value={this.state.last} placeholder="last name" onClick={this.emptyField} onChange={this.compileData} />
+                <input
+                    ref={this.firstInput}
+                    style={this.state.firstRed}
+                    name="first" type="text"
+                    value={this.state.first}
+                    placeholder="first name"
+                    onFocus={this.emptyField}
+                    onChange={this.compileData}
+                    onKeyDown={this.register}
+                    />
+                <input style={this.state.lastRed} name="last" type="text" value={this.state.last} placeholder="last name" onFocus={this.emptyField} onChange={this.compileData} onKeyDown={this.register} />
                 <div className="login_question">
-                    <input style={this.state.aliasRed} name="alias" type="text" value={this.state.alias} placeholder="user name" onClick={this.emptyField} onChange={this.compileData} />
+                    <input style={this.state.aliasRed} name="alias" type="text" value={this.state.alias} placeholder="user name" onFocus={this.emptyField} onChange={this.compileData} onKeyDown={this.register} />
                     <p onClick={this.toggleAliasModal}>?</p>
                     {this.state.aliasModal && <h2>This can be any name you like!<br/>Your user name will be the only data we show in the site.<br/>All your data will be handled securely and only ever accessed by staff of The Intuitive Story.</h2>}
                 </div>
-                <input style={this.state.mailRed} name="mail" type="text" value={this.state.mail} placeholder="mail" onClick={this.emptyField} onChange={this.compileData} />
-                <input style={this.state.phoneRed} name="phone" type="text" value={this.state.phone} placeholder="phone" onClick={this.emptyField} onChange={this.compileData} />
-                <input name="pw" type="password" placeholder="password" onChange={this.compileData} />
-                <input name="repeat" type="password" placeholder="repeat password" onChange={this.compileData} />
+                <input style={this.state.mailRed} name="mail" type="text" value={this.state.mail} placeholder="mail" onFocus={this.emptyField} onChange={this.compileData} onKeyDown={this.register} />
+                <input style={this.state.phoneRed} name="phone" type="text" value={this.state.phone} placeholder="phone" onFocus={this.emptyField} onChange={this.compileData} onKeyDown={this.register} />
+                <input name="pw" type="password" placeholder="password" onChange={this.compileData} onKeyDown={this.register} />
+                <input name="repeat" type="password" placeholder="repeat password" onChange={this.compileData} onKeyDown={this.register} />
                 <button onClick={this.register}>Sign up</button>
                 <Link to="/login"><button>Already have an account?</button></Link>
             </section>
