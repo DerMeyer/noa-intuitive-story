@@ -2,10 +2,10 @@ const express = require('express');
 const app = express();
 
 const { s3upload } = require('./s3');
-const { s3Url } = require('./config');
+const { s3Url, iconUrls } = require('./config');
 const { MY_SECRET } = (process.env.NODE_ENV === 'production' && process.env) || require('./confidential.json');
 
-const { hashPW, checkPW } = require('./db');
+const { hashPW, checkPW, login, register } = require('./db');
 
 const multer = require('multer');
 const uidSafe = require('uid-safe');
@@ -52,21 +52,69 @@ const PORT = process.env.PORT || 5000;
 
 app.get('/api/logout', (req, res) => {
     req.session = null;
-    res.end();
-});
-
-app.post('/api/register', (req, res) => {
-    console.log(req.body);
     res.json({
         success: true
     });
 });
 
-app.post('/api/login', (req, res) => {
-    console.log(req.body);
+app.get('/api/check_login', (req, res) => {
     res.json({
-        success: true
+        success: !!req.session.user
     });
+});
+
+app.post('/api/login', async (req, res) => {
+    try {
+        const result = await login(req.body.alias);
+        const correctPW = await checkPW(req.body.pw, result.rows[0].pw);
+        if (correctPW) {
+            const { id, verified } = result.rows[0];
+            req.session.user = {
+                id,
+                alias: req.body.alias,
+                verified
+            };
+            console.log(req.session.user);
+            res.json({
+                success: true,
+                alias: req.body.alias
+            });
+        } else {
+            res.json({
+                success: false
+            });
+        }
+    } catch (err) {
+        console.log(err);
+        res.json({
+            success: false
+        });
+    }
+});
+
+app.post('/api/register', async (req, res) => {
+    try {
+        const hashedPW = await hashPW(req.body.pw);
+        const result = await register(
+            req.body.first,
+            req.body.last,
+            req.body.alias,
+            req.body.mail,
+            req.body.phone,
+            hashedPW,
+            iconUrls[0]
+        );
+        req.session.user = result.rows[0];
+        res.json({
+            success: true,
+            alias: result.rows[0].alias
+        });
+    } catch (err) {
+        console.log(err);
+        res.json({
+            success: false
+        });
+    }
 });
 
 app.get('/api/hello', (req, res) => res.json({

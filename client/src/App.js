@@ -12,8 +12,11 @@ import Register from './register';
 import Admin from './admin';
 
 class App extends Component {
-    state = {
-        server_message: 'There has been no request from my side.'
+    constructor(props) {
+        super(props);
+        this.state = {
+            server_message: 'There has been no request from my side.'
+        }
     }
     componentDidMount() {
         this.serverSaysHi();
@@ -33,7 +36,24 @@ class App extends Component {
         } catch (err) {
             console.log(err);
             this.setState({
-                server_message: 'The server did not respond with a 200.'
+                server_message: 'The server did not respond.'
+            });
+        }
+    }
+    logout = async () => {
+        try {
+            const resp = await axios.get('/api/logout');
+            if (resp.data.success) {
+                this.setState({
+                    server_message: 'You are now logged out.'
+                });
+                // window.location.replace('/login');
+                window.location.pathname = '/login';
+            }
+        } catch (err) {
+            console.log(err);
+            this.setState({
+                server_message: 'The server did not respond.'
             });
         }
     }
@@ -52,7 +72,7 @@ class App extends Component {
                     <Route path="/register" component={Register} />
                     <Route path="/avira" component={Admin} />
                     <Footer />
-                    <p className="server_greeting">
+                    <p className="server_greeting" onClick={this.logout}>
                         {this.state.server_message}
                     </p>
                 </main>

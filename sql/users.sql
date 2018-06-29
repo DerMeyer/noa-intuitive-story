@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
-    verified INTEGER,
+    verified INTEGER DEFAULT 0,
     first VARCHAR(64) NOT NULL,
     last VARCHAR(64) NOT NULL,
     alias VARCHAR(64) UNIQUE,

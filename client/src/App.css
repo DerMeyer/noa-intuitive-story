@@ -9,9 +9,10 @@ main {
 }
 
 .server_greeting {
+    cursor: pointer;
     position: fixed;
     top: 94vh;
-    left: 40vw;
+    left: 39vw;
     font-size: 2vh;
     color: whitesmoke;
     z-index: 150;

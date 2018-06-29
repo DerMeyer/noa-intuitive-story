@@ -16,7 +16,19 @@ class Login extends Component {
         this.firstInput = React.createRef();
     }
     componentDidMount() {
+        this.checkLogin();
         this.firstInput.current.focus();
+    }
+    async checkLogin() {
+        try {
+            const resp = await axios.get('/api/check_login');
+            if (resp.data.success) {
+                window.location.replace('/');
+            }
+        } catch (err) {
+            console.log(err);
+            this.setState({ loginStatus: 'Login check failed' });
+        }
     }
     compileData = event => {
         this.setState({
@@ -61,6 +73,7 @@ class Login extends Component {
                 messageRed: { color: 'red' }
             });
         }
+        this.checkLogin();
     }
     emptyField = event => {
         this.setState({

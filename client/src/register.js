@@ -26,7 +26,19 @@ class Register extends Component {
         this.firstInput = React.createRef();
     }
     componentDidMount() {
+        this.checkLogin();
         this.firstInput.current.focus();
+    }
+    async checkLogin() {
+        try {
+            const resp = await axios.get('/api/check_login');
+            if (resp.data.success) {
+                window.location.replace('/');
+            }
+        } catch (err) {
+            console.log(err);
+            this.setState({ loginStatus: 'Login check failed' });
+        }
     }
     compileData = event => {
         this.setState({
@@ -55,7 +67,7 @@ class Register extends Component {
             try {
                 const resp = await axios.post('/api/register', { first, last, alias, mail, phone, pw });
                 if (resp.data.success) {
-                    this.setState({ message: `You're now registered.` });
+                    this.setState({ message: `Hello ${resp.data.alias}, you're now registered.` });
                 } else {
                     this.setState({
                         message: 'That user name or mail already exists.',
@@ -85,6 +97,7 @@ class Register extends Component {
             });
             this.state.pw || this.setErrorMessage('message', 'password.');
         }
+        this.checkLogin();
     }
     setErrorMessage(field, name) {
         this.setState({
