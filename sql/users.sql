@@ -5,7 +5,7 @@ CREATE TABLE users (
     verified INTEGER,
     first VARCHAR(64) NOT NULL,
     last VARCHAR(64) NOT NULL,
-    alias VARCHAR(64) NOT NULL,
+    alias VARCHAR(64) UNIQUE,
     mail VARCHAR(128) UNIQUE,
     phone VARCHAR(128) UNIQUE,
     pw TEXT NOT NULL,

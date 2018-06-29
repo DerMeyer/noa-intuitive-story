@@ -39,7 +39,7 @@ class Login extends Component {
                 <h1>{this.state.message}</h1>
                 <input name="mail" type="text" placeholder="mail" onChange={this.compileData} />
                 <input name="pw" type="password" placeholder="password" onChange={this.compileData} />
-                <button onClick={this.login}>Log In</button>
+                <button onClick={this.login}>Log in</button>
                 <button onClick={this.forgotPW}>Forgot your password?</button>
                 <Link to="/register"><button>Not a member yet?</button></Link>
             </section>

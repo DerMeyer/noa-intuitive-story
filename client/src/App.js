@@ -8,6 +8,7 @@ import { ConnectedNavigation, ProfileMenu, Footer } from './navigation';
 import Timeline from './timeline';
 import GroupComponent from './group-component';
 import Login from './login';
+import Register from './register';
 import Admin from './admin';
 
 class App extends Component {
@@ -48,6 +49,7 @@ class App extends Component {
                     <Route exact path="/" component={Timeline} />
                     <Route path="/group" component={GroupComponent} />
                     <Route path="/login" component={Login} />
+                    <Route path="/register" component={Register} />
                     <Route path="/avira" component={Admin} />
                     <Footer />
                     <p className="server_greeting">

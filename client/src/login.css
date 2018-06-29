@@ -1,17 +1,23 @@
 .login_component_frame {
     position: absolute;
-    top: 11vh;
+    top: 7vh;
     left: 17vw;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 65vh;
+    height: 75vh;
     width: 66vw;
 }
 
 .login_component_frame h1 {
     font-size: 3vh;
+    color: whitesmoke;
+}
+
+.login_component_frame h3 {
+    font-size: 2vh;
+    margin-top: -4vh;
     color: whitesmoke;
 }
 
@@ -31,7 +37,7 @@
     line-height: 1;
     height: 4.5vh;
     min-width: 20vw;
-    padding: 0 2vw;
+    padding: 0 1vw;
     border-radius: 1vh;
     margin-top: 2vh;
     color: whitesmoke;
@@ -39,10 +45,35 @@
     transition-duration: .15s;
 }
 
-.login_component_frame button:nth-child(4) {
-    background-color: gray;
-}
-
 .login_component_frame button:hover {
     background-color: lightgray;
+}
+
+.login_question {
+    position: relative;
+}
+
+.login_question p {
+    cursor: pointer;
+    position: absolute;
+    top: 1vh;
+    left: -3vw;
+    font-size: 2.5vh;
+    line-height: 1;
+    padding: .5vh 1vh 0 1vh;
+    border-radius: 50%;
+    margin: 0;
+    color: rgb(7, 40, 64);
+    background-color: whitesmoke;
+}
+
+.login_question h2 {
+    position: absolute;
+    top: 1vh;
+    left: -24vw;
+    font-size: 2.5vh;
+    line-height: 1.2;
+    width: 20vw;
+    margin: 0;
+    color: whitesmoke;
 }
