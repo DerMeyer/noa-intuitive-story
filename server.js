@@ -5,7 +5,7 @@ const { s3upload } = require('./s3');
 const { s3Url, iconUrls } = require('./config');
 const { MY_SECRET } = (process.env.NODE_ENV === 'production' && process.env) || require('./confidential.json');
 
-const { hashPW, checkPW, login, register } = require('./db');
+const { hashPW, checkPW, login, register, getAllGroups } = require('./db');
 
 const multer = require('multer');
 const uidSafe = require('uid-safe');
@@ -74,7 +74,6 @@ app.post('/api/login', async (req, res) => {
                 alias: req.body.alias,
                 verified
             };
-            console.log(req.session.user);
             res.json({
                 success: true,
                 alias: req.body.alias
@@ -108,6 +107,21 @@ app.post('/api/register', async (req, res) => {
         res.json({
             success: true,
             alias: result.rows[0].alias
+        });
+    } catch (err) {
+        console.log(err);
+        res.json({
+            success: false
+        });
+    }
+});
+
+app.get('/api/groups', async (req, res) => {
+    try {
+        const result = await getAllGroups();
+        res.json({
+            success: true,
+            groups: result.rows
         });
     } catch (err) {
         console.log(err);

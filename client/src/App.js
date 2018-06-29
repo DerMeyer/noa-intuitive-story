@@ -20,6 +20,7 @@ class App extends Component {
     }
     componentDidMount() {
         this.serverSaysHi();
+        this.getGroups();
     }
     serverSaysHi = async () => {
         try {
@@ -47,8 +48,21 @@ class App extends Component {
                 this.setState({
                     server_message: 'You are now logged out.'
                 });
-                // window.location.replace('/login');
-                window.location.pathname = '/login';
+            }
+        } catch (err) {
+            console.log(err);
+            this.setState({
+                server_message: 'The server did not respond.'
+            });
+        }
+    }
+    async getGroups() {
+        try {
+            const resp = await axios.get('/api/groups');
+            if (resp.data.success) {
+                console.log(resp.data.groups);
+            } else {
+                console.log('no groups!');
             }
         } catch (err) {
             console.log(err);
