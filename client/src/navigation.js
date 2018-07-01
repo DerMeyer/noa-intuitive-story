@@ -20,16 +20,6 @@ const mapStateToProps = state => state.navigation || {};
 
 export const ConnectedNavigation = connect(mapStateToProps)(Navigation);
 
-export class ProfileMenu extends Component {
-    render() {
-        return (
-            <section className="profile_menu">
-                <img src="images/profile_menu.png" alt="User" />
-            </section>
-        );
-    }
-}
-
 const frame = {
     position: 'fixed',
     top: '94vh',

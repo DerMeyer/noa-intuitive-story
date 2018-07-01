@@ -57,6 +57,19 @@ app.get('/api/logout', (req, res) => {
     });
 });
 
+app.get('/api/check_login', (req, res) => {
+    if (req.session.user) {
+        res.json({
+            success: true,
+            user: { ...req.session.user }
+        });
+    } else {
+        res.json({
+            success: false
+        });
+    }
+});
+
 app.post('/api/login', async (req, res) => {
     try {
         const result = await login(req.body.alias);

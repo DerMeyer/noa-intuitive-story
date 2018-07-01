@@ -1,5 +1,78 @@
 import axios from './axios';
 
+export const noError = () => ({ type: 'NO_ERROR' });
+
+export const logout = async () => {
+    try {
+        const resp = await axios.get('/api/logout');
+        if (resp.data.success) {
+            return {
+                type: 'LOG_OUT',
+                success: true
+            };
+        }
+    } catch (err) {
+        console.log(err);
+        return {
+            type: 'LOG_OUT',
+            success: false,
+            error: {
+                message: `The server didn't respond.`
+            }
+        };
+    }
+}
+
+export const checkLogin = async () => {
+    try {
+        const resp = await axios.get('/api/check_login');
+        if (resp.data.success) {
+            return {
+                type: 'LOG_IN',
+                success: true,
+                data: { ...resp.data.user }
+            };
+        } else {
+            return {};
+        }
+    } catch (err) {
+        console.log(err);
+        return {};
+    }
+}
+
+export const login = async (alias, pw) => {
+    try {
+        const resp = await axios.post('/api/login', { alias, pw });
+        if (resp.data.success) {
+            return {
+                type: 'LOG_IN',
+                success: true,
+                data: { ...resp.data.user }
+            };
+        } else {
+            return {
+                type: 'LOG_IN',
+                success: false,
+                error: {
+                    message: 'Wrong mail or password. Please try again.',
+                    messageRed: { color: 'red' }
+                }
+            };
+        }
+    } catch (err) {
+        console.log(err);
+        return {
+            type: 'LOG_IN',
+            success: false,
+            error: {
+                message: `The server didn't respond.`,
+                messageRed: { color: 'red' }
+            }
+        };
+    }
+}
+
 export const getGroups = async () => {
     try {
         const resp = await axios.get('/api/groups');
@@ -38,48 +111,24 @@ export const getGroups = async () => {
                 type: 'GET_GROUPS',
                 success: true,
                 data: groups
-            }
+            };
         } else {
             return {
                 type: 'GET_GROUPS',
                 success: false,
-                data: `The server did't send any group data.`
-            }
+                error: {
+                    message: `The server didn't send any group data.`
+                }
+            };
         }
     } catch (err) {
         console.log(err);
         return {
             type: 'GET_GROUPS',
             success: false,
-            data: `The server did't respond.`
-        }
+            error: {
+                message: `The server didn't respond.`
+            }
+        };
     }
 }
-
-export const login = async (alias, pw) => {
-    try {
-        const resp = await axios.post('/api/login', { alias, pw });
-        if (resp.data.success) {
-            console.log(resp.data);
-            return {
-                type: 'LOG_IN',
-                success: true,
-                data: { ...resp.data.user }
-            }
-        } else {
-            return {
-                type: 'LOG_IN',
-                success: false
-            }
-        }
-    } catch (err) {
-        console.log(err);
-        return {
-            type: 'LOG_IN',
-            success: false,
-            data: `Something went wrong. The server didn't respond.`
-        }
-    }
-}
-
-// export const showNavigation = () => ({ type: 'SHOW_NAVIGATION' });

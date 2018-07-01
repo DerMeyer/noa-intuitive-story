@@ -1,21 +1,34 @@
-const reducer = (state = {
-    alias: '',
-    userId: 0,
-    loggedIn: false,
-    verified: 0,
-    unreadMessages: false,
-    unreadGroups: []
-}, action) => {
-    if (action.type === 'GET_GROUPS') {
+const reducer = (
+    state = {
+        error: {},
+        alias: '',
+        userId: 0,
+        loggedIn: false,
+        verified: 0,
+        unreadMessages: false,
+        unreadGroups: []
+    },
+    action
+) => {
+    if (action.type === 'NO_ERROR') {
+        return {
+            ...state,
+            error: {}
+        }
+    }
+    if (action.type === 'LOG_OUT') {
         if (action.success) {
             return {
                 ...state,
-                groups: { ...action.data }
+                alias: '',
+                userId: 0,
+                loggedIn: false,
+                verified: 0
             }
         } else {
             return {
                 ...state,
-                groupsError: action.data
+                error: { ...action.error }
             }
         }
     }
@@ -31,10 +44,20 @@ const reducer = (state = {
         } else {
             return {
                 ...state,
-                loginError: {
-                    message: 'Wrong mail or password. Please try again.',
-                    messageRed: { color: 'red' }
-                }
+                error: { ...action.error }
+            }
+        }
+    }
+    if (action.type === 'GET_GROUPS') {
+        if (action.success) {
+            return {
+                ...state,
+                groups: { ...action.data }
+            }
+        } else {
+            return {
+                ...state,
+                error: { ...action.error }
             }
         }
     }

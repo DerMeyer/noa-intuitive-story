@@ -25,7 +25,7 @@ class Login extends Component {
             [event.target.name]: event.target.value
         });
     }
-    login = async event => {
+    login = event => {
         if (event.type !== 'click' && event.keyCode !== 13) {
             return;
         }
@@ -80,7 +80,7 @@ class Login extends Component {
     }
 }
 
-const mapStateToProps = state => state;
+const mapStateToProps = state => state.error;
 
 const ConnectedLogin = connect(mapStateToProps)(Login);
 
