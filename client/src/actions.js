@@ -56,9 +56,28 @@ export const getGroups = async () => {
     }
 }
 
-export const showNavigation = () => {
-    return {
-        type: 'LOG_IN'
+export const login = async (alias, pw) => {
+    try {
+        const resp = await axios.post('/api/login', { alias, pw });
+        if (resp.data.success) {
+            return {
+                type: 'LOG_IN',
+                success: true,
+                data: { ...resp.data }
+            }
+        } else {
+            return {
+                type: 'LOG_IN',
+                success: false
+            }
+        }
+    } catch (err) {
+        console.log(err);
+        return {
+            type: 'LOG_IN',
+            success: false,
+            data: `Something went wrong. The server didn't respond.`
+        }
     }
 }
 

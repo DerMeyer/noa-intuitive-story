@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import './login.css';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import axios from './axios';
+
+import { login } from './actions';
 
 class Login extends Component {
     constructor(props) {
@@ -16,7 +19,6 @@ class Login extends Component {
         this.firstInput = React.createRef();
     }
     componentDidMount() {
-        this.checkLogin();
         this.firstInput.current.focus();
     }
     async checkLogin() {
@@ -46,23 +48,7 @@ class Login extends Component {
         });
         if (this.state.alias && !this.state.aliasRed.color && this.state.pw) {
             const { alias, pw } = this.state;
-            try {
-                const resp = await axios.post('/api/login', { alias, pw });
-                if (resp.data.success) {
-                    this.setState({ message: `You're now logged in.` });
-                } else {
-                    this.setState({
-                        message: 'Wrong mail or password. Please try again.',
-                        messageRed: { color: 'red' }
-                    });
-                }
-            } catch (err) {
-                console.log(err);
-                this.setState({
-                    message: `Something went wrong. The server didn't respond.`,
-                    messageRed: { color: 'red' }
-                });
-            }
+            this.props.dispatch(login(alias, pw));
         } else {
             this.state.alias || this.setState({
                 alias: 'Please enter a user name',
@@ -73,7 +59,6 @@ class Login extends Component {
                 messageRed: { color: 'red' }
             });
         }
-        this.checkLogin();
     }
     emptyField = event => {
         this.setState({
@@ -107,4 +92,8 @@ class Login extends Component {
     }
 }
 
-export default Login;
+const mapStateToProps = state => state;
+
+const ConnectedLogin = connect(mapStateToProps)(Login);
+
+export default ConnectedLogin;

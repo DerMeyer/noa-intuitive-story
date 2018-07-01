@@ -76,7 +76,7 @@ app.post('/api/login', async (req, res) => {
             };
             res.json({
                 success: true,
-                alias: req.body.alias
+                alias: req.session.user
             });
         } else {
             res.json({
