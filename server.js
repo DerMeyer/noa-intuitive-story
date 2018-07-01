@@ -57,12 +57,6 @@ app.get('/api/logout', (req, res) => {
     });
 });
 
-app.get('/api/check_login', (req, res) => {
-    res.json({
-        success: !!req.session.user
-    });
-});
-
 app.post('/api/login', async (req, res) => {
     try {
         const result = await login(req.body.alias);
@@ -76,7 +70,7 @@ app.post('/api/login', async (req, res) => {
             };
             res.json({
                 success: true,
-                alias: req.session.user
+                user: { ...req.session.user }
             });
         } else {
             res.json({
@@ -106,7 +100,7 @@ app.post('/api/register', async (req, res) => {
         req.session.user = result.rows[0];
         res.json({
             success: true,
-            alias: result.rows[0].alias
+            user: { ...req.session.user }
         });
     } catch (err) {
         console.log(err);

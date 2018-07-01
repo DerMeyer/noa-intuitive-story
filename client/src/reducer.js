@@ -2,7 +2,7 @@ const reducer = (state = {
     alias: '',
     userId: 0,
     loggedIn: false,
-    verified: false,
+    verified: 0,
     unreadMessages: false,
     unreadGroups: []
 }, action) => {
@@ -21,7 +21,6 @@ const reducer = (state = {
     }
     if (action.type === 'LOG_IN') {
         if (action.success) {
-            console.log('hi');
             return {
                 ...state,
                 alias: action.data.alias,

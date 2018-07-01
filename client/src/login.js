@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './login.css';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import axios from './axios';
 
 import { login } from './actions';
 
@@ -20,17 +19,6 @@ class Login extends Component {
     }
     componentDidMount() {
         this.firstInput.current.focus();
-    }
-    async checkLogin() {
-        try {
-            const resp = await axios.get('/api/check_login');
-            if (resp.data.success) {
-                window.location.replace('/');
-            }
-        } catch (err) {
-            console.log(err);
-            this.setState({ loginStatus: 'Login check failed' });
-        }
     }
     compileData = event => {
         this.setState({

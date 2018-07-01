@@ -11,8 +11,6 @@ import Login from './login';
 import Register from './register';
 import Admin from './admin';
 
-import { getGroups } from './actions';
-
 class App extends Component {
     constructor(props) {
         super(props);
@@ -22,7 +20,6 @@ class App extends Component {
     }
     componentDidMount() {
         this.serverSaysHi();
-        this.props.dispatch(getGroups());
     }
     serverSaysHi = async () => {
         try {

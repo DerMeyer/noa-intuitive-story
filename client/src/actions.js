@@ -60,10 +60,11 @@ export const login = async (alias, pw) => {
     try {
         const resp = await axios.post('/api/login', { alias, pw });
         if (resp.data.success) {
+            console.log(resp.data);
             return {
                 type: 'LOG_IN',
                 success: true,
-                data: { ...resp.data }
+                data: { ...resp.data.user }
             }
         } else {
             return {

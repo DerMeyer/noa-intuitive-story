@@ -5,6 +5,8 @@ import Architypes from './architypes';
 import Group from './group';
 import History from './history';
 
+import { getGroups } from './actions';
+
 class Timeline extends Component {
     constructor(props) {
         super(props);
@@ -54,6 +56,7 @@ class Timeline extends Component {
         window.scroll(0, window.innerHeight);
         // Polling for Scroll
         this.setTimelineLeft();
+        this.props.dispatch(getGroups());
     }
     componentDidUpdate() {
         this.scrollFactor = ((window.innerHeight * this.timelineImageQuotient) - window.innerWidth) / (2 * window.innerHeight);
