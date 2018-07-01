@@ -16,6 +16,4 @@ INSERT INTO souls (user_id, group_id, soul, story) VALUES (6, 1, 'gul', 'User st
 
 INSERT INTO souls (user_id, group_id, soul, story) VALUES (2, 2, 'bezrechu', 'User story one.');
 INSERT INTO souls (user_id, group_id, soul, story) VALUES (3, 2, 'vermel', 'User story two.');
-INSERT INTO souls (user_id, group_id, soul, story) VALUES (4, 2, 'grun', 'User story three.');
-INSERT INTO souls (user_id, group_id, soul, story) VALUES (5, 2, 'sagol', 'User story four.');
 INSERT INTO souls (user_id, group_id, soul, story) VALUES (6, 2, 'gul', 'User story five.');
