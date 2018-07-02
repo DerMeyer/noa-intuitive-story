@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import './login.css';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import axios from './axios';
+
+import { register, noMessage } from './actions';
 
 class Register extends Component {
     constructor(props) {
@@ -28,6 +31,9 @@ class Register extends Component {
     componentDidMount() {
         this.firstInput.current.focus();
     }
+    componentWillUnmount() {
+        this.props.dispatch(noMessage());
+    }
     compileData = event => {
         this.setState({
             [event.target.name]: event.target.value
@@ -38,6 +44,7 @@ class Register extends Component {
             return;
         }
         event.preventDefault();
+        this.props.dispatch(noMessage());
         this.setState({
             message: 'Please register for the Intuitive Story.',
             messageRed: {}
@@ -52,23 +59,7 @@ class Register extends Component {
             && this.state.pw === this.state.repeat
         ) {
             const { first, last, alias, mail, phone, pw } = this.state;
-            try {
-                const resp = await axios.post('/api/register', { first, last, alias, mail, phone, pw });
-                if (resp.data.success) {
-                    this.setState({ message: `Hello ${resp.data.alias}, you're now registered.` });
-                } else {
-                    this.setState({
-                        message: 'That user name or mail already exists.',
-                        messageRed: { color: 'red' }
-                    });
-                }
-            } catch (err) {
-                console.log(err);
-                this.setState({
-                    message: `Something went wrong. The server didn't respond.`,
-                    messageRed: { color: 'red' }
-                });
-            }
+            this.props.dispatch(register(first, last, alias, mail, phone, pw));
         } else {
             this.state.first || this.setErrorMessage('first', 'first name');
             this.state.last || this.setErrorMessage('last', 'last name');
@@ -110,9 +101,12 @@ class Register extends Component {
         }
     }
     render() {
+        if (this.props.loggedIn) {
+            window.location.replace('/');
+        }
         return (
             <section className="login_component_frame">
-                <h1 style={this.state.messageRed}>{this.state.message}</h1>
+                <h1 style={this.props.message.registerColor || this.state.messageRed}>{this.props.message.registerText || this.state.message}</h1>
                 <h3>( All fields are required )</h3>
                 <input
                     ref={this.firstInput}
@@ -141,4 +135,11 @@ class Register extends Component {
     }
 }
 
-export default Register;
+const mapStateToProps = state => ({
+    message: state.message,
+    loggedIn: state.loggedIn
+});
+
+const ConnectedRegister = connect(mapStateToProps)(Register);
+
+export default ConnectedRegister;

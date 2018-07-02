@@ -19,7 +19,10 @@ class Profile extends Component {
     }
 }
 
-const mapStateToProps = state => state;
+const mapStateToProps = state => ({
+    ...state.user,
+    loggedIn: state.loggedIn
+});
 
 const ConnectedProfile = connect(mapStateToProps)(Profile);
 

@@ -3,7 +3,7 @@ import './login.css';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { login } from './actions';
+import { login, noMessage } from './actions';
 
 class Login extends Component {
     constructor(props) {
@@ -20,6 +20,9 @@ class Login extends Component {
     componentDidMount() {
         this.firstInput.current.focus();
     }
+    componentWillUnmount() {
+        this.props.dispatch(noMessage());
+    }
     compileData = event => {
         this.setState({
             [event.target.name]: event.target.value
@@ -30,6 +33,7 @@ class Login extends Component {
             return;
         }
         event.preventDefault();
+        this.props.dispatch(noMessage());
         this.setState({
             message: 'Please log in to the Intuitive Story.',
             messageRed: {}
@@ -58,9 +62,12 @@ class Login extends Component {
         this.setState({ message: `We're working to send you a new password.` });
     }
     render() {
+        if (this.props.loggedIn) {
+            window.location.replace('/');
+        }
         return (
             <section className="login_component_frame">
-                <h1 style={this.state.messageRed}>{this.state.message}</h1>
+                <h1 style={this.props.message.loginColor || this.state.messageRed}>{this.props.message.loginText || this.state.message}</h1>
                 <input
                     ref={this.firstInput}
                     style={this.state.aliasRed}
@@ -80,7 +87,10 @@ class Login extends Component {
     }
 }
 
-const mapStateToProps = state => state.error;
+const mapStateToProps = state => ({
+    message: state.message,
+    loggedIn: state.loggedIn
+});
 
 const ConnectedLogin = connect(mapStateToProps)(Login);
 

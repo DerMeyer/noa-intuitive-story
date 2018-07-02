@@ -1,23 +1,21 @@
 import axios from './axios';
 
-export const noError = () => ({ type: 'NO_ERROR' });
+export const noMessage = () => ({ type: 'NO_MESSAGE' });
 
 export const logout = async () => {
     try {
         const resp = await axios.get('/api/logout');
         if (resp.data.success) {
             return {
-                type: 'LOG_OUT',
-                success: true
+                type: 'LOG_OUT'
             };
         }
     } catch (err) {
         console.log(err);
         return {
-            type: 'LOG_OUT',
-            success: false,
-            error: {
-                message: `The server didn't respond.`
+            type: 'SET_MESSAGE',
+            message: {
+                text: `The server didn't respond.`
             }
         };
     }
@@ -29,15 +27,22 @@ export const checkLogin = async () => {
         if (resp.data.success) {
             return {
                 type: 'LOG_IN',
-                success: true,
                 data: { ...resp.data.user }
             };
         } else {
-            return {};
+            return {
+                type: 'LOG_OUT'
+            };
         }
     } catch (err) {
         console.log(err);
-        return {};
+        return {
+            type: 'SET_MESSAGE',
+            message: {
+                text: `The server didn't respond to show if you're logged in.`,
+                color: { color: 'red' }
+            }
+        };
     }
 }
 
@@ -47,31 +52,57 @@ export const login = async (alias, pw) => {
         if (resp.data.success) {
             return {
                 type: 'LOG_IN',
-                success: true,
                 data: { ...resp.data.user }
             };
         } else {
             return {
-                type: 'LOG_IN',
-                success: false,
-                error: {
-                    message: 'Wrong mail or password. Please try again.',
-                    messageRed: { color: 'red' }
+                type: 'SET_MESSAGE',
+                message: {
+                    loginText: 'Wrong mail or password. Please try again.',
+                    loginColor: { color: 'red' }
                 }
             };
         }
     } catch (err) {
         console.log(err);
         return {
-            type: 'LOG_IN',
-            success: false,
-            error: {
-                message: `The server didn't respond.`,
-                messageRed: { color: 'red' }
+            type: 'SET_MESSAGE',
+            message: {
+                text: `The server didn't respond.`,
+                color: { color: 'red' }
             }
         };
     }
 }
+
+export const register = async (first, last, alias, mail, phone, pw) => {
+    try {
+        const resp = await axios.post('/api/register', { first, last, alias, mail, phone, pw });
+        if (resp.data.success) {
+            return {
+                type: 'LOG_IN',
+                data: { ...resp.data.user }
+            };
+        } else {
+            return {
+                type: 'SET_MESSAGE',
+                message: {
+                    registerText: 'That user name or mail already exists.',
+                    registerColor: { color: 'red' }
+                }
+            };
+        }
+    } catch (err) {
+        console.log(err);
+        return {
+            type: 'SET_MESSAGE',
+            message: {
+                text: `The server didn't respond.`,
+                color: { color: 'red' }
+            }
+        };
+    }
+};
 
 export const getGroups = async () => {
     try {
@@ -109,25 +140,22 @@ export const getGroups = async () => {
             });
             return {
                 type: 'GET_GROUPS',
-                success: true,
                 data: groups
             };
         } else {
             return {
-                type: 'GET_GROUPS',
-                success: false,
-                error: {
-                    message: `The server didn't send any group data.`
+                type: 'SET_MESSAGE',
+                message: {
+                    text: `The server didn't send any group data.`
                 }
             };
         }
     } catch (err) {
         console.log(err);
         return {
-            type: 'GET_GROUPS',
-            success: false,
-            error: {
-                message: `The server didn't respond.`
+            type: 'SET_MESSAGE',
+            message: {
+                text: `The server didn't respond to show data on groups.`
             }
         };
     }

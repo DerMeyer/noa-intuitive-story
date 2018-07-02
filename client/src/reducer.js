@@ -1,65 +1,56 @@
 const reducer = (
     state = {
-        error: {},
-        alias: '',
-        userId: 0,
+        message: {},
         loggedIn: false,
-        verified: 0,
-        unreadMessages: false,
-        unreadGroups: []
+        user: {
+            alias: '',
+            userId: 0,
+            verified: 0,
+            unreadMessages: false,
+            unreadGroups: []
+        }
     },
     action
 ) => {
-    if (action.type === 'NO_ERROR') {
+    if (action.type === 'NO_MESSAGE') {
         return {
             ...state,
-            error: {}
-        }
+            message: {}
+        };
+    }
+    if (action.type === 'SET_MESSAGE') {
+        return {
+            ...state,
+            message: { ...action.message }
+        };
     }
     if (action.type === 'LOG_OUT') {
-        if (action.success) {
-            return {
-                ...state,
+        return {
+            ...state,
+            loggedIn: false,
+            user: {
                 alias: '',
                 userId: 0,
-                loggedIn: false,
-                verified: 0
+                verified: 0,
+                unreadMessages: false,
+                unreadGroups: []
             }
-        } else {
-            return {
-                ...state,
-                error: { ...action.error }
-            }
-        }
+        };
     }
     if (action.type === 'LOG_IN') {
-        if (action.success) {
-            return {
-                ...state,
-                alias: action.data.alias,
-                userId: action.data.id,
-                loggedIn: true,
-                verified: action.data.verified,
+        return {
+            ...state,
+            loggedIn: true,
+            user: {
+                ...action.data
             }
-        } else {
-            return {
-                ...state,
-                error: { ...action.error }
-            }
-        }
+        };
     }
     if (action.type === 'GET_GROUPS') {
-        if (action.success) {
-            return {
-                ...state,
-                groups: { ...action.data }
-            }
-        } else {
-            return {
-                ...state,
-                error: { ...action.error }
-            }
-        }
+        return {
+            ...state,
+            groups: { ...action.data }
+        };
     }
     return state;
 }

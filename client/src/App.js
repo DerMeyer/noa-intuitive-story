@@ -60,8 +60,8 @@ class App extends Component {
                     <Route path="/avira" component={Admin} />
                     <Footer />
                     <Link to="/login" className="logo">
-                        <p className="server_greeting">
-                            {this.state.server_message}
+                        <p style={this.props.messageColor} className="server_greeting">
+                            {this.props.message || this.state.server_message}
                         </p>
                     </Link>
                 </main>
@@ -70,7 +70,10 @@ class App extends Component {
     }
 }
 
-const mapStateToProps = state => state;
+const mapStateToProps = state => ({
+    ...state.error,
+    loggedIn: state.loggedIn
+});
 
 const ConnectedApp = connect(mapStateToProps)(App);
 
