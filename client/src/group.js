@@ -2,11 +2,10 @@ import React from 'react';
 
 const group = props => {
     console.log(props);
-    const randomY = 10 + (Math.random() * 12);
     const style = {
         container: {
             position: 'absolute',
-            top: `${randomY}vh`,
+            top: `${props.randomY}vh`,
             left: `${props.left}px`,
             display: 'grid',
             gridTemplate: '1fr 1fr 1fr 1fr 1fr / 1fr 1fr 3.2fr',
@@ -38,7 +37,7 @@ const group = props => {
             position: 'absolute',
             top: '15vh',
             left: '7.5vh',
-            height: `${26 - randomY}vh`,
+            height: `${26 - props.randomY}vh`,
             width: '.2vh',
             backgroundColor: 'rgb(120, 120, 120)'
         },

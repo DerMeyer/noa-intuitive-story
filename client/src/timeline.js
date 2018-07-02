@@ -116,6 +116,22 @@ class Timeline extends Component {
         this.previousLeft = left;
         return delta;
     };
+    createGroupsForRender = () => {
+        if (!this.props.groups || this.state.groups) {
+            return this.state.groups;
+        }
+        this.setState({
+            groups: Object.keys(this.props.groups).map(groupID => {
+                const { name, time_period, gul, grun, vermel, bezrechu, sagol } = this.props.groups[groupID];
+                const groupProps = {
+                    name, time_period, gul, grun, vermel, bezrechu, sagol,
+                    left: this.mapTimelineToPosition(time_period),
+                    randomY: 10 + (Math.random() * 12)
+                }
+                return (<Group key={groupID} { ...groupProps } />)
+            })
+        });
+    }
     mapPositionToTimeline = event => {
         const currentTimelineScale = 2980 / (window.innerHeight * this.timelineImageQuotient);
         const timelineX = (event.pageX - this.timelineSled.current.offsetLeft) * currentTimelineScale;
@@ -159,14 +175,7 @@ class Timeline extends Component {
                         >
                         <img style={this.style.timeline} src="/images/timeline.png" alt="Timeline" />
                         <Architypes />
-                        {this.props.groups && Object.keys(this.props.groups).map(groupID => {
-                            const { name, time_period, gul, grun, vermel, bezrechu, sagol } = this.props.groups[groupID];
-                            const groupProps = {
-                                name, time_period, gul, grun, vermel, bezrechu, sagol,
-                                left: this.mapTimelineToPosition(time_period)
-                            }
-                            return (<Group key={groupID} { ...groupProps } />)
-                        })}
+                        {this.createGroupsForRender()}
                         <History />
                     </section>
                 </section>
