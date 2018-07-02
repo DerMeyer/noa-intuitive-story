@@ -12,7 +12,7 @@ const reducer = (
     },
     action
 ) => {
-    if (action.type === 'NO_MESSAGE') {
+    if (action.type === 'DELETE_MESSAGE') {
         return {
             ...state,
             message: {}
@@ -34,7 +34,8 @@ const reducer = (
                 verified: 0,
                 unreadMessages: false,
                 unreadGroups: []
-            }
+            },
+            message: { ...action.message }
         };
     }
     if (action.type === 'LOG_IN') {

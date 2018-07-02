@@ -1,6 +1,15 @@
 import axios from './axios';
 
-export const noMessage = () => ({ type: 'NO_MESSAGE' });
+export const deleteMessage = () => ({ type: 'DELETE_MESSAGE' });
+
+export const setMessage = (text, color, time) => ({
+    type: 'SET_MESSAGE',
+    message: {
+        text,
+        color: { color },
+        time
+    }
+});
 
 export const logout = async () => {
     try {

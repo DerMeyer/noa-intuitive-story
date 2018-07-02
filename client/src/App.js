@@ -12,7 +12,7 @@ import Login from './login';
 import Register from './register';
 import Admin from './admin';
 
-import { checkLogin } from './actions';
+import { checkLogin, deleteMessage } from './actions';
 
 class App extends Component {
     constructor(props) {
@@ -24,6 +24,9 @@ class App extends Component {
     componentDidMount() {
         this.props.dispatch(checkLogin());
         this.serverSaysHi();
+    }
+    componentDidUpdate() {
+        this.props.message.text && this.showMessage();
     }
     serverSaysHi = async () => {
         try {
@@ -44,6 +47,11 @@ class App extends Component {
             });
         }
     }
+    showMessage() {
+        setTimeout(() => {
+            this.props.dispatch(deleteMessage());
+        }, 4000);
+    }
     render() {
         return (
             <BrowserRouter>
@@ -59,11 +67,9 @@ class App extends Component {
                     <Route path="/register" component={Register} />
                     <Route path="/avira" component={Admin} />
                     <Footer />
-                    <Link to="/login" className="logo">
-                        <p style={this.props.messageColor} className="server_greeting">
-                            {this.props.message || this.state.server_message}
-                        </p>
-                    </Link>
+                    <p style={this.props.message.color} className="server_greeting">
+                        {this.props.message.text || this.state.server_message}
+                    </p>
                 </main>
             </BrowserRouter>
         );
@@ -71,7 +77,7 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-    ...state.error,
+    message: state.message,
     loggedIn: state.loggedIn
 });
 

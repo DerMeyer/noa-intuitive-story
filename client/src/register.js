@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import axios from './axios';
 
-import { register, noMessage } from './actions';
+import { register, deleteMessage } from './actions';
 
 class Register extends Component {
     constructor(props) {
@@ -32,7 +32,7 @@ class Register extends Component {
         this.firstInput.current.focus();
     }
     componentWillUnmount() {
-        this.props.dispatch(noMessage());
+        this.props.dispatch(deleteMessage());
     }
     compileData = event => {
         this.setState({
@@ -44,7 +44,7 @@ class Register extends Component {
             return;
         }
         event.preventDefault();
-        this.props.dispatch(noMessage());
+        this.props.dispatch(deleteMessage());
         this.setState({
             message: 'Please register for the Intuitive Story.',
             messageRed: {}

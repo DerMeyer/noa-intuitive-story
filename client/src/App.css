@@ -11,8 +11,8 @@ main {
 .server_greeting {
     cursor: pointer;
     position: fixed;
-    top: 94vh;
-    left: 39vw;
+    top: 3vh;
+    left: 50vw;
     font-size: 2vh;
     color: whitesmoke;
     z-index: 150;
@@ -57,7 +57,29 @@ nav .button {
 .profile_menu {
     position: fixed;
     top: 2.5vh;
-    left: 93vw;
+    left: 85vw;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 17vw;
+}
+
+.profile_menu div {
+    justify-self: center;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.profile_menu p {
+    cursor: pointer;
+    font-size: 2vh;
+    margin: 0;
+    color: whitesmoke;
+}
+
+.profile_menu p:hover {
+    color: darkgray;
 }
 
 .profile_menu img {

@@ -3,7 +3,7 @@ import './login.css';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { login, noMessage } from './actions';
+import { login, deleteMessage } from './actions';
 
 class Login extends Component {
     constructor(props) {
@@ -21,7 +21,7 @@ class Login extends Component {
         this.firstInput.current.focus();
     }
     componentWillUnmount() {
-        this.props.dispatch(noMessage());
+        this.props.dispatch(deleteMessage());
     }
     compileData = event => {
         this.setState({
@@ -33,7 +33,7 @@ class Login extends Component {
             return;
         }
         event.preventDefault();
-        this.props.dispatch(noMessage());
+        this.props.dispatch(deleteMessage());
         this.setState({
             message: 'Please log in to the Intuitive Story.',
             messageRed: {}
