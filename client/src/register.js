@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './login.css';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import axios from './axios';
 
 import { register, deleteMessage } from './actions';
 

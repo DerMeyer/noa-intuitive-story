@@ -2,12 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { logout, setMessage } from './actions';
+import { logout } from './actions';
 
 class Profile extends Component {
-    constructor(props) {
-        super(props);
-    }
     logout = () => {
         this.props.dispatch(logout());
         window.location.replace('/');

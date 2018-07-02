@@ -44,8 +44,8 @@ INSERT INTO groups (
     bezrechu_user_id,
     sagol_user_id
 ) VALUES (
-    'Florence',
-    1592,
+    'Spain',
+    1201,
     'This is the first group story to come out of Noas database.',
     2,
     3,

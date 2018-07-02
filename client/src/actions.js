@@ -40,7 +40,10 @@ export const checkLogin = async () => {
             };
         } else {
             return {
-                type: 'LOG_OUT'
+                type: 'SET_MESSAGE',
+                message: {
+                    text: `You're logged out.`
+                }
             };
         }
     } catch (err) {

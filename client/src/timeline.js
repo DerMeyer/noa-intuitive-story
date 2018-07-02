@@ -15,6 +15,12 @@ class Timeline extends Component {
             timelineLeft: ((window.innerHeight * this.timelineImageQuotient) - window.innerWidth) / 2
         };
         this.style = {
+            test: {
+                position: 'fixed',
+                top: '30vh',
+                left: '30vw',
+                zIndex: '6543'
+            },
             expander: {
                 height: '300vh'
             },
@@ -66,10 +72,12 @@ class Timeline extends Component {
         // window.removeEventListener('scroll', this.setTimelineLeft);
     }
     setTimelineLeft = () => {
-        this.setState({
-            timelineLeft: window.scrollY * this.scrollFactor
-        });
         // Polling for Scroll
+        if (this.state.timelineLeft !== window.scrollY * this.scrollFactor) {
+            this.setState({
+                timelineLeft: window.scrollY * this.scrollFactor
+            });
+        }
         if (!this.isDragging) {
             setTimeout(() => {
                 this.setTimelineLeft();
@@ -113,7 +121,7 @@ class Timeline extends Component {
         this.previousLeft = left;
         return delta;
     };
-    mapPixelToTimeline = event => {
+    mapPositionToTimeline = event => {
         const currentTimelineScale = 2980 / (window.innerHeight * this.timelineImageQuotient);
         const timelineX = (event.pageX - this.timelineSled.current.offsetLeft) * currentTimelineScale;
         let timelineSection;
@@ -125,8 +133,20 @@ class Timeline extends Component {
             }
         });
         const exactYear = Math.floor(timelineSection[0][1] + ((timelineSection[1][1] - timelineSection[0][1]) * ((timelineSection[0][0] - timelineX) / (timelineSection[0][0] - timelineSection[1][0]))));
-        console.log(exactYear);
         return exactYear;
+    }
+    mapTimelineToPosition = year => {
+        const currentTimelineScale = (window.innerHeight * this.timelineImageQuotient) / 2980;
+        let timelineSection;
+        this.timelineMap.forEach((v, i, a) => {
+            if (a[i + 1]) {
+                if (v[1] < year && a[i + 1][1] > year) {
+                    timelineSection = [ v, a[i + 1] ];
+                }
+            }
+        });
+        const exactPosition = (timelineSection[0][0] + ((timelineSection[1][0] - timelineSection[0][0]) * ((year - timelineSection[0][1]) / (timelineSection[1][1] - timelineSection[0][1])))) * currentTimelineScale;
+        return exactPosition;
     }
     render() {
         return (
@@ -139,11 +159,18 @@ class Timeline extends Component {
                         onMouseMove={this.onMove}
                         onMouseUp={this.onUp}
                         onMouseLeave={this.onUp}
-                        onClick={this.mapPixelToTimeline}
+                        onClick={this.mapPositionToTimeline}
                         >
                         <img style={this.style.timeline} src="/images/timeline.png" alt="Timeline" />
                         <Architypes />
-                        <Group />
+                        {this.props.groups && Object.keys(this.props.groups).map(groupID => {
+                            const { name, time_period, gul, grun, vermel, bezrechu, sagol } = this.props.groups[groupID];
+                            const groupProps = {
+                                name, time_period, gul, grun, vermel, bezrechu, sagol,
+                                left: this.mapTimelineToPosition(time_period)
+                            }
+                            return (<Group key={groupID} { ...groupProps } />)
+                        })}
                         <History />
                     </section>
                 </section>
@@ -152,7 +179,10 @@ class Timeline extends Component {
     }
 }
 
-const mapStateToProps = state => state;
+const mapStateToProps = state => ({
+    groups: state.groups,
+    loggedIn: state.loggedIn
+});
 
 const ConnectedTimeline = connect(mapStateToProps)(Timeline);
 
