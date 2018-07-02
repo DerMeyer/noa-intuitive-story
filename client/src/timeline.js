@@ -61,8 +61,10 @@ class Timeline extends Component {
     }
     componentDidUpdate() {
         this.scrollFactor = ((window.innerHeight * this.timelineImageQuotient) - window.innerWidth) / (2 * window.innerHeight);
+        this.createGroupsForRender();
     }
     componentWillUnmount() {
+        clearTimeout(this.setTimeoutID);
         // Polling for Scroll
         // window.removeEventListener('scroll', this.setTimelineLeft);
     }
@@ -74,7 +76,7 @@ class Timeline extends Component {
             });
         }
         if (!this.isDragging) {
-            setTimeout(() => {
+            this.setTimeoutID = setTimeout(() => {
                 this.setTimelineLeft();
             }, 30);
         }
@@ -125,10 +127,13 @@ class Timeline extends Component {
                 const { name, time_period, gul, grun, vermel, bezrechu, sagol } = this.props.groups[groupID];
                 const groupProps = {
                     name, time_period, gul, grun, vermel, bezrechu, sagol,
+                    id: groupID,
                     left: this.mapTimelineToPosition(time_period),
                     randomY: 10 + (Math.random() * 12)
                 }
-                return (<Group key={groupID} { ...groupProps } />)
+                return (
+                    <Group key={groupID} { ...groupProps } />
+                )
             })
         });
     }
@@ -175,7 +180,7 @@ class Timeline extends Component {
                         >
                         <img style={this.style.timeline} src="/images/timeline.png" alt="Timeline" />
                         <Architypes />
-                        {this.createGroupsForRender()}
+                        {this.state.groups}
                         <History />
                     </section>
                 </section>

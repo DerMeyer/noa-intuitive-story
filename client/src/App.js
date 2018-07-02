@@ -7,7 +7,7 @@ import axios from './axios';
 import { ConnectedNavigation, Footer } from './navigation';
 import Profile from './profile';
 import Timeline from './timeline';
-import GroupComponent from './group-component';
+import GroupPage from './group-page';
 import Login from './login';
 import Register from './register';
 import Admin from './admin';
@@ -57,12 +57,14 @@ class App extends Component {
             <BrowserRouter>
                 <main>
                     <Link to="/" className="logo">
-                        <img src="images/logo.png" alt="Galaxy Logo"/>
+                        <img src="/images/logo.png" alt="Galaxy Logo"/>
                     </Link>
                     <Route exact path="/" component={ConnectedNavigation} />
                     <Route exact path="/" component={Profile} />
                     <Route exact path="/" component={Timeline} />
-                    <Route path="/group" component={GroupComponent} />
+                    <Route path="/group/:id" render={props => (
+                            <GroupPage match={props.match} />
+                        )} />
                     <Route path="/login" component={Login} />
                     <Route path="/register" component={Register} />
                     <Route path="/avira" component={Admin} />

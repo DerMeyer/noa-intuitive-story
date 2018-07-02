@@ -1,7 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const group = props => {
-    console.log(props);
     const style = {
         container: {
             position: 'absolute',
@@ -9,6 +9,7 @@ const group = props => {
             left: `${props.left}px`,
             display: 'grid',
             gridTemplate: '1fr 1fr 1fr 1fr 1fr / 1fr 1fr 3.2fr',
+            textDecoration: 'none',
             height: '15vh',
             width: '15vh',
             transform: 'translatex(-50%)'
@@ -73,7 +74,7 @@ const group = props => {
         }
     };
     return (
-        <section style={style.container}>
+        <Link to={`/group/${props.id}`} style={style.container}>
             <p style={style.headline} >{`${props.name} ${props.time_period}`}</p>
             <img style={style.tableImage} src="/images/box_s.png" alt="Group Box" />
             <div style={style.arrow}></div>
@@ -142,7 +143,7 @@ const group = props => {
                 <p style={style.alias}>{props.sagol.alias}</p>
             </div>
             : <div></div>}
-        </section>
+        </Link>
     )
 };
 

@@ -1,16 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import './group-component.css';
+import './group-page.css';
 
-class GroupComponent extends Component {
+import Group from './group';
+
+class GroupPage extends Component {
     constructor(props) {
         super(props);
         this.state = {};
     }
     render() {
+        console.log(this.props.match.params);
         return (
             <section className="group_component_frame">
-                <section className="group_container"></section>
+                <section className="group_container">
+                    <Group />
+                </section>
                 <section className="info_container">
                     <h1>Everything has and end, only the sausage has two.</h1>
                 </section>
@@ -22,6 +27,6 @@ class GroupComponent extends Component {
 
 const mapStateToProps = state => state;
 
-const ConnectedGroupComponent = connect(mapStateToProps)(GroupComponent);
+const ConnectedGroupPage = connect(mapStateToProps)(GroupPage);
 
-export default ConnectedGroupComponent;
+export default ConnectedGroupPage;

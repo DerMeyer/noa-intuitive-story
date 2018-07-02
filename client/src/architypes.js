@@ -30,12 +30,15 @@ class Architypes extends Component {
     componentDidMount() {
         this.animateSouls();
     }
+    componentWillUnmount() {
+        clearTimeout(this.setTimeoutID);
+    }
     animateSouls() {
         this.setState({
             soulsX: this.state.soulsX.map((x, i) => this.getTranslateX(this.state.soulsX[i], this.state.soulsX[i - 1], this.state.soulsX[i + 1])),
             soulsY: this.state.soulsY.map(y => this.getTranslateY())
         });
-        setTimeout(() => {
+        this.setTimeoutID = setTimeout(() => {
             this.animateSouls();
         }, 200);
     }
