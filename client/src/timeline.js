@@ -15,12 +15,6 @@ class Timeline extends Component {
             timelineLeft: ((window.innerHeight * this.timelineImageQuotient) - window.innerWidth) / 2
         };
         this.style = {
-            test: {
-                position: 'fixed',
-                top: '30vh',
-                left: '30vw',
-                zIndex: '6543'
-            },
             expander: {
                 height: '300vh'
             },
@@ -40,7 +34,8 @@ class Timeline extends Component {
                 height: '82vh'
             },
             timeline: {
-                height: '82vh'
+                height: '82vh',
+                transform: 'scaleX(1.028)'
             }
         };
         this.timelineMap = [
@@ -133,6 +128,7 @@ class Timeline extends Component {
             }
         });
         const exactYear = Math.floor(timelineSection[0][1] + ((timelineSection[1][1] - timelineSection[0][1]) * ((timelineSection[0][0] - timelineX) / (timelineSection[0][0] - timelineSection[1][0]))));
+        console.log(exactYear);
         return exactYear;
     }
     mapTimelineToPosition = year => {

@@ -2,15 +2,17 @@ import React from 'react';
 
 const group = props => {
     console.log(props);
+    const randomY = 10 + (Math.random() * 12);
     const style = {
         container: {
             position: 'absolute',
-            top: '10vh',
+            top: `${randomY}vh`,
             left: `${props.left}px`,
             display: 'grid',
             gridTemplate: '1fr 1fr 1fr 1fr 1fr / 1fr 1fr 3.2fr',
             height: '15vh',
-            width: '15vh'
+            width: '15vh',
+            transform: 'translatex(-50%)'
         },
         headline: {
             position: 'absolute',
@@ -31,6 +33,14 @@ const group = props => {
             left: '-.5vh',
             height: '16vh',
             transform: 'rotate(.001turn)'
+        },
+        arrow: {
+            position: 'absolute',
+            top: '15vh',
+            left: '7.5vh',
+            height: `${26 - randomY}vh`,
+            width: '.2vh',
+            backgroundColor: 'rgb(120, 120, 120)'
         },
         colorContainer: {
             justifySelf: 'center',
@@ -65,8 +75,9 @@ const group = props => {
     };
     return (
         <section style={style.container}>
-            <p style={style.headline} >Florence 1592</p>
+            <p style={style.headline} >{`${props.name} ${props.time_period}`}</p>
             <img style={style.tableImage} src="/images/box_s.png" alt="Group Box" />
+            <div style={style.arrow}></div>
             <div style={style.colorContainer}>
                 <img style={style.color} src="/images/color_gul.png" alt="Gul" />
             </div>
