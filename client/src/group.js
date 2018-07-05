@@ -74,7 +74,7 @@ const group = props => {
         }
     };
     return (
-        <Link to={`/group/${props.id}`} style={style.container}>
+        <Link to={`/group/${props.id}`} style={style.container} onClick={event => event.stopPropagation()}>
             <p style={style.headline} >{`${props.name} ${props.time_period}`}</p>
             <img style={style.tableImage} src="/images/box_s.png" alt="Group Box" />
             <div style={style.arrow}></div>

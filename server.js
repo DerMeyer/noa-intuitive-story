@@ -1,9 +1,10 @@
 const express = require('express');
 const app = express();
+const nodemailer = require('nodemailer');
 
 const { s3upload } = require('./s3');
 const { s3Url, iconUrls } = require('./config');
-const { MY_SECRET } = (process.env.NODE_ENV === 'production' && process.env) || require('./confidential.json');
+const { MY_SECRET, SMTP_USER, SMTP_PASS } = (process.env.NODE_ENV === 'production' && process.env) || require('./confidential.json');
 
 const { hashPW, checkPW, login, register, getAllGroups } = require('./db');
 
@@ -100,8 +101,10 @@ app.post('/api/login', async (req, res) => {
 
 app.post('/api/register', async (req, res) => {
     try {
+        const vCode = Math.floor(1000 + (Math.random() * 9000));
         const hashedPW = await hashPW(req.body.pw);
         const result = await register(
+            vCode,
             req.body.first,
             req.body.last,
             req.body.alias,
@@ -111,6 +114,28 @@ app.post('/api/register', async (req, res) => {
             iconUrls[0]
         );
         req.session.user = result.rows[0];
+        const transporter = nodemailer.createTransport({
+            host: 'smtp.1und1.de',
+            port: 587,
+            secure: false,
+            auth: {
+                user: SMTP_USER,
+                pass: SMTP_PASS
+            }
+        });
+        const mailOptions = {
+            from: 'admin@simonmeyer.de',
+            to: req.body.mail,
+            subject: 'Please confirm your Intuitive Story account.',
+            html: `<h2>Confirmation Code:</h2><h1>${vCode}</h1>`
+        };
+        transporter.sendMail(mailOptions, (err, info) => {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log('Message ID at register:', info.messageId);
+        }
+        });
         res.json({
             success: true,
             user: { ...req.session.user }

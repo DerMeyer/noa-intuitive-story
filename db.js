@@ -31,10 +31,10 @@ exports.login = alias =>
         'SELECT id, verified, pw FROM users WHERE alias = $1', [alias]
     );
 
-exports.register = (first, last, alias, mail, phone, pw, icon_url) =>
+exports.register = (vCode, first, last, alias, mail, phone, pw, iconUrl) =>
     db.query(
-        'INSERT INTO users (first, last, alias, mail, phone, pw, icon_url) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id, alias, verified',
-        [first, last, alias, mail, phone, pw, icon_url]
+        'INSERT INTO users (v_code, first, last, alias, mail, phone, pw, icon_url) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id, alias, verified',
+        [vCode, first, last, alias, mail, phone, pw, iconUrl]
     );
 
 exports.getAllGroups = () =>

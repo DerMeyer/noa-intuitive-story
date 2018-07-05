@@ -26,7 +26,9 @@ class App extends Component {
         this.serverSaysHi();
     }
     componentDidUpdate() {
-        this.props.message.text && this.showMessage();
+        if (!this.currentMessage && this.props.message.text) {
+            this.showMessage();
+        }
     }
     serverSaysHi = async () => {
         try {
@@ -48,7 +50,9 @@ class App extends Component {
         }
     }
     showMessage() {
+        this.currentMessage = true;
         setTimeout(() => {
+            this.currentMessage = false;
             this.props.dispatch(deleteMessage());
         }, 4000);
     }

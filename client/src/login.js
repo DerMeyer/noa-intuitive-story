@@ -20,8 +20,14 @@ class Login extends Component {
     componentDidMount() {
         this.firstInput.current.focus();
     }
+    // componentDidUpdate(prevProps) {
+    //     if (this.props.loggedIn) {
+    //         window.location.replace(`${prevProps.location.pathname}`);
+    //     }
+    // }
     componentWillUnmount() {
-        this.props.dispatch(deleteMessage());
+        this.props.message.loginText && this.props.dispatch(deleteMessage());
+        clearTimeout(this.setTimeoutID);
     }
     compileData = event => {
         this.setState({
@@ -33,14 +39,19 @@ class Login extends Component {
             return;
         }
         event.preventDefault();
-        this.props.dispatch(deleteMessage());
+        this.props.message.loginText && this.props.dispatch(deleteMessage());
         this.setState({
             message: 'Please log in to the Intuitive Story.',
             messageRed: {}
         });
         if (this.state.alias && !this.state.aliasRed.color && this.state.pw) {
             const { alias, pw } = this.state;
-            this.props.dispatch(login(alias, pw));
+            this.setTimeoutID = setTimeout(() => {
+                this.props.dispatch(login(alias, pw));
+            }, 500);
+            this.setState({
+                message: 'Please wait...'
+            });
         } else {
             this.state.alias || this.setState({
                 alias: 'Please enter a user name',

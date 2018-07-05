@@ -30,20 +30,28 @@ class Register extends Component {
     componentDidMount() {
         this.firstInput.current.focus();
     }
+    componentDidUpdate(prevProps) {
+        console.log(prevProps, this.props);
+        // this.setState({
+        //     aliasRed: { color: 'red' },
+        //     mailRed: { color: 'red' }
+        // });
+    }
     componentWillUnmount() {
-        this.props.dispatch(deleteMessage());
+        this.props.message.registerText && this.props.dispatch(deleteMessage());
+        clearTimeout(this.setTimeoutID);
     }
     compileData = event => {
         this.setState({
             [event.target.name]: event.target.value
         });
     }
-    register = async event => {
+    register = event => {
         if (event.type !== 'click' && event.keyCode !== 13) {
             return;
         }
         event.preventDefault();
-        this.props.dispatch(deleteMessage());
+        this.props.message.registerText && this.props.dispatch(deleteMessage());
         this.setState({
             message: 'Please register for the Intuitive Story.',
             messageRed: {}
@@ -58,7 +66,12 @@ class Register extends Component {
             && this.state.pw === this.state.repeat
         ) {
             const { first, last, alias, mail, phone, pw } = this.state;
-            this.props.dispatch(register(first, last, alias, mail, phone, pw));
+            this.setTimeoutID = setTimeout(() => {
+                this.props.dispatch(register(first, last, alias, mail, phone, pw));
+            }, 500);
+            this.setState({
+                message: 'Please wait...'
+            });
         } else {
             this.state.first || this.setErrorMessage('first', 'first name');
             this.state.last || this.setErrorMessage('last', 'last name');
