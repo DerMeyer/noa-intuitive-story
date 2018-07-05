@@ -153,6 +153,7 @@ app.post('/api/verify_account', async (req, res) => {
         const result = await getVCode(req.body.alias);
         if (result.rows[0].v_code == req.body.vCode) {
             const result = await verifyAccount(req.body.alias);
+            req.session.user.verified = 1;
             res.json({
                 success: true
             });

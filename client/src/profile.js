@@ -10,14 +10,13 @@ class Profile extends Component {
         window.location.replace('/');
     }
     render() {
-        console.log(this.props);
         return (
-            <section className="profile_menu">
+            <Link to={`/profile/${this.props.alias}`} className="profile_menu">
                 {this.props.loggedIn
                     ? <div>
                         {this.props.verified
                             ? <Link to="/group"><p>Hello {this.props.alias}!</p></Link>
-                            : <Link to={`/profile/${this.props.alias}`}><p>Please verify...</p></Link>}
+                            : <Link to={`/profile/${this.props.alias}`}><p>Please confirm...</p></Link>}
                         <p onClick={this.logout}>Log out</p>
                     </div>
                     : <div>
@@ -26,7 +25,7 @@ class Profile extends Component {
                     </div>
                 }
                 <img src="images/profile_menu.png" alt="User" />
-            </section>
+            </Link >
         );
     }
 }

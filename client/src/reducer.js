@@ -53,7 +53,8 @@ const reducer = (
             user: {
                 ...state.user,
                 verified: 1
-            }
+            },
+            message: { ...action.message }
         }
     }
     if (action.type === 'GET_GROUPS') {

@@ -121,7 +121,10 @@ export const verifyAccount = async (alias, vCode) => {
         const resp = await axios.post('/api/verify_account', { alias, vCode });
         if (resp.data.success) {
             return {
-                type: 'VERIFY_ACCOUNT'
+                type: 'VERIFY_ACCOUNT',
+                message: {
+                    text: 'Your account has been verified.'
+                }
             };
         } else {
             return {
