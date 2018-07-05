@@ -40,7 +40,7 @@ class GroupPage extends Component {
                 </section>
                 <section className="info_container">
                     <h1>{this.props.match.params.user}</h1>
-                    <h1>Please enter the confirmation code we sent you via mail to confirm your account.</h1>
+                    <h1>Please enter the confirmation code we sent you via mail.</h1>
                         <input
                             ref={this.firstInput}
                             name="vCode" type="text"

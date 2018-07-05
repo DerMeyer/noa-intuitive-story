@@ -11,6 +11,7 @@ import Timeline from './timeline';
 import GroupPage from './group-page';
 import Login from './login';
 import Register from './register';
+import Verify from './verify';
 import Admin from './admin';
 
 import { checkLogin, deleteMessage } from './actions';
@@ -75,6 +76,7 @@ class App extends Component {
                         )} />
                     <Route path="/login" component={Login} />
                     <Route path="/register" component={Register} />
+                    <Route path="/verify_account" component={Verify} />
                     <Route path="/avira" component={Admin} />
                     <Footer />
                     <p style={this.props.message.color} className="server_greeting">

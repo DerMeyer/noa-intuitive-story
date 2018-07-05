@@ -6,7 +6,7 @@ const { s3upload } = require('./s3');
 const { s3Url, iconUrls } = require('./config');
 const { MY_SECRET, SMTP_USER, SMTP_PASS } = (process.env.NODE_ENV === 'production' && process.env) || require('./confidential.json');
 
-const { hashPW, checkPW, login, register, getVCode, verifyAccount, getAllGroups } = require('./db');
+const { hashPW, checkPW, login, register, getVCode, setVCode, verifyAccount, getAllGroups } = require('./db');
 
 const multer = require('multer');
 const uidSafe = require('uid-safe');
@@ -99,6 +99,31 @@ app.post('/api/login', async (req, res) => {
     }
 });
 
+const sendMail = (alias, mail, vCode) => {
+    const transporter = nodemailer.createTransport({
+        host: 'smtp.1und1.de',
+        port: 587,
+        secure: false,
+        auth: {
+            user: SMTP_USER,
+            pass: SMTP_PASS
+        }
+    });
+    const mailOptions = {
+        from: 'admin@simonmeyer.de',
+        to: mail,
+        subject: 'Please confirm your Intuitive Story account.',
+        html: `<h2>Hi ${alias}, your confirmation code is:</h2><h1>${vCode}</h1>`
+    };
+    transporter.sendMail(mailOptions, (err, info) => {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log('Message ID at register:', info.messageId);
+        }
+    });
+}
+
 app.post('/api/register', async (req, res) => {
     try {
         const vCode = Math.floor(1000 + (Math.random() * 9000));
@@ -114,31 +139,26 @@ app.post('/api/register', async (req, res) => {
             iconUrls[0]
         );
         req.session.user = result.rows[0];
-        const transporter = nodemailer.createTransport({
-            host: 'smtp.1und1.de',
-            port: 587,
-            secure: false,
-            auth: {
-                user: SMTP_USER,
-                pass: SMTP_PASS
-            }
-        });
-        const mailOptions = {
-            from: 'admin@simonmeyer.de',
-            to: req.body.mail,
-            subject: 'Please confirm your Intuitive Story account.',
-            html: `<h2>Confirmation Code:</h2><h1>${vCode}</h1>`
-        };
-        transporter.sendMail(mailOptions, (err, info) => {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log('Message ID at register:', info.messageId);
-        }
-        });
+        sendMail(req.body.alias, req.body.mail, vCode);
         res.json({
             success: true,
             user: { ...req.session.user }
+        });
+    } catch (err) {
+        console.log(err);
+        res.json({
+            success: false
+        });
+    }
+});
+
+app.post('/api/new_v_code', async (req, res) => {
+    try {
+        const vCode = Math.floor(1000 + (Math.random() * 9000));
+        const result = await setVCode(vCode, req.body.alias);
+        sendMail(req.body.alias, result.rows[0].mail, vCode);
+        res.json({
+            success: true
         });
     } catch (err) {
         console.log(err);

@@ -116,6 +116,38 @@ export const register = async (first, last, alias, mail, phone, pw) => {
     }
 };
 
+export const newVCode = async alias => {
+    try {
+        const resp = await axios.post('/api/new_v_code', { alias });
+        if (resp.data.success) {
+            return {
+                type: 'SET_MESSAGE',
+                message: {
+                    verifyText: 'We sent you a new confirmation code to your e mail address.',
+                    verifyColor: {}
+                }
+            };
+        } else {
+            return {
+                type: 'SET_MESSAGE',
+                message: {
+                    verifyText: 'Sorry, something went wrong.',
+                    verifyColor: { color: 'red' }
+                }
+            };
+        }
+    } catch (err) {
+        console.log(err);
+        return {
+            type: 'SET_MESSAGE',
+            message: {
+                text: `The server didn't respond.`,
+                color: { color: 'red' }
+            }
+        };
+    }
+}
+
 export const verifyAccount = async (alias, vCode) => {
     try {
         const resp = await axios.post('/api/verify_account', { alias, vCode });
@@ -130,8 +162,8 @@ export const verifyAccount = async (alias, vCode) => {
             return {
                 type: 'SET_MESSAGE',
                 message: {
-                    text: 'You entered the wrong verification code.',
-                    color: { color: 'red' }
+                    verifyText: 'You entered a wrong verification code.',
+                    verifyColor: { color: 'red' }
                 }
             };
         }

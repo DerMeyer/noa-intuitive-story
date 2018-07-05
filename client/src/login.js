@@ -20,11 +20,13 @@ class Login extends Component {
     componentDidMount() {
         this.firstInput.current.focus();
     }
-    // componentDidUpdate(prevProps) {
-    //     if (this.props.loggedIn) {
-    //         window.location.replace(`${prevProps.location.pathname}`);
-    //     }
-    // }
+    componentDidUpdate() {
+        if (this.props.loggedIn && this.props.verified) {
+            window.location.replace('/');
+        } else if (this.props.loggedIn && !this.props.verified) {
+            window.location.replace('/verify_account');
+        }
+    }
     componentWillUnmount() {
         this.props.message.loginText && this.props.dispatch(deleteMessage());
         clearTimeout(this.setTimeoutID);
@@ -73,9 +75,6 @@ class Login extends Component {
         this.setState({ message: `We're working to send you a new password.` });
     }
     render() {
-        if (this.props.loggedIn) {
-            window.location.replace('/');
-        }
         return (
             <section className="login_component_frame">
                 <h1 style={this.props.message.loginColor || this.state.messageRed}>{this.props.message.loginText || this.state.message}</h1>
@@ -100,7 +99,8 @@ class Login extends Component {
 
 const mapStateToProps = state => ({
     message: state.message,
-    loggedIn: state.loggedIn
+    loggedIn: state.loggedIn,
+    verified: state.user.verified
 });
 
 const ConnectedLogin = connect(mapStateToProps)(Login);

@@ -8,6 +8,10 @@ main {
     min-width: 100vw;
 }
 
+.router_link  {
+    text-decoration: none;
+}
+
 .server_greeting {
     cursor: pointer;
     position: fixed;
@@ -85,9 +89,11 @@ nav .button {
     color: darkgray;
 }
 
-.profile_menu img {
-    cursor: pointer;
+.profile_menu .profile_image {
     justify-self: center;
     align-self: center;
+    height: 9vh;
+}
+.profile_menu img {
     height: 9vh;
 }

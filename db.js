@@ -42,6 +42,11 @@ exports.getVCode = alias =>
         'SELECT v_code FROM users WHERE alias = $1', [alias]
     );
 
+exports.setVCode = (vCode, alias) =>
+    db.query(
+        'UPDATE users SET v_code = $1 WHERE alias = $2 RETURNING mail', [vCode, alias]
+    );
+
 exports.verifyAccount = alias =>
     db.query(
         'UPDATE users SET verified = 1 WHERE alias = $1', [alias]

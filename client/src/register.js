@@ -30,12 +30,12 @@ class Register extends Component {
     componentDidMount() {
         this.firstInput.current.focus();
     }
-    componentDidUpdate(prevProps) {
-        console.log(prevProps, this.props);
-        // this.setState({
-        //     aliasRed: { color: 'red' },
-        //     mailRed: { color: 'red' }
-        // });
+    componentDidUpdate() {
+        if (this.props.loggedIn && this.props.verified) {
+            window.location.replace('/');
+        } else if (this.props.loggedIn && !this.props.verified) {
+            window.location.replace('/verify_account');
+        }
     }
     componentWillUnmount() {
         this.props.message.registerText && this.props.dispatch(deleteMessage());
@@ -113,9 +113,6 @@ class Register extends Component {
         }
     }
     render() {
-        if (this.props.loggedIn) {
-            window.location.replace('/');
-        }
         return (
             <section className="login_component_frame">
                 <h1 style={this.props.message.registerColor || this.state.messageRed}>{this.props.message.registerText || this.state.message}</h1>
@@ -149,7 +146,8 @@ class Register extends Component {
 
 const mapStateToProps = state => ({
     message: state.message,
-    loggedIn: state.loggedIn
+    loggedIn: state.loggedIn,
+    verified: state.user.verified
 });
 
 const ConnectedRegister = connect(mapStateToProps)(Register);
