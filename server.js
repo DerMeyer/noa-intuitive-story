@@ -6,7 +6,7 @@ const { s3upload } = require('./s3');
 const { s3Url, iconUrls } = require('./config');
 const { MY_SECRET, SMTP_USER, SMTP_PASS } = (process.env.NODE_ENV === 'production' && process.env) || require('./confidential.json');
 
-const { hashPW, checkPW, login, register, getAllGroups } = require('./db');
+const { hashPW, checkPW, login, register, getVCode, verifyAccount, getAllGroups } = require('./db');
 
 const multer = require('multer');
 const uidSafe = require('uid-safe');
@@ -140,6 +140,27 @@ app.post('/api/register', async (req, res) => {
             success: true,
             user: { ...req.session.user }
         });
+    } catch (err) {
+        console.log(err);
+        res.json({
+            success: false
+        });
+    }
+});
+
+app.post('/api/verify_account', async (req, res) => {
+    try {
+        const result = await getVCode(req.body.alias);
+        if (result.rows[0].v_code == req.body.vCode) {
+            const result = await verifyAccount(req.body.alias);
+            res.json({
+                success: true
+            });
+        } else {
+            res.json({
+                success: false
+            });
+        }
     } catch (err) {
         console.log(err);
         res.json({

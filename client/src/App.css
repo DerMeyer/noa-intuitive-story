@@ -56,11 +56,14 @@ nav .button {
 
 .profile_menu {
     position: fixed;
-    top: 2.5vh;
+    top: 1.5vh;
     left: 85vw;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    width: 17vw;
+    grid-template-columns: 1.5fr 1fr;
+    width: 14vw;
+    padding: 1vh;
+    border-radius: .5vh;
+    background-color: rgb(12, 73, 117);
 }
 
 .profile_menu div {
@@ -84,5 +87,7 @@ nav .button {
 
 .profile_menu img {
     cursor: pointer;
+    justify-self: center;
+    align-self: center;
     height: 9vh;
 }

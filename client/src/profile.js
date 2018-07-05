@@ -10,11 +10,14 @@ class Profile extends Component {
         window.location.replace('/');
     }
     render() {
+        console.log(this.props);
         return (
             <section className="profile_menu">
                 {this.props.loggedIn
                     ? <div>
-                        <Link to="/group"><p>Hello {this.props.alias}!</p></Link>
+                        {this.props.verified
+                            ? <Link to="/group"><p>Hello {this.props.alias}!</p></Link>
+                            : <Link to={`/profile/${this.props.alias}`}><p>Please verify...</p></Link>}
                         <p onClick={this.logout}>Log out</p>
                     </div>
                     : <div>

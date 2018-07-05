@@ -47,6 +47,15 @@ const reducer = (
             }
         };
     }
+    if (action.type === 'VERIFY_ACCOUNT') {
+        return {
+            ...state,
+            user: {
+                ...state.user,
+                verified: 1
+            }
+        }
+    }
     if (action.type === 'GET_GROUPS') {
         return {
             ...state,

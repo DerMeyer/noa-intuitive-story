@@ -116,6 +116,34 @@ export const register = async (first, last, alias, mail, phone, pw) => {
     }
 };
 
+export const verifyAccount = async (alias, vCode) => {
+    try {
+        const resp = await axios.post('/api/verify_account', { alias, vCode });
+        if (resp.data.success) {
+            return {
+                type: 'VERIFY_ACCOUNT'
+            };
+        } else {
+            return {
+                type: 'SET_MESSAGE',
+                message: {
+                    text: 'You entered the wrong verification code.',
+                    color: { color: 'red' }
+                }
+            };
+        }
+    } catch (err) {
+        console.log(err);
+        return {
+            type: 'SET_MESSAGE',
+            message: {
+                text: `The server didn't respond.`,
+                color: { color: 'red' }
+            }
+        };
+    }
+}
+
 export const getGroups = async () => {
     try {
         const resp = await axios.get('/api/groups');

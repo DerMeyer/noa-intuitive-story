@@ -6,6 +6,7 @@ import axios from './axios';
 
 import { ConnectedNavigation, Footer } from './navigation';
 import Profile from './profile';
+import ProfilePage from './profile-page';
 import Timeline from './timeline';
 import GroupPage from './group-page';
 import Login from './login';
@@ -65,6 +66,9 @@ class App extends Component {
                     </Link>
                     <Route exact path="/" component={ConnectedNavigation} />
                     <Route exact path="/" component={Profile} />
+                        <Route path="/profile/:user" render={props => (
+                                <ProfilePage match={props.match} />
+                            )} />
                     <Route exact path="/" component={Timeline} />
                     <Route path="/group/:id" render={props => (
                             <GroupPage match={props.match} />
