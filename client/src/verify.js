@@ -22,8 +22,7 @@ class Verify extends Component {
     componentDidMount() {
         this.firstInput.current.focus();
     }
-    componentDidUpdate() {
-        console.log(this.props);
+    componentDidUpdate(prevProps) {
         if (!this.props.loggedIn || this.props.verified) {
             window.location.replace('/');
         }

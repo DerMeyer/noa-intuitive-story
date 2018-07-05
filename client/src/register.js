@@ -30,7 +30,7 @@ class Register extends Component {
     componentDidMount() {
         this.firstInput.current.focus();
     }
-    componentDidUpdate() {
+    componentDidUpdate(prevProps) {
         if (this.props.loggedIn && this.props.verified) {
             window.location.replace('/');
         } else if (this.props.loggedIn && !this.props.verified) {

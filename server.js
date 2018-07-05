@@ -110,7 +110,7 @@ const sendMail = (alias, mail, vCode) => {
         }
     });
     const mailOptions = {
-        from: 'admin@simonmeyer.de',
+        from: 'theintuitivestory@gmail.com',
         to: mail,
         subject: 'Please confirm your Intuitive Story account.',
         html: `<h2>Hi ${alias}, your confirmation code is:</h2><h1>${vCode}</h1>`
