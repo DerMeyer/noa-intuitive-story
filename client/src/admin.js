@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import './page.css';
+import { connect } from 'react-redux';
+import axios from './axios';
+
+import { setMessage } from './actions';
 
 class Admin extends Component {
     constructor(props) {
@@ -27,11 +31,25 @@ class Admin extends Component {
     }
     componentDidMount() {
         this.firstInput.current.focus();
+        this.getUsers();
     }
     compileData = event => {
         this.setState({
             [event.target.name]: event.target.value
         });
+    }
+    getUsers = async () => {
+        try {
+            const resp = await axios.get('/api/get_users');
+            if (resp.data.success) {
+                console.log(resp.data);
+            } else {
+                this.props.dispatch(setMessage(`The server didn't send any user data.`, 'red'));
+            }
+        } catch (err) {
+            console.log(err);
+            this.props.dispatch(setMessage(`The server didn't respond to the user data request.`, 'red'));
+        }
     }
     createGroup = () => {
         console.log(this.state);
@@ -80,4 +98,8 @@ class Admin extends Component {
     }
 }
 
-export default Admin;
+const mapStateToProps = state => state;
+
+const ConnectedAdmin= connect(mapStateToProps)(Admin);
+
+export default ConnectedAdmin;

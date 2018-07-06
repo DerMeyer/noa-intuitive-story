@@ -56,3 +56,8 @@ exports.getAllGroups = () =>
     db.query(
         'SELECT name, time_period, group_id, user_id, gul_user_id, grun_user_id, vermel_user_id, bezrechu_user_id, sagol_user_id, soul, alias, groups.story AS group_story, souls.story AS soul_story, groups.created_at AS group_start, groups.updated_at AS group_update FROM groups JOIN souls ON groups.id = group_id JOIN users ON user_id = users.id'
     );
+
+exports.getAllUsers = () =>
+    db.query(
+        'SELECT id, alias FROM users'
+    );
