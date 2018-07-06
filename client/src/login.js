@@ -21,7 +21,9 @@ class Login extends Component {
         this.firstInput.current.focus();
     }
     componentDidUpdate(prevProps) {
-        if (this.props.loggedIn && this.props.verified) {
+        if (this.props.loggedIn && this.props.verified === 2) {
+            window.location.replace('/avira');
+        } else if (this.props.loggedIn && this.props.verified) {
             window.location.replace('/');
         } else if (this.props.loggedIn && !this.props.verified) {
             window.location.replace('/verify_account');
@@ -81,7 +83,8 @@ class Login extends Component {
                 <input
                     ref={this.firstInput}
                     style={this.state.aliasRed}
-                    name="alias" type="text"
+                    name="alias"
+                    type="text"
                     value={this.state.alias}
                     placeholder="user name"
                     onFocus={this.emptyField}

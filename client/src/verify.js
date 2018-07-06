@@ -28,6 +28,7 @@ class Verify extends Component {
         }
     }
     componentWillUnmount() {
+        this.props.message.registerText && this.props.dispatch(deleteMessage());
         clearTimeout(this.setTimeoutID);
     }
     compileData = event => {
@@ -67,7 +68,8 @@ class Verify extends Component {
                 <input
                     ref={this.firstInput}
                     style={this.state.inputStyle}
-                    name="vCode" type="text"
+                    name="vCode"
+                    type="text"
                     value={this.state.vCode}
                     onChange={this.compileData}
                     onKeyDown={this.verify} />

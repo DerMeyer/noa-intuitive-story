@@ -120,7 +120,8 @@ class Register extends Component {
                 <input
                     ref={this.firstInput}
                     style={this.state.firstRed}
-                    name="first" type="text"
+                    name="first"
+                    type="text"
                     value={this.state.first}
                     placeholder="first name"
                     onFocus={this.emptyField}
