@@ -6,7 +6,7 @@ const { s3upload } = require('./s3');
 const { s3Url, iconUrls } = require('./config');
 const { MY_SECRET, SMTP_USER, SMTP_PASS } = (process.env.NODE_ENV === 'production' && process.env) || require('./confidential.json');
 
-const { hashPW, checkPW, login, register, getVCode, setVCode, verifyAccount, getAllGroups, getAllUsers } = require('./db');
+const { hashPW, checkPW, login, register, getVCode, setVCode, verifyAccount, getAllGroups, getAllUsers, setGroup, setSoul } = require('./db');
 
 const multer = require('multer');
 const uidSafe = require('uid-safe');
@@ -196,6 +196,46 @@ app.get('/api/groups', async (req, res) => {
         res.json({
             success: true,
             groups: result.rows
+        });
+    } catch (err) {
+        console.log(err);
+        res.json({
+            success: false
+        });
+    }
+});
+
+app.post('/api/create_group', async (req, res) => {
+    console.log(req.body);
+    try {
+        const [ one, two, three, four, five ] = req.body.souls;
+        const result = await setGroup(
+            req.body.group.name,
+            req.body.group.year,
+            req.body.group.story,
+            req.body.group.gul_id,
+            req.body.group.grun_id,
+            req.body.group.vermel_id,
+            req.body.group.bezrechu_id,
+            req.body.group.sagol_id
+        );
+        if (one) {
+            await setSoul(one.id, result.rows[0].id, one.soul);
+        }
+        if (two) {
+            await setSoul(one.id, result.rows[0].id, one.soul);
+        }
+        if (three) {
+            await setSoul(one.id, result.rows[0].id, one.soul);
+        }
+        if (four) {
+            await setSoul(one.id, result.rows[0].id, one.soul);
+        }
+        if (five) {
+            await setSoul(one.id, result.rows[0].id, one.soul);
+        }
+        res.json({
+            success: true
         });
     } catch (err) {
         console.log(err);

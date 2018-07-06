@@ -66,3 +66,40 @@
     display: flex;
     flex-direction: column;
 }
+
+.create_group_container .overlay_container {
+    position: relative;
+}
+
+.create_group_container .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 4.5vh;
+    width: 20vw;
+    background-color: rgba(255, 255, 255, .6);
+}
+
+.create_group_container .user_search_menu {
+    position: absolute;
+    top: 4.7vh;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    z-index: 50;
+}
+
+.create_group_container .user_search_menu p {
+    cursor: pointer;
+    width: 20vw;
+    padding-left: .5vw;
+    border-bottom: .3vh solid gray;
+    margin: 0;
+    color: rgb(80, 80, 80);
+    transition-duration: .15s;
+}
+
+.create_group_container .user_search_menu p:hover {
+    background-color: lightgray;
+}

@@ -59,5 +59,17 @@ exports.getAllGroups = () =>
 
 exports.getAllUsers = () =>
     db.query(
-        'SELECT id, alias FROM users'
+        'SELECT id, verified, alias FROM users'
+    );
+
+exports.setGroup = (name, time_period, story, gul_user_id, grun_user_id, vermel_user_id, bezrechu_user_id, sagol_user_id) =>
+    db.query(
+        'INSERT INTO groups (name, time_period, story, gul_user_id, grun_user_id, vermel_user_id, bezrechu_user_id, sagol_user_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id',
+        [name, time_period, story, gul_user_id, grun_user_id, vermel_user_id, bezrechu_user_id, sagol_user_id]
+    );
+
+exports.setSoul = (user_id, group_id, soul) =>
+    db.query(
+        'INSERT INTO souls (user_id, group_id, soul) VALUES ($1, $2, $3)',
+        [user_id, group_id, soul]
     );
