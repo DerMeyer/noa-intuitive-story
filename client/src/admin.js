@@ -163,7 +163,6 @@ class Admin extends Component {
         vermel_id && souls.push({ id: vermel_id, soul: vermel_soul.toLowerCase() });
         bezrechu_id && souls.push({ id: bezrechu_id, soul: bezrechu_soul.toLowerCase() });
         sagol_id && souls.push({ id: sagol_id, soul: sagol_soul.toLowerCase() });
-        console.log(group, souls);
         try {
             const resp = await axios.post('/api/create_group', { group, souls });
             if (resp.data.success) {
