@@ -49,6 +49,12 @@ class Admin extends Component {
             }
         };
         this.firstInput = React.createRef();
+        this.soulOneInput = React.createRef();
+        this.soulTwoInput = React.createRef();
+        this.soulThreeInput = React.createRef();
+        this.soulFourInput = React.createRef();
+        this.soulFiveInput = React.createRef();
+        this.userOneInput = React.createRef();
     }
     componentDidMount() {
         this.firstInput.current.focus();
@@ -200,30 +206,30 @@ class Admin extends Component {
                     <section>
                         <input style={this.style.extraSpace} name="year" type="text" value={this.state.year} placeholder="year" onChange={this.compileData} />
                         <div className="overlay_container">
-                            <input name="gul_soul" type="text" value={this.state.gul_soul} placeholder="soul one"  onChange={this.compileData} />
+                            <input ref={this.soulOneInput} name="gul_soul" type="text" value={this.state.gul_soul} placeholder="soul one"  onChange={this.compileData} onFocus={() => this.state.overlay_gul && this.soulTwoInput.current.focus()} />
                             {this.state.overlay_gul && <div className="overlay"></div>}
                         </div>
                         <div className="overlay_container">
-                            <input name="grun_soul" type="text" value={this.state.grun_soul} placeholder="soul two"  onChange={this.compileData} />
+                            <input ref={this.soulTwoInput} name="grun_soul" type="text" value={this.state.grun_soul} placeholder="soul two"  onChange={this.compileData} onFocus={() => this.state.overlay_grun && this.soulThreeInput.current.focus()} />
                             {this.state.overlay_grun && <div className="overlay"></div>}
                         </div>
                         <div className="overlay_container">
-                            <input name="vermel_soul" type="text" value={this.state.vermel_soul} placeholder="soul three"  onChange={this.compileData} />
+                            <input ref={this.soulThreeInput} name="vermel_soul" type="text" value={this.state.vermel_soul} placeholder="soul three"  onChange={this.compileData} onFocus={() => this.state.overlay_vermel && this.soulFourInput.current.focus()} />
                             {this.state.overlay_vermel && <div className="overlay"></div>}
                         </div>
                         <div className="overlay_container">
-                            <input name="bezrechu_soul" type="text" value={this.state.bezrechu_soul} placeholder="soul four"  onChange={this.compileData} />
+                            <input ref={this.soulFourInput} name="bezrechu_soul" type="text" value={this.state.bezrechu_soul} placeholder="soul four"  onChange={this.compileData} onFocus={() => this.state.overlay_bezrechu && this.soulFiveInput.current.focus()} />
                             {this.state.overlay_bezrechu && <div className="overlay"></div>}
                         </div>
                         <div className="overlay_container">
-                            <input name="sagol_soul" type="text" value={this.state.sagol_soul} placeholder="soul five" onChange={this.compileData} />
+                            <input ref={this.soulFiveInput} name="sagol_soul" type="text" value={this.state.sagol_soul} placeholder="soul five" onChange={this.compileData} onFocus={() => this.state.overlay_sagol && this.userOneInput.current.focus()} />
                             {this.state.overlay_sagol && <div className="overlay"></div>}
                         </div>
                     </section>
                     <section>
                         <button style={this.style.extraSpace} onClick={this.createGroup}>Create Group</button>
                         <div className="overlay_container">
-                            <input name="gul_name" type="text" value={this.state.gul_name} placeholder="user one"  onChange={this.compileData} />
+                            <input ref={this.userOneInput} name="gul_name" type="text" value={this.state.gul_name} placeholder="user one"  onChange={this.compileData} />
                             {this.state.user_search_gul && <div className="user_search_menu">{this.state.user_search.map((result, i) => (<p key={i} onClick={this.setName}>{result}</p>))}</div>}
                         </div>
                         <div className="overlay_container">

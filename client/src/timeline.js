@@ -129,7 +129,7 @@ class Timeline extends Component {
                     name, time_period, gul, grun, vermel, bezrechu, sagol,
                     id: groupID,
                     left: this.mapTimelineToPosition(time_period),
-                    randomY: 10 + (Math.random() * 12)
+                    top: 10 + (Math.random() * 12)
                 }
                 return (
                     <Group key={groupID} { ...groupProps } />

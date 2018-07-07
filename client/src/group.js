@@ -5,7 +5,7 @@ const group = props => {
     const style = {
         container: {
             position: 'absolute',
-            top: `${props.randomY}vh`,
+            top: `${props.top}vh`,
             left: `${props.left}px`,
             display: 'grid',
             gridTemplate: '1fr 1fr 1fr 1fr 1fr / 1fr 1fr 3.2fr',
@@ -38,7 +38,7 @@ const group = props => {
             position: 'absolute',
             top: '15vh',
             left: '7.5vh',
-            height: `${26 - props.randomY}vh`,
+            height: `${26 - props.top}vh`,
             width: '.2vh',
             backgroundColor: 'rgb(120, 120, 120)'
         },

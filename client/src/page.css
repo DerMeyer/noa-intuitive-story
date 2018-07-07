@@ -39,6 +39,10 @@
     margin: 0 0 2vh 0;
 }
 
+.page_container h4 {
+    color: gray;
+}
+
 .page_container button {
     cursor: pointer;
     font-family: 'NTR', sans-serif;

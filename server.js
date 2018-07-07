@@ -207,7 +207,6 @@ app.get('/api/groups', async (req, res) => {
 
 app.post('/api/create_group', async (req, res) => {
     try {
-        const [ one, two, three, four, five ] = req.body.souls;
         const result = await setGroup(
             req.body.group.name,
             req.body.group.year,
@@ -218,6 +217,7 @@ app.post('/api/create_group', async (req, res) => {
             req.body.group.bezrechu_id,
             req.body.group.sagol_id
         );
+        const [ one, two, three, four, five ] = req.body.souls;
         if (one) {
             await setSoul(one.id, result.rows[0].id, one.soul);
         }
