@@ -27,6 +27,11 @@ class Admin extends Component {
             overlay_vermel: true,
             overlay_bezrechu: true,
             overlay_sagol: true,
+            soul_search_gul: false,
+            soul_search_grun: false,
+            soul_search_vermel: false,
+            soul_search_bezrechu: false,
+            soul_search_sagol: false,
             user_search_gul: false,
             user_search_grun: false,
             user_search_vermel: false,
@@ -34,6 +39,7 @@ class Admin extends Component {
             user_search_sagol: false,
             user_search: []
         };
+        this.soul_list = ['gul', 'grun', 'vermel', 'bezrechu', 'sagol'];
         this.users = [];
         this.style = {
             extraSpace: {
@@ -68,7 +74,7 @@ class Admin extends Component {
         // } else if (this.props.loggedIn && !this.props.verified) {
         //     window.location.replace('/verify_account');
         // }
-        ['gul', 'grun', 'vermel', 'bezrechu', 'sagol'].forEach(soul => {
+        this.soul_list.forEach(soul => {
             const soulName = this.state[`${soul}_name`].endsWith(' (unverified)') ? this.state[`${soul}_name`].slice(0, -13) : this.state[`${soul}_name`]
             if (this.users.some(user => user.alias === soulName)) {
                 this.state[`overlay_${soul}`] === true && this.setState({
@@ -77,7 +83,7 @@ class Admin extends Component {
             } else {
                 this.state[`overlay_${soul}`] === false && this.setState({
                     [`overlay_${soul}`]: true,
-                    gul_soul: ''
+                    [`${soul}_soul`]: ''
                 });
             }
         });
@@ -88,9 +94,25 @@ class Admin extends Component {
         });
         this.setUserSearchMenu(event.target.name, event.target.value);
     }
-    setUserSearchMenu = (inputName, inputValue) => {
+    setSoulSearchMenu = inputName => {
         if (typeof inputName !== 'string') {
-            inputName = '';
+            return;
+        }
+        this.soul_list.forEach(soul => {
+            if (inputName.slice(0, -5) === soul) {
+                this.state[`soul_search_${soul}`] === false && this.setState({
+                    [`soul_search_${soul}`]: true
+                });
+            } else if (inputName.slice(0, -5) !== soul) {
+                this.state[`soul_search_${soul}`] === true && this.setState({
+                    [`soul_search_${soul}`]: false
+                });
+            }
+        });
+    }
+    setUserSearchMenu = (inputName, inputValue) => {
+        if (typeof inputName !== 'string' || typeof inputValue !== 'string') {
+            return;
         }
         const userSearchMenu = [];
         this.users.forEach(user => {
@@ -103,7 +125,7 @@ class Admin extends Component {
         this.setState({
             user_search: userSearchMenu.sort().slice(0, 5)
         });
-        ['gul', 'grun', 'vermel', 'bezrechu', 'sagol'].forEach(soul => {
+        this.soul_list.forEach(soul => {
             if (inputName.slice(0, -5) === soul) {
                 this.state[`user_search_${soul}`] === false && this.setState({
                     [`user_search_${soul}`]: true
@@ -115,13 +137,30 @@ class Admin extends Component {
             }
         });
     }
+    setSoul = event => {
+        this.soul_list.forEach(soul => {
+            if (this.state[`soul_search_${soul}`] === true) {
+                this.setState({
+                    [`${soul}_soul`]: event.target.innerHTML
+                });
+            }
+        });
+    }
     setName = event => {
-        ['gul', 'grun', 'vermel', 'bezrechu', 'sagol'].forEach(soul => {
+        this.soul_list.forEach(soul => {
             if (this.state[`user_search_${soul}`] === true) {
                 this.setState({
                     [`${soul}_name`]: event.target.innerHTML
                 });
             }
+        });
+    }
+    emptyField = event => {
+        console.log('empty');
+        event.stopPropagation();
+        this.setState({
+            [event.target.name]: '',
+            [`${event.target.name}Red`]: {}
         });
     }
     getUsers = async () => {
@@ -183,10 +222,13 @@ class Admin extends Component {
     }
     render() {
         return (
-            <section className="page_container">
+            <section className="page_container" onClick={() => {
+                    this.setSoulSearchMenu('');
+                    this.setUserSearchMenu('', '');
+                }}>
                 <h1>Hi Noa!</h1>
                 <h2>Create a new Group</h2>
-                <section className="create_group_container" onClick={this.setUserSearchMenu}>
+                <section className="create_group_container">
                     <section>
                         <input
                             ref={this.firstInput}
@@ -206,49 +248,70 @@ class Admin extends Component {
                     <section>
                         <input style={this.style.extraSpace} name="year" type="text" value={this.state.year} placeholder="year" onChange={this.compileData} />
                         <div className="overlay_container">
-                            <input ref={this.soulOneInput} name="gul_soul" type="text" value={this.state.gul_soul} placeholder="soul one"  onChange={this.compileData} onFocus={() => this.state.overlay_gul && this.soulTwoInput.current.focus()} />
+                            <input ref={this.soulOneInput} name="gul_soul" type="text" value={this.state.gul_soul} placeholder="soul one" onChange={this.compileData} onFocus={event => {
+                                    this.state.overlay_gul && this.soulTwoInput.current.focus();
+                                    this.setSoulSearchMenu(event.target.name);
+                                }} onClick={this.emptyField} />
                             {this.state.overlay_gul && <div className="overlay"></div>}
+                            {this.state.soul_search_gul && <div className="search_menu">{this.soul_list.map((soul, i) => (<p key={i} onClick={this.setSoul}>{soul}</p>))}</div>}
                         </div>
                         <div className="overlay_container">
-                            <input ref={this.soulTwoInput} name="grun_soul" type="text" value={this.state.grun_soul} placeholder="soul two"  onChange={this.compileData} onFocus={() => this.state.overlay_grun && this.soulThreeInput.current.focus()} />
+                            <input ref={this.soulTwoInput} name="grun_soul" type="text" value={this.state.grun_soul} placeholder="soul two" onChange={this.compileData} onFocus={event => {
+                                    this.state.overlay_grun && this.soulTwoInput.current.focus();
+                                    this.setSoulSearchMenu(event.target.name);
+                                }} onClick={this.emptyField} />
                             {this.state.overlay_grun && <div className="overlay"></div>}
+                            {this.state.soul_search_grun && <div className="search_menu">{this.soul_list.map((soul, i) => (<p key={i} onClick={this.setSoul}>{soul}</p>))}</div>}
                         </div>
                         <div className="overlay_container">
-                            <input ref={this.soulThreeInput} name="vermel_soul" type="text" value={this.state.vermel_soul} placeholder="soul three"  onChange={this.compileData} onFocus={() => this.state.overlay_vermel && this.soulFourInput.current.focus()} />
+                            <input ref={this.soulThreeInput} name="vermel_soul" type="text" value={this.state.vermel_soul} placeholder="soul three" onChange={this.compileData} onFocus={event => {
+                                    this.state.overlay_vermel && this.soulTwoInput.current.focus();
+                                    this.setSoulSearchMenu(event.target.name);
+                                }} onClick={this.emptyField} />
                             {this.state.overlay_vermel && <div className="overlay"></div>}
+                            {this.state.soul_search_vermel && <div className="search_menu">{this.soul_list.map((soul, i) => (<p key={i} onClick={this.setSoul}>{soul}</p>))}</div>}
                         </div>
                         <div className="overlay_container">
-                            <input ref={this.soulFourInput} name="bezrechu_soul" type="text" value={this.state.bezrechu_soul} placeholder="soul four"  onChange={this.compileData} onFocus={() => this.state.overlay_bezrechu && this.soulFiveInput.current.focus()} />
+                            <input ref={this.soulFourInput} name="bezrechu_soul" type="text" value={this.state.bezrechu_soul} placeholder="soul four" onChange={this.compileData} onFocus={event => {
+                                    this.state.overlay_bezrechu && this.soulTwoInput.current.focus();
+                                    this.setSoulSearchMenu(event.target.name);
+                                }} onClick={this.emptyField} />
                             {this.state.overlay_bezrechu && <div className="overlay"></div>}
+                            {this.state.soul_search_bezrechu && <div className="search_menu">{this.soul_list.map((soul, i) => (<p key={i} onClick={this.setSoul}>{soul}</p>))}</div>}
                         </div>
                         <div className="overlay_container">
-                            <input ref={this.soulFiveInput} name="sagol_soul" type="text" value={this.state.sagol_soul} placeholder="soul five" onChange={this.compileData} onFocus={() => this.state.overlay_sagol && this.userOneInput.current.focus()} />
+                            <input ref={this.soulFiveInput} name="sagol_soul" type="text" value={this.state.sagol_soul} placeholder="soul five" onChange={this.compileData} onFocus={event => {
+                                    this.state.overlay_sagol && this.soulTwoInput.current.focus();
+                                    this.setSoulSearchMenu(event.target.name);
+                                }} onClick={this.emptyField} />
                             {this.state.overlay_sagol && <div className="overlay"></div>}
+                            {this.state.soul_search_sagol && <div className="search_menu">{this.soul_list.map((soul, i) => (<p key={i} onClick={this.setSoul}>{soul}</p>))}</div>}
                         </div>
                     </section>
                     <section>
                         <button style={this.style.extraSpace} onClick={this.createGroup}>Create Group</button>
                         <div className="overlay_container">
-                            <input ref={this.userOneInput} name="gul_name" type="text" value={this.state.gul_name} placeholder="user one"  onChange={this.compileData} />
-                            {this.state.user_search_gul && <div className="user_search_menu">{this.state.user_search.map((result, i) => (<p key={i} onClick={this.setName}>{result}</p>))}</div>}
+                            <input ref={this.userOneInput} name="gul_name" type="text" value={this.state.gul_name} placeholder="user one" onChange={this.compileData} onFocus={event => this.setUserSearchMenu(event.target.name, event.target.value)} onClick={this.emptyField} />
+                            {this.state.user_search_gul && <div className="search_menu">{this.state.user_search.map((result, i) => (<p key={i} onClick={this.setName}>{result}</p>))}</div>}
                         </div>
                         <div className="overlay_container">
-                            <input name="grun_name" type="text" value={this.state.grun_name} placeholder="user two"  onChange={this.compileData} />
-                            {this.state.user_search_grun && <div className="user_search_menu">{this.state.user_search.map((result, i) => (<p key={i} onClick={this.setName}>{result}</p>))}</div>}
+                            <input name="grun_name" type="text" value={this.state.grun_name} placeholder="user two" onChange={this.compileData} onFocus={event => this.setUserSearchMenu(event.target.name, event.target.value)} onClick={this.emptyField} />
+                            {this.state.user_search_grun && <div className="search_menu">{this.state.user_search.map((result, i) => (<p key={i} onClick={this.setName}>{result}</p>))}</div>}
                         </div>
                         <div className="overlay_container">
-                            <input name="vermel_name" type="text" value={this.state.vermel_name} placeholder="user three"  onChange={this.compileData} />
-                            {this.state.user_search_vermel && <div className="user_search_menu">{this.state.user_search.map((result, i) => (<p key={i} onClick={this.setName}>{result}</p>))}</div>}
+                            <input name="vermel_name" type="text" value={this.state.vermel_name} placeholder="user three" onChange={this.compileData} onFocus={event => this.setUserSearchMenu(event.target.name, event.target.value)} onClick={this.emptyField} />
+                            {this.state.user_search_vermel && <div className="search_menu">{this.state.user_search.map((result, i) => (<p key={i} onClick={this.setName}>{result}</p>))}</div>}
                         </div>
                         <div className="overlay_container">
-                            <input name="bezrechu_name" type="text" value={this.state.bezrechu_name} placeholder="user four"  onChange={this.compileData} />
-                            {this.state.user_search_bezrechu && <div className="user_search_menu">{this.state.user_search.map((result, i) => (<p key={i} onClick={this.setName}>{result}</p>))}</div>}
+                            <input name="bezrechu_name" type="text" value={this.state.bezrechu_name} placeholder="user four" onChange={this.compileData} onFocus={event => this.setUserSearchMenu(event.target.name, event.target.value)} onClick={this.emptyField} />
+                            {this.state.user_search_bezrechu && <div className="search_menu">{this.state.user_search.map((result, i) => (<p key={i} onClick={this.setName}>{result}</p>))}</div>}
                         </div>
                         <div className="overlay_container">
-                            <input name="sagol_name" type="text" value={this.state.sagol_name} placeholder="user five" onChange={this.compileData} />
-                            {this.state.user_search_sagol && <div className="user_search_menu">{this.state.user_search.map((result, i) => (<p key={i} onClick={this.setName}>{result}</p>))}</div>}
+                            <input name="sagol_name" type="text" value={this.state.sagol_name} placeholder="user five" onChange={this.compileData} onFocus={event => this.setUserSearchMenu(event.target.name, event.target.value)} onClick={this.emptyField} />
+                            {this.state.user_search_sagol && <div className="search_menu">{this.state.user_search.map((result, i) => (<p key={i} onClick={this.setName}>{result}</p>))}</div>}
                         </div>
                     </section>
+                    <textarea></textarea>
                 </section>
             </section>
         )
