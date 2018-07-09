@@ -93,8 +93,8 @@ class Login extends Component {
                     />
                 <input name="pw" type="password" placeholder="password" onChange={this.compileData} onKeyDown={this.login} />
                 <button onClick={this.login}>Log in</button>
-                <button onClick={this.forgotPW}>Forgot your password?</button>
                 <Link to="/register"><button>Not a member yet?</button></Link>
+                <button onClick={this.forgotPW}>Forgot your password?</button>
             </section>
         )
     }

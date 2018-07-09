@@ -63,6 +63,7 @@ class Admin extends Component {
         this.userOneInput = React.createRef();
     }
     componentDidMount() {
+        window.scroll(0, 0);
         this.firstInput.current.focus();
         this.getUsers();
     }

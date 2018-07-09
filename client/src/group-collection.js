@@ -24,6 +24,7 @@ class GroupCollection extends Component {
         };
     }
     componentDidMount() {
+        window.scroll(0, 0);
         if (!this.props.groups) {
             this.props.dispatch(getGroups());
         } else {
