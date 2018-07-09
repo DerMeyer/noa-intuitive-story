@@ -4,10 +4,11 @@ import { connect } from 'react-redux';
 import { BrowserRouter, Route, Link } from 'react-router-dom';
 import axios from './axios';
 
+import Timeline from './timeline';
 import { ConnectedNavigation, Footer } from './navigation';
 import Profile from './profile';
+import GroupCollection from './group-collection';
 import ProfilePage from './profile-page';
-import Timeline from './timeline';
 import GroupPage from './group-page';
 import Login from './login';
 import Register from './register';
@@ -65,12 +66,13 @@ class App extends Component {
                     <Link to="/" className="logo">
                         <img src="/images/logo.png" alt="Galaxy Logo"/>
                     </Link>
+                    <Route exact path="/" component={Timeline} />
                     <Route exact path="/" component={ConnectedNavigation} />
                     <Route exact path="/" component={Profile} />
-                        <Route path="/profile/:user" render={props => (
-                                <ProfilePage match={props.match} />
-                            )} />
-                    <Route exact path="/" component={Timeline} />
+                    <Route path="/profile/:user" render={props => (
+                            <ProfilePage match={props.match} />
+                        )} />
+                    <Route path="/group_collection" component={GroupCollection} />
                     <Route path="/group/:id" render={props => (
                             <GroupPage match={props.match} />
                         )} />

@@ -206,6 +206,9 @@ app.get('/api/groups', async (req, res) => {
 });
 
 app.post('/api/create_group', async (req, res) => {
+    if (!req.session.user || req.session.user.id !== 1) {
+        res.end();
+    }
     try {
         const result = await setGroup(
             req.body.group.name,

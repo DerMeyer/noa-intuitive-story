@@ -16,12 +16,20 @@ const group = props => {
         },
         headline: {
             position: 'absolute',
-            bottom: '15vh',
+            bottom: '16vh',
             left: '0',
+            display: 'flex',
+            justifyContent: 'center',
+            width: '15vh',
+            borderRadius: '.4vh',
+            backgroundColor: 'white'
+        },
+        headlineText: {
             textAlign: 'center',
             fontSize: '1.3vw',
-            width: '15vh',
-            paddingTop: '.4vh',
+            lineHeight: '1.2',
+            whiteSpace: 'nowrap',
+            padding: '.4vh 1vw 0 1vw',
             borderRadius: '.4vh',
             margin: '0',
             color: 'rgb(80, 80, 80)',
@@ -74,8 +82,10 @@ const group = props => {
         }
     };
     return (
-        <Link to={`/group/${props.id}`} style={style.container} onClick={event => event.stopPropagation()}>
-            <p style={style.headline} >{`${props.name} ${props.time_period}`}</p>
+        <Link to={`/group/${props.id}`} style={style.container} onClick={event => event.stopPropagation()} className="group_on_timeline">
+            <div style={style.headline}>
+                <p style={style.headlineText} >{`${props.name} ${props.time_period}`}</p>
+            </div>
             <img style={style.tableImage} src="/images/box_s.png" alt="Group Box" />
             <div style={style.arrow}></div>
             <div style={style.colorContainer}>

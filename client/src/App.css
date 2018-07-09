@@ -97,3 +97,7 @@ nav .button {
 .profile_menu img {
     height: 9vh;
 }
+
+.group_on_timeline:hover {
+    z-index: 100;
+}

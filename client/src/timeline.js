@@ -143,7 +143,7 @@ class Timeline extends Component {
         let timelineSection;
         this.timelineMap.forEach((v, i, a) => {
             if (a[i + 1]) {
-                if (v[0] < timelineX && a[i + 1][0] > timelineX) {
+                if (v[0] <= timelineX && a[i + 1][0] > timelineX) {
                     timelineSection = [ v, a[i + 1] ];
                 }
             }
@@ -157,7 +157,7 @@ class Timeline extends Component {
         let timelineSection;
         this.timelineMap.forEach((v, i, a) => {
             if (a[i + 1]) {
-                if (v[1] < year && a[i + 1][1] > year) {
+                if (v[1] <= year && a[i + 1][1] > year) {
                     timelineSection = [ v, a[i + 1] ];
                 }
             }

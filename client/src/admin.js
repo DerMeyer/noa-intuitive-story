@@ -67,13 +67,9 @@ class Admin extends Component {
         this.getUsers();
     }
     componentDidUpdate() {
-        // if (this.props.loggedIn && this.props.verified === 2) {
-        //     window.location.replace('/avira');
-        // } else if (this.props.loggedIn && this.props.verified) {
-        //     window.location.replace('/');
-        // } else if (this.props.loggedIn && !this.props.verified) {
-        //     window.location.replace('/verify_account');
-        // }
+        if (this.props.user.verified !== 2) {
+            window.location.replace('/');
+        }
         this.soul_list.forEach(soul => {
             const soulName = this.state[`${soul}_name`].endsWith(' (unverified)') ? this.state[`${soul}_name`].slice(0, -13) : this.state[`${soul}_name`]
             if (this.users.some(user => user.alias === soulName)) {
@@ -83,7 +79,7 @@ class Admin extends Component {
             } else {
                 this.state[`overlay_${soul}`] === false && this.setState({
                     [`overlay_${soul}`]: true,
-                    [`${soul}_soul`]: ''
+                    [`${soul}_soul4`]: ''
                 });
             }
         });
@@ -92,7 +88,8 @@ class Admin extends Component {
         this.setState({
             [event.target.name]: event.target.value
         });
-        this.setUserSearchMenu(event.target.name, event.target.value);
+        event.target.name.endsWith('name') && this.setUserSearchMenu(event.target.name, event.target.value);
+        console.log(this.state.story);
     }
     setSoulSearchMenu = inputName => {
         if (typeof inputName !== 'string') {
@@ -123,7 +120,7 @@ class Admin extends Component {
             }
         });
         this.setState({
-            user_search: userSearchMenu.sort().slice(0, 5)
+            user_search: userSearchMenu.sort()
         });
         this.soul_list.forEach(soul => {
             if (inputName.slice(0, -5) === soul) {
@@ -212,12 +209,43 @@ class Admin extends Component {
             const resp = await axios.post('/api/create_group', { group, souls });
             if (resp.data.success) {
                 this.props.dispatch(setMessage(`${group.name} ${group.year} has been created.`, 'white'));
+                this.setState({
+                    name: '',
+                    year: '',
+                    story: '',
+                    gul_soul: '',
+                    grun_soul: '',
+                    vermel_soul: '',
+                    bezrechu_soul: '',
+                    sagol_soul: '',
+                    gul_name: '',
+                    grun_name: '',
+                    vermel_name: '',
+                    bezrechu_name: '',
+                    sagol_name: '',
+                    overlay_gul: true,
+                    overlay_grun: true,
+                    overlay_vermel: true,
+                    overlay_bezrechu: true,
+                    overlay_sagol: true,
+                    soul_search_gul: false,
+                    soul_search_grun: false,
+                    soul_search_vermel: false,
+                    soul_search_bezrechu: false,
+                    soul_search_sagol: false,
+                    user_search_gul: false,
+                    user_search_grun: false,
+                    user_search_vermel: false,
+                    user_search_bezrechu: false,
+                    user_search_sagol: false,
+                    user_search: []
+                });
             } else {
                 this.props.dispatch(setMessage(`The group couldn't be created.`, 'red'));
             }
         } catch (err) {
             console.log(err);
-            this.props.dispatch(setMessage(`The server didn't respond to the user data request.`, 'red'));
+            this.props.dispatch(setMessage(`The server didn't respond.`, 'red'));
         }
     }
     render() {
@@ -249,40 +277,45 @@ class Admin extends Component {
                         <input style={this.style.extraSpace} name="year" type="text" value={this.state.year} placeholder="year" onChange={this.compileData} />
                         <div className="overlay_container">
                             <input ref={this.soulOneInput} name="gul_soul" type="text" value={this.state.gul_soul} placeholder="soul one" onChange={this.compileData} onFocus={event => {
-                                    this.state.overlay_gul && this.soulTwoInput.current.focus();
-                                    this.setSoulSearchMenu(event.target.name);
+                                    this.state.overlay_gul
+                                    ? this.soulTwoInput.current.focus()
+                                    : this.setSoulSearchMenu(event.target.name)
                                 }} onClick={this.emptyField} />
                             {this.state.overlay_gul && <div className="overlay"></div>}
                             {this.state.soul_search_gul && <div className="search_menu">{this.soul_list.map((soul, i) => (<p key={i} onClick={this.setSoul}>{soul}</p>))}</div>}
                         </div>
                         <div className="overlay_container">
                             <input ref={this.soulTwoInput} name="grun_soul" type="text" value={this.state.grun_soul} placeholder="soul two" onChange={this.compileData} onFocus={event => {
-                                    this.state.overlay_grun && this.soulTwoInput.current.focus();
-                                    this.setSoulSearchMenu(event.target.name);
+                                    this.state.overlay_grun
+                                    ? this.soulThreeInput.current.focus()
+                                    : this.setSoulSearchMenu(event.target.name)
                                 }} onClick={this.emptyField} />
                             {this.state.overlay_grun && <div className="overlay"></div>}
                             {this.state.soul_search_grun && <div className="search_menu">{this.soul_list.map((soul, i) => (<p key={i} onClick={this.setSoul}>{soul}</p>))}</div>}
                         </div>
                         <div className="overlay_container">
                             <input ref={this.soulThreeInput} name="vermel_soul" type="text" value={this.state.vermel_soul} placeholder="soul three" onChange={this.compileData} onFocus={event => {
-                                    this.state.overlay_vermel && this.soulTwoInput.current.focus();
-                                    this.setSoulSearchMenu(event.target.name);
+                                    this.state.overlay_vermel
+                                    ? this.soulFourInput.current.focus()
+                                    : this.setSoulSearchMenu(event.target.name)
                                 }} onClick={this.emptyField} />
                             {this.state.overlay_vermel && <div className="overlay"></div>}
                             {this.state.soul_search_vermel && <div className="search_menu">{this.soul_list.map((soul, i) => (<p key={i} onClick={this.setSoul}>{soul}</p>))}</div>}
                         </div>
                         <div className="overlay_container">
                             <input ref={this.soulFourInput} name="bezrechu_soul" type="text" value={this.state.bezrechu_soul} placeholder="soul four" onChange={this.compileData} onFocus={event => {
-                                    this.state.overlay_bezrechu && this.soulTwoInput.current.focus();
-                                    this.setSoulSearchMenu(event.target.name);
+                                    this.state.overlay_bezrechu
+                                    ? this.soulFiveInput.current.focus()
+                                    : this.setSoulSearchMenu(event.target.name)
                                 }} onClick={this.emptyField} />
                             {this.state.overlay_bezrechu && <div className="overlay"></div>}
                             {this.state.soul_search_bezrechu && <div className="search_menu">{this.soul_list.map((soul, i) => (<p key={i} onClick={this.setSoul}>{soul}</p>))}</div>}
                         </div>
                         <div className="overlay_container">
                             <input ref={this.soulFiveInput} name="sagol_soul" type="text" value={this.state.sagol_soul} placeholder="soul five" onChange={this.compileData} onFocus={event => {
-                                    this.state.overlay_sagol && this.soulTwoInput.current.focus();
-                                    this.setSoulSearchMenu(event.target.name);
+                                    this.state.overlay_sagol
+                                    ? this.userOneInput.current.focus()
+                                    : this.setSoulSearchMenu(event.target.name)
                                 }} onClick={this.emptyField} />
                             {this.state.overlay_sagol && <div className="overlay"></div>}
                             {this.state.soul_search_sagol && <div className="search_menu">{this.soul_list.map((soul, i) => (<p key={i} onClick={this.setSoul}>{soul}</p>))}</div>}
@@ -311,7 +344,7 @@ class Admin extends Component {
                             {this.state.user_search_sagol && <div className="search_menu">{this.state.user_search.map((result, i) => (<p key={i} onClick={this.setName}>{result}</p>))}</div>}
                         </div>
                     </section>
-                    <textarea></textarea>
+                    <textarea name="story" value={this.state.story} onChange={this.compileData}></textarea>
                 </section>
             </section>
         )

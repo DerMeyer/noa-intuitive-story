@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 class Navigation extends Component {
     render() {
         return (
             <header>
                 <nav>
-                    <img className="button" src="/images/about.png" alt="About the Intuitive Story" />
-                    <img className="button" src="/images/groups.png" alt="Group Collection" />
-                    <img className="button" src="/images/share.png" alt="Share an intuitive Note" />
+                    <Link to="/group_collection"><img className="button" src="/images/about.png" alt="About the Intuitive Story" /></Link>
+                    <Link to="/group_collection"><img className="button" src="/images/groups.png" alt="Group Collection" /></Link>
+                    <Link to="/group_collection"><img className="button" src="/images/share.png" alt="Share an intuitive Note" /></Link>
                 </nav>
             </header>
         );
