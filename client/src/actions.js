@@ -70,7 +70,7 @@ export const login = async (alias, pw) => {
             return {
                 type: 'SET_MESSAGE',
                 message: {
-                    loginText: 'Wrong mail or password. Please try again.',
+                    loginText: 'Wrong user name or password. Please try again.',
                     loginColor: { color: 'red' }
                 }
             };

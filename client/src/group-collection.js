@@ -39,12 +39,14 @@ class GroupCollection extends Component {
             return this.state.groups;
         }
         this.setState({
-            groups: Object.keys(this.props.groups).map(groupID => {
+            groups: Object.keys(this.props.groups)
+                          .sort((a, b) => this.props.groups[a].group_start - this.props.groups[b].group_start)
+                          .map(groupID => {
                 const { name, time_period, gul, grun, vermel, bezrechu, sagol } = this.props.groups[groupID];
                 const groupProps = {
                     name, time_period, gul, grun, vermel, bezrechu, sagol,
                     id: groupID,
-                    left: groupID % 2 === 0 ? window.innerWidth / 1.64 : window.innerWidth / 20,
+                    left: window.innerWidth / 20,
                     top: 26
                 }
                 return (
@@ -67,12 +69,14 @@ class GroupCollection extends Component {
     }
 }
 
+// <object data="/story.pdf" type="application/pdf"></object>
+
 const mapStateToProps = state => ({
     loggedIn: state.loggedIn,
     user_id: state.user.id,
     groups: state.groups
 });
 
-const ConnectedGroupCollection= connect(mapStateToProps)(GroupCollection);
+const ConnectedGroupCollection = connect(mapStateToProps)(GroupCollection);
 
 export default ConnectedGroupCollection;

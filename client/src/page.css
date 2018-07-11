@@ -17,6 +17,11 @@
     margin-bottom: 2vw;
 }
 
+/* .page_container object {
+    height: 100vh;
+    width: 66vw;
+} */
+
 .page_container h1 {
     position: absolute;
     top: -12vh;
@@ -121,4 +126,23 @@
 
 .create_group_container .search_menu p:hover {
     background-color: lightgray;
+}
+
+.profile_edit_container {
+    display: flex;
+    justify-content: space-around;
+}
+
+.profile_edit_container > img {
+    height: 15vw;
+    width: 15vw;
+}
+
+.profile_edit_container > section {
+    width: 26vw;
+}
+
+.profile_edit_container div {
+    display: flex;
+    justify-content: space-between;
 }

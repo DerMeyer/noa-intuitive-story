@@ -15,7 +15,7 @@ class Profile extends Component {
                 <section className="profile_menu">
                     <div>
                         {this.props.verified
-                            ? <Link to="/group" className="router_link"><p>Hello {this.props.alias}!</p></Link>
+                            ? <Link to={`/profile/${this.props.alias}`} className="router_link"><p>Hello {this.props.alias}!</p></Link>
                             : <Link to="/verify_account" className="router_link"><p>Please confirm...</p></Link>}
                         <p onClick={this.logout}>Log out</p>
                     </div>

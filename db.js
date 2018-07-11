@@ -28,7 +28,7 @@ exports.checkPW = (pwUser, pwDB) =>
 
 exports.login = alias =>
     db.query(
-        'SELECT id, verified, pw FROM users WHERE alias = $1', [alias]
+        'SELECT id, verified, first, last, mail, phone, icon_url, pw FROM users WHERE alias = $1', [alias]
     );
 
 exports.register = (vCode, first, last, alias, mail, phone, pw, iconUrl) =>

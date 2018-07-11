@@ -26,7 +26,7 @@ INSERT INTO users (
     2,
     'Noa',
     'Golan',
-    'The Boss',
+    'Noa',
     'theintuitivestory@gmail.com',
     '+49 176 47870823',
     '$2a$10$3K8nnAzervRzrQGZkSlohuxUSIJvdoe/qtZfJMhMETUPkxofHBi7O'

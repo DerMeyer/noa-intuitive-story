@@ -76,15 +76,22 @@ app.post('/api/login', async (req, res) => {
         const result = await login(req.body.alias);
         const correctPW = await checkPW(req.body.pw, result.rows[0].pw);
         if (correctPW) {
-            const { id, verified } = result.rows[0];
+            const { id, verified, first, last, mail, phone, icon_url } = result.rows[0];
             req.session.user = {
                 id,
+                verified,
+                first,
+                last,
                 alias: req.body.alias,
-                verified
+                mail,
+                phone,
+                icon_url
             };
             res.json({
                 success: true,
-                user: { ...req.session.user }
+                user: {
+                    ...req.session.user
+                }
             });
         } else {
             res.json({

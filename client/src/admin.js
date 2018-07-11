@@ -277,7 +277,7 @@ class Admin extends Component {
                     <section>
                         <input style={this.style.extraSpace} name="year" type="text" value={this.state.year} placeholder="year" onChange={this.compileData} />
                         <div className="overlay_container">
-                            <input ref={this.soulOneInput} name="gul_soul" type="text" value={this.state.gul_soul} placeholder="soul one" onChange={this.compileData} onFocus={event => {
+                            <input ref={this.soulOneInput} name="gul_soul" type="text" value={this.state.gul_soul} placeholder="role" onChange={this.compileData} onFocus={event => {
                                     this.state.overlay_gul
                                     ? this.soulTwoInput.current.focus()
                                     : this.setSoulSearchMenu(event.target.name)
@@ -286,7 +286,7 @@ class Admin extends Component {
                             {this.state.soul_search_gul && <div className="search_menu">{this.soul_list.map((soul, i) => (<p key={i} onClick={this.setSoul}>{soul}</p>))}</div>}
                         </div>
                         <div className="overlay_container">
-                            <input ref={this.soulTwoInput} name="grun_soul" type="text" value={this.state.grun_soul} placeholder="soul two" onChange={this.compileData} onFocus={event => {
+                            <input ref={this.soulTwoInput} name="grun_soul" type="text" value={this.state.grun_soul} placeholder="role" onChange={this.compileData} onFocus={event => {
                                     this.state.overlay_grun
                                     ? this.soulThreeInput.current.focus()
                                     : this.setSoulSearchMenu(event.target.name)
@@ -295,7 +295,7 @@ class Admin extends Component {
                             {this.state.soul_search_grun && <div className="search_menu">{this.soul_list.map((soul, i) => (<p key={i} onClick={this.setSoul}>{soul}</p>))}</div>}
                         </div>
                         <div className="overlay_container">
-                            <input ref={this.soulThreeInput} name="vermel_soul" type="text" value={this.state.vermel_soul} placeholder="soul three" onChange={this.compileData} onFocus={event => {
+                            <input ref={this.soulThreeInput} name="vermel_soul" type="text" value={this.state.vermel_soul} placeholder="role" onChange={this.compileData} onFocus={event => {
                                     this.state.overlay_vermel
                                     ? this.soulFourInput.current.focus()
                                     : this.setSoulSearchMenu(event.target.name)
@@ -304,7 +304,7 @@ class Admin extends Component {
                             {this.state.soul_search_vermel && <div className="search_menu">{this.soul_list.map((soul, i) => (<p key={i} onClick={this.setSoul}>{soul}</p>))}</div>}
                         </div>
                         <div className="overlay_container">
-                            <input ref={this.soulFourInput} name="bezrechu_soul" type="text" value={this.state.bezrechu_soul} placeholder="soul four" onChange={this.compileData} onFocus={event => {
+                            <input ref={this.soulFourInput} name="bezrechu_soul" type="text" value={this.state.bezrechu_soul} placeholder="role" onChange={this.compileData} onFocus={event => {
                                     this.state.overlay_bezrechu
                                     ? this.soulFiveInput.current.focus()
                                     : this.setSoulSearchMenu(event.target.name)
@@ -313,7 +313,7 @@ class Admin extends Component {
                             {this.state.soul_search_bezrechu && <div className="search_menu">{this.soul_list.map((soul, i) => (<p key={i} onClick={this.setSoul}>{soul}</p>))}</div>}
                         </div>
                         <div className="overlay_container">
-                            <input ref={this.soulFiveInput} name="sagol_soul" type="text" value={this.state.sagol_soul} placeholder="soul five" onChange={this.compileData} onFocus={event => {
+                            <input ref={this.soulFiveInput} name="sagol_soul" type="text" value={this.state.sagol_soul} placeholder="role" onChange={this.compileData} onFocus={event => {
                                     this.state.overlay_sagol
                                     ? this.userOneInput.current.focus()
                                     : this.setSoulSearchMenu(event.target.name)
@@ -354,6 +354,6 @@ class Admin extends Component {
 
 const mapStateToProps = state => state;
 
-const ConnectedAdmin= connect(mapStateToProps)(Admin);
+const ConnectedAdmin = connect(mapStateToProps)(Admin);
 
 export default ConnectedAdmin;
