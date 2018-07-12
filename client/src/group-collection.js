@@ -12,11 +12,17 @@ class GroupCollection extends Component {
         this.state = {};
         this.style = {
             row: {
+                display: 'flex',
                 height: '23vh',
                 borderBottom: '.5vh solid gray'
             },
             group:{
                 margin: '4vh 2vw 0 2vw'
+            },
+            story: {
+                height: '20vh',
+                width: '48vw',
+                margin: '0 0 0 2vw'
             }
         };
     }
@@ -49,6 +55,7 @@ class GroupCollection extends Component {
                         <section style={this.style.group}>
                             <Group { ...groupProps } />
                         </section>
+                        <object style={this.style.story} data="/story.pdf" type="application/pdf"></object>
                     </section>
                 )
             })
@@ -57,14 +64,13 @@ class GroupCollection extends Component {
     render() {
         return (
             <section className="page_container">
-                <section></section>
+                <h1>Groups collection</h1>
+                <h2>Click on a group to see more</h2>
                 {this.state.groups}
             </section>
         )
     }
 }
-
-// <object data="/story.pdf" type="application/pdf"></object>
 
 const mapStateToProps = state => ({
     loggedIn: state.loggedIn,

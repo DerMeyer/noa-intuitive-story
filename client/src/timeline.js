@@ -145,7 +145,7 @@ class Timeline extends Component {
                     backgroundColor: 'rgb(120, 120, 120)'
                 }
                 return (
-                    <section key={groupID} style={groupStyle}>
+                    <section key={groupID} style={groupStyle} className="group_on_timeline">
                         <Group { ...groupProps } />
                         <section style={arrowStyle}></section>
                     </section>

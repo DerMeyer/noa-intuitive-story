@@ -71,7 +71,7 @@ const group = props => {
         }
     };
     return (
-        <Link to={`/group/${props.id}`} style={style.container} onClick={event => event.stopPropagation()} className="group_on_timeline">
+        <Link to={`/group/${props.id}`} style={style.container} onClick={event => event.stopPropagation()}>
             <div style={style.headline}>
                 <p style={style.headlineText} >{`${props.name} ${props.time_period}`}</p>
             </div>
