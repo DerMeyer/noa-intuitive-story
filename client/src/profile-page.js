@@ -71,7 +71,7 @@ class ProfilePage extends Component {
     render() {
         return (
             <section className="page_container">
-                <h1>Welcome {this.props.user && this.props.user.alias}!</h1>
+                <h1>Hello {this.props.user && this.props.user.alias}!</h1>
                 <h2>Edit your profile</h2>
                 <section className="profile_edit_container">
                     <section>

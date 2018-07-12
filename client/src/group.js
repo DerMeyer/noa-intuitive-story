@@ -4,15 +4,12 @@ import { Link } from 'react-router-dom';
 const group = props => {
     const style = {
         container: {
-            position: 'absolute',
-            top: `${props.top}vh`,
-            left: `${props.left}px`,
+            position: 'relative',
             display: 'grid',
             gridTemplate: '1fr 1fr 1fr 1fr 1fr / 1fr 1fr 3.2fr',
             textDecoration: 'none',
             height: '15vh',
-            width: '15vh',
-            transform: 'translatex(-50%)'
+            width: '15vh'
         },
         headline: {
             position: 'absolute',
@@ -41,14 +38,6 @@ const group = props => {
             left: '-.5vh',
             height: '16vh',
             transform: 'rotate(.001turn)'
-        },
-        arrow: {
-            position: 'absolute',
-            top: '15vh',
-            left: '7.5vh',
-            height: `${26 - props.top}vh`,
-            width: '.2vh',
-            backgroundColor: 'rgb(120, 120, 120)'
         },
         colorContainer: {
             justifySelf: 'center',
@@ -87,7 +76,6 @@ const group = props => {
                 <p style={style.headlineText} >{`${props.name} ${props.time_period}`}</p>
             </div>
             <img style={style.tableImage} src="/images/box_s.png" alt="Group Box" />
-            <div style={style.arrow}></div>
             <div style={style.colorContainer}>
                 <img style={style.color} src="/images/color_gul.png" alt="Gul" />
             </div>

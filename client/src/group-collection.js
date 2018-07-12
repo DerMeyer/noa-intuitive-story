@@ -12,14 +12,11 @@ class GroupCollection extends Component {
         this.state = {};
         this.style = {
             row: {
-                position: 'relative',
                 height: '23vh',
                 borderBottom: '.5vh solid gray'
             },
             group:{
-                position: 'absolute',
-                top: '-21vh',
-                left: '0'
+                margin: '4vh 2vw 0 2vw'
             }
         };
     }
@@ -44,10 +41,8 @@ class GroupCollection extends Component {
                           .map(groupID => {
                 const { name, time_period, gul, grun, vermel, bezrechu, sagol } = this.props.groups[groupID];
                 const groupProps = {
-                    name, time_period, gul, grun, vermel, bezrechu, sagol,
                     id: groupID,
-                    left: window.innerWidth / 20,
-                    top: 26
+                    name, time_period, gul, grun, vermel, bezrechu, sagol
                 }
                 return (
                     <section key={groupID} style={this.style.row}>

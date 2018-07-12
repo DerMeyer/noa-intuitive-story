@@ -126,13 +126,29 @@ class Timeline extends Component {
             groups: Object.keys(this.props.groups).map(groupID => {
                 const { name, time_period, gul, grun, vermel, bezrechu, sagol } = this.props.groups[groupID];
                 const groupProps = {
-                    name, time_period, gul, grun, vermel, bezrechu, sagol,
                     id: groupID,
-                    left: this.mapTimelineToPosition(time_period),
-                    top: 10 + (Math.random() * 12)
+                    name, time_period, gul, grun, vermel, bezrechu, sagol
+                }
+                const randomTop = 10 + (Math.random() * 12);
+                const groupStyle = {
+                    position: 'absolute',
+                    left: `${this.mapTimelineToPosition(time_period)}px`,
+                    top: `${randomTop}vh`,
+                    transform: 'translatex(-50%)'
+                }
+                const arrowStyle = {
+                    position: 'absolute',
+                    top: '15vh',
+                    left: '7.5vh',
+                    height: `${26 - randomTop}vh`,
+                    width: '.2vh',
+                    backgroundColor: 'rgb(120, 120, 120)'
                 }
                 return (
-                    <Group key={groupID} { ...groupProps } />
+                    <section key={groupID} style={groupStyle}>
+                        <Group { ...groupProps } />
+                        <section style={arrowStyle}></section>
+                    </section>
                 )
             })
         });
