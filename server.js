@@ -6,7 +6,7 @@ const { s3upload } = require('./s3');
 const { s3Url, iconUrls } = require('./config');
 const { MY_SECRET, SMTP_USER, SMTP_PASS } = (process.env.NODE_ENV === 'production' && process.env) || require('./confidential.json');
 
-const { hashPW, checkPW, login, register, getVCode, setVCode, verifyAccount, newPW, getAllGroups, getAllUsers, setGroup, setSoul } = require('./db');
+const { hashPW, checkPW, login, register, getVCode, setVCode, verifyAccount, newPW, updatePW, updateProfile, getAllGroups, getAllUsers, setGroup, setSoul } = require('./db');
 
 const multer = require('multer');
 const uidSafe = require('uid-safe');
@@ -62,7 +62,9 @@ app.get('/api/check_login', (req, res) => {
     if (req.session.user) {
         res.json({
             success: true,
-            user: { ...req.session.user }
+            user: {
+                 ...req.session.user
+            }
         });
     } else {
         res.json({
@@ -76,7 +78,7 @@ app.post('/api/login', async (req, res) => {
         const result = await login(req.body.alias);
         const correctPW = await checkPW(req.body.pw, result.rows[0].pw);
         if (correctPW) {
-            const { id, verified, first, last, mail, phone, icon_url } = result.rows[0];
+            const { id, verified, first, last, mail, phone, icon_url, created_at } = result.rows[0];
             req.session.user = {
                 id,
                 verified,
@@ -85,12 +87,13 @@ app.post('/api/login', async (req, res) => {
                 alias: req.body.alias,
                 mail,
                 phone,
-                icon_url
+                icon_url,
+                created_at
             };
             res.json({
                 success: true,
                 user: {
-                    ...req.session.user
+                     ...req.session.user
                 }
             });
         } else {
@@ -151,11 +154,14 @@ app.post('/api/register', async (req, res) => {
             hashedPW,
             iconUrls[0]
         );
-        req.session.user = result.rows[0];
         sendMail(req.body.alias, req.body.mail, vCode);
+        const { id, verified, first, last, alias, mail, phone, icon_url, created_at } = result.rows[0];
+        req.session.user = { id, verified, first, last, alias, mail, phone, icon_url, created_at };
         res.json({
             success: true,
-            user: { ...req.session.user }
+            user: {
+                 ...req.session.user
+            }
         });
     } catch (err) {
         console.log(err);
@@ -216,6 +222,36 @@ app.post('/api/get_new_pw', async (req, res) => {
                 success: false
             });
         }
+    } catch (err) {
+        console.log(err);
+        res.json({
+            success: false
+        });
+    }
+});
+
+app.post('/api/update_profile', async (req, res) => {
+    try {
+        if (req.body.newPW) {
+            const hashedPW = await hashPW(req.body.newPW);
+            await updatePW(req.body.alias, hashedPW);
+        }
+        const result = await updateProfile(
+            req.body.id,
+            req.body.first,
+            req.body.last,
+            req.body.alias,
+            req.body.mail,
+            req.body.phone
+        );
+        const { id, verified, first, last, alias, mail, phone, icon_url, created_at } = result.rows[0];
+        req.session.user = { id, verified, first, last, alias, mail, phone, icon_url, created_at };
+        res.json({
+            success: true,
+            user: {
+                 ...req.session.user
+            }
+        });
     } catch (err) {
         console.log(err);
         res.json({

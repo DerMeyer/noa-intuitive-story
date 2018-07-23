@@ -4,12 +4,22 @@ import { connect } from 'react-redux';
 
 import Group from './group';
 
-import { getGroups } from './actions';
+import { deleteMessage, getGroups, updateProfile } from './actions';
 
 class ProfilePage extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            user: false,
+            message: '',
+            first: '',
+            last: '',
+            alias: '',
+            mail: '',
+            phone: '',
+            newPW: '',
+            confirmPW: ''
+        };
         this.style = {
             row: {
                 height: '23vh',
@@ -31,6 +41,16 @@ class ProfilePage extends Component {
     }
     componentDidUpdate() {
         this.createGroupsForRender();
+        if (!this.state.user) {
+            this.props.user && this.setState({
+                user: true,
+                ...this.props.user
+            });
+        }
+    }
+    componentWillUnmount() {
+        this.props.message.updateProfileText && this.props.dispatch(deleteMessage());
+        clearTimeout(this.setTimeoutID);
     }
     createGroupsForRender = () => {
         if (!this.props.groups || this.state.groups) {
@@ -63,42 +83,94 @@ class ProfilePage extends Component {
             })
         });
     }
+    compileData = event => {
+        this.setState({
+            [event.target.name]: event.target.value
+        });
+    }
+    updateProfile = event => {
+        if (event.type !== 'click' && event.keyCode !== 13) {
+            return;
+        }
+        event.preventDefault();
+        this.props.message.updateProfileText && this.props.dispatch(deleteMessage());
+        this.setState({
+            message: ''
+        });
+        if (this.state.newPW !== this.state.confirmPW) {
+            this.setState({
+                message: `The two passwords you entered don't match.`
+            });
+            this.timeoutID = window.setTimeout(() => {
+                this.setState({
+                    message: ''
+                });
+            }, 2000);
+        } else {
+            const { id, prev_first, prev_last, prev_alias, prev_mail, prev_phone } = this.props.user;
+            const { first = prev_first, last = prev_last, alias = prev_alias, mail = prev_mail, phone = prev_phone, newPW } = this.state;
+            this.props.dispatch(updateProfile(id, first, last, alias, mail, phone, newPW));
+            this.timeoutID = window.setTimeout(() => {
+                this.setState({
+                    message: ''
+                });
+            }, 4000);
+        }
+    }
+    emptyField = event => {
+        this.setState({
+            [event.target.name]: '',
+            [`${event.target.name}Red`]: {}
+        });
+    }
+    fillField = event => {
+        if (!this.state[event.target.name]) {
+            this.setState({
+                [event.target.name]: this.props.user[event.target.name]
+            });
+        }
+    }
     render() {
         return (
             <section className="page_container">
-                <h1>Hello {this.props.user && this.props.user.alias}!</h1>
+                <h1>{this.props.message.updateProfileText || this.state.message || `Hello ${this.props.user && this.props.user.alias}!`}</h1>
                 <h2>Edit your profile</h2>
                 <section className="profile_edit_container">
-                    <section>
+                    {this.props.user && !this.props.user.verified && <p>Please verify your account.</p>}
+                    {this.props.user && this.props.user.verified && <section>
                         <div>
                             <p>First Name</p>
-                            <p>{this.props.user && this.props.user.first}</p>
+                            <input name="first" type="text" value={this.state.first} placeholder="first name" onFocus={this.emptyField} onBlur={this.fillField} onChange={this.compileData} onKeyDown={this.updateProfile} />
                         </div>
                         <div>
                             <p>Last Name</p>
-                            <p>{this.props.user && this.props.user.last}</p>
+                            <input name="last" type="text" value={this.state.last} placeholder="last name" onFocus={this.emptyField} onBlur={this.fillField} onChange={this.compileData} onKeyDown={this.updateProfile} />
                         </div>
                         <div>
                             <p>User Name</p>
-                            <p>{this.props.user && this.props.user.alias}</p>
+                            <input name="alias" type="text" value={this.state.alias} placeholder="user name" onFocus={this.emptyField} onBlur={this.fillField} onChange={this.compileData} onKeyDown={this.updateProfile} />
                         </div>
                         <div>
                             <p>Mail</p>
-                            <p>{this.props.user && this.props.user.mail}</p>
+                            <input name="mail" type="text" value={this.state.mail} placeholder="mail" onFocus={this.emptyField} onBlur={this.fillField} onChange={this.compileData} onKeyDown={this.updateProfile} />
                         </div>
                         <div>
                             <p>Phone</p>
-                            <p>{this.props.user && this.props.user.phone}</p>
+                            <input name="phone" type="text" value={this.state.phone} placeholder="phone" onFocus={this.emptyField} onBlur={this.fillField} onChange={this.compileData} onKeyDown={this.updateProfile} />
                         </div>
                         <div>
-                            <p>Password</p>
-                            <p>***</p>
+                            <p>New Password</p>
+                            <input name="newPW" type="password" value={this.state.newPW} placeholder="new password" onFocus={this.emptyField} onChange={this.compileData} onKeyDown={this.updateProfile} />
+                        </div>
+                        <div>
+                            <p>Confirm Password</p>
+                            <input name="confirmPW" type="password" value={this.state.confirmPW} placeholder="confirm password" onFocus={this.emptyField} onChange={this.compileData} onKeyDown={this.updateProfile} />
                         </div>
                         <div>
                             <p>Cancel</p>
                             <p>Submit</p>
                         </div>
-                    </section>
+                    </section>}
                     <img src="/default.jpeg" alt="My Profile Pic"></img>
                 </section>
                 <h2>Your groups</h2>

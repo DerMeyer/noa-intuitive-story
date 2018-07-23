@@ -57,6 +57,15 @@ const reducer = (
             message: { ...action.message }
         }
     }
+    if (action.type === 'UPDATE_PROFILE') {
+        return {
+            ...state,
+            user: {
+                ...action.data
+            },
+            message: { ...action.message }
+        }
+    }
     if (action.type === 'GET_GROUPS') {
         return {
             ...state,

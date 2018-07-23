@@ -55,7 +55,6 @@ class GroupCollection extends Component {
                         <section style={this.style.group}>
                             <Group { ...groupProps } />
                         </section>
-                        <object style={this.style.story} data="/story.pdf" type="application/pdf"></object>
                     </section>
                 )
             })

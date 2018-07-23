@@ -29,7 +29,7 @@ exports.checkPW = (pwUser, pwDB) =>
 
 exports.login = alias =>
     db.query(
-        'SELECT id, verified, first, last, mail, phone, icon_url, pw FROM users WHERE alias = $1', [alias]
+        'SELECT id, verified, first, last, mail, phone, pw, icon_url, created_at FROM users WHERE alias = $1', [alias]
     );
 
 exports.register = (vCode, first, last, alias, mail, phone, pw, iconUrl) =>
@@ -73,6 +73,18 @@ exports.newPW = async alias => {
         mail: result.rows[0].mail
     }
 }
+
+exports.updatePW = (alias, newPW) =>
+    db.query(
+        'UPDATE users SET pw = $1 WHERE alias = $2',
+        [newPW, alias]
+    );
+
+exports.updateProfile = (id, first, last, alias, mail, phone) =>
+    db.query(
+        'UPDATE users SET first = $1, last = $2, alias = $3, mail = $4, phone = $5 WHERE id = $6 RETURNING *',
+        [first, last, alias, mail, phone, id]
+    );
 
 exports.getAllGroups = () =>
     db.query(

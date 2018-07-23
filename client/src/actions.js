@@ -179,6 +179,36 @@ export const verifyAccount = async (alias, vCode) => {
     }
 }
 
+export const updateProfile = async (id, first, last, alias, mail, phone, newPW) => {
+    try {
+        const resp = await axios.post('/api/update_profile', { id, first, last, alias, mail, phone, newPW });
+        if (resp.data.success) {
+            return {
+                type: 'UPDATE_PROFILE',
+                data: { ...resp.data.user },
+                message: {
+                    updateProfileText: 'Your profile was updated.'
+                }
+            }
+        } else {
+            return {
+                type: 'SET_MESSAGE',
+                message: {
+                    updateProfileText: 'Something went wrong.'
+                }
+            };
+        }
+    } catch (err) {
+        console.log(err);
+        return {
+            type: 'SET_MESSAGE',
+            message: {
+                updateProfileText: `The server didn't respond.`
+            }
+        };
+    }
+};
+
 export const getGroups = async () => {
     try {
         const resp = await axios.get('/api/groups');
