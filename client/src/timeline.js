@@ -12,7 +12,9 @@ class Timeline extends Component {
         super(props);
         this.timelineImageQuotient = 4.4383;
         this.state = {
-            timelineLeft: ((window.innerHeight * this.timelineImageQuotient) - window.innerWidth) / 2
+            timelineLeft: ((window.innerHeight * this.timelineImageQuotient) - window.innerWidth) / 2,
+            newHistoryEntry: false,
+            addHistory: {}
         };
         this.style = {
             expander: {
@@ -50,6 +52,7 @@ class Timeline extends Component {
         this.timelineSled = React.createRef();
         this.isDragging = false;
         this.previousLeft = 0;
+        this.mouseDownX = 0;
     }
     componentDidMount() {
         this.scrollFactor = ((window.innerHeight * this.timelineImageQuotient) - window.innerWidth) / (2 * window.innerHeight);
@@ -85,6 +88,7 @@ class Timeline extends Component {
         event.preventDefault();
         this.isDragging = true;
         this.extractLeftDelta(event);
+        this.hasDragged(event);
         // Polling for Scroll
         // window.removeEventListener('scroll', this.setTimelineLeft);
     };
@@ -98,7 +102,7 @@ class Timeline extends Component {
             timelineLeft: timelineLeft <= ((window.innerHeight * this.timelineImageQuotient) - window.innerWidth) ? timelineLeft - left : timelineLeft
         }));
     };
-    onUp = () => {
+    onUp = event => {
         if (this.state.timelineLeft > ((window.innerHeight * this.timelineImageQuotient) - window.innerWidth)) {
             this.setState({
                 timelineLeft: (window.innerHeight * this.timelineImageQuotient) - window.innerWidth
@@ -111,6 +115,9 @@ class Timeline extends Component {
             // Polling for Scroll
             this.setTimelineLeft();
         }
+        if (!this.hasDragged(event)) {
+            this.addHistoryEntry(event);
+        }
     }
     extractLeftDelta = event => {
         const left = event.pageX;
@@ -118,6 +125,14 @@ class Timeline extends Component {
         this.previousLeft = left;
         return delta;
     };
+    hasDragged = event => {
+        if (this.mouseDownX === event.pageX) {
+            return false;
+        } else {
+            this.mouseDownX = event.pageX;
+            return true;
+        }
+    }
     createGroupsForRender = () => {
         if (!this.props.groups || this.state.groups) {
             return this.state.groups;
@@ -151,6 +166,29 @@ class Timeline extends Component {
                     </section>
                 )
             })
+        });
+    }
+    addHistoryEntry = event => {
+        this.setState({
+            newHistoryEntry: true,
+            addHistory: {
+                position: 'absolute',
+                top: `${event.clientY - window.innerHeight * .12}px`,
+                left: `${event.pageX - this.timelineSled.current.offsetLeft}px`,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                height: '100px',
+                width: '100px',
+                backgroundColor: 'whitesmoke',
+                transform: 'translate(-50%, -50%)'
+            }
+        });
+    }
+    createHistoryEntry = () => {
+        this.setState({
+            newHistoryEntry: false,
+            addHistory: {}
         });
     }
     mapPositionToTimeline = event => {
@@ -192,12 +230,14 @@ class Timeline extends Component {
                         onMouseMove={this.onMove}
                         onMouseUp={this.onUp}
                         onMouseLeave={this.onUp}
-                        onClick={this.mapPositionToTimeline}
                         >
                         <img style={this.style.timeline} src="/images/timeline.png" alt="Timeline" />
                         <Architypes />
                         {this.state.groups}
-                        <History />
+                        {this.state.history}
+                        {this.state.newHistoryEntry && <section style={this.state.addHistory} onClick={this.createHistoryEntry}>
+                            <p>Wahnsinn</p>
+                        </section>}
                     </section>
                 </section>
             </section>
@@ -206,8 +246,9 @@ class Timeline extends Component {
 }
 
 const mapStateToProps = state => ({
+    loggedIn: state.loggedIn,
     groups: state.groups,
-    loggedIn: state.loggedIn
+    history: state.history
 });
 
 const ConnectedTimeline = connect(mapStateToProps)(Timeline);

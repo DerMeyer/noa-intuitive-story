@@ -264,9 +264,10 @@ class ProfilePage extends Component {
                         {this.state.selectedImage.url && <button style={this.style.updateProfileButton} onClick={this.uploadImage}>Submit</button>}
                     </section>
                 </section>
+                <h2>Your messages</h2>
                 <h2>Your groups</h2>
                 {this.state.groups}
-                <h2>Your messages</h2>
+                <h2>Your history entries</h2>
             </section>
         )
     }

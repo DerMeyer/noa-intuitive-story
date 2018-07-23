@@ -272,3 +272,31 @@ export const getGroups = async () => {
         };
     }
 }
+
+export const getNotes = async () => {
+    try {
+        const resp = await axios.get('/api/get_notes');
+        const notes = {};
+        if (resp.data.success) {
+            return {
+                type: 'GET_NOTES',
+                data: notes
+            };
+        } else {
+            return {
+                type: 'SET_MESSAGE',
+                message: {
+                    text: `The server didn't send any notes.`
+                }
+            };
+        }
+    } catch (err) {
+        console.log(err);
+        return {
+            type: 'SET_MESSAGE',
+            message: {
+                text: `The server didn't respond.`
+            }
+        };
+    }
+}

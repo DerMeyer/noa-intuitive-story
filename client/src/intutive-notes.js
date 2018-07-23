@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import './page.css';
 import { connect } from 'react-redux';
 
-import { getGroups } from './actions';
+import { getNotes } from './actions';
 
-class GroupCollection extends Component {
+class IntuitiveNotes extends Component {
     componentDidMount() {
         if (!this.props.groups) {
-            this.props.dispatch(getGroups());
+            this.props.dispatch(getNotes());
         }
     }
     render() {
@@ -21,9 +21,9 @@ class GroupCollection extends Component {
 const mapStateToProps = state => ({
     loggedIn: state.loggedIn,
     user_id: state.user.id,
-    groups: state.groups
+    notes: state.notes
 });
 
-const ConnectedGroupCollection= connect(mapStateToProps)(GroupCollection);
+const ConnectedIntuitiveNotes= connect(mapStateToProps)(IntuitiveNotes);
 
-export default ConnectedGroupCollection;
+export default ConnectedIntuitiveNotes;
