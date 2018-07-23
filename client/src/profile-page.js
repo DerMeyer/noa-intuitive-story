@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import './page.css';
 import { connect } from 'react-redux';
+import axios from './axios';
 
 import Group from './group';
 
-import { deleteMessage, getGroups, updateProfile } from './actions';
+import { deleteMessage, getGroups, updateProfile, updateIconUrl } from './actions';
 
 class ProfilePage extends Component {
     constructor(props) {
@@ -18,7 +19,9 @@ class ProfilePage extends Component {
             mail: '',
             phone: '',
             newPW: '',
-            confirmPW: ''
+            confirmPW: '',
+            icon_url: '',
+            selectedImage: {}
         };
         this.style = {
             updateProfileButton: {
@@ -47,7 +50,8 @@ class ProfilePage extends Component {
         if (!this.state.user) {
             this.props.user && this.setState({
                 user: true,
-                ...this.props.user
+                ...this.props.user,
+                icon_url: this.props.user.icon_url || '/default.jpeg'
             });
         }
     }
@@ -108,7 +112,7 @@ class ProfilePage extends Component {
                 this.setState({
                     message: ''
                 });
-            }, 2000);
+            }, 3000);
         } else {
             const { id, prev_first, prev_last, prev_alias, prev_mail, prev_phone } = this.props.user;
             const { first = prev_first, last = prev_last, alias = prev_alias, mail = prev_mail, phone = prev_phone, newPW } = this.state;
@@ -136,6 +140,74 @@ class ProfilePage extends Component {
             this.setState({
                 [event.target.name]: this.props.user[event.target.name]
             });
+        }
+    }
+    selectImage = event => {
+        if (!event.target.files[0]) {
+            return;
+        }
+        const targetFile = event.target.files[0];
+        const selectedImage = new FileReader();
+        selectedImage.readAsDataURL(targetFile);
+        selectedImage.addEventListener('load', () => {
+            this.setState({
+                selectedImage: {
+                    url: selectedImage.result,
+                    file: targetFile
+                }
+            });
+        });
+    }
+    cancelUpload = () => {
+        this.setState({
+            selectedImage: {}
+        });
+    }
+    uploadImage = async () => {
+        console.log('hey', this.state.selectedImage.file);
+        if (this.state.selectedImage.file) {
+            const formData = new FormData();
+            formData.append('user_id', this.props.user.id);
+            formData.append('file', this.state.selectedImage.file);
+            try {
+                const resp = await axios.post('/api/upload_image', formData);
+                if (resp.data.success) {
+                    this.props.dispatch(updateIconUrl(resp.data.icon_url));
+                    this.setState({
+                        icon_url: resp.data.icon_url,
+                        selectedImage: {},
+                        message: 'You have a new profile image.'
+                    });
+                    this.timeoutID = window.setTimeout(() => {
+                        this.setState({
+                            message: ''
+                        });
+                    }, 3000);
+                } else {
+                    this.setState({
+                        message: 'Something went wrong.'
+                    });
+                    this.timeoutID = window.setTimeout(() => {
+                        this.setState({
+                            message: ''
+                        });
+                    }, 3000);
+                }
+            } catch (err) {
+                console.log(err);
+                this.setState({
+                    message: 'No Server response.'
+                });
+            }
+        } else {
+            this.setState({
+                message: 'No file selected.'
+            });
+            this.timeoutID = window.setTimeout(() => {
+                this.setState({
+                    message: ''
+                });
+            }, 3000);
         }
     }
     render() {
@@ -179,7 +251,18 @@ class ProfilePage extends Component {
                             <button style={this.style.updateProfileButton} onClick={this.updateProfile}>Submit</button>
                         </div>
                     </section>}
-                    <img src="/default.jpeg" alt="My Profile Pic"></img>
+                    <section className="profile-image-container">
+                        <img src={this.state.selectedImage.url || this.state.icon_url} alt="My Profile Pic"></img>
+                            <input
+                                id="fileInput"
+                                type="file"
+                                name="imageforupload"
+                                onChange={this.selectImage}
+                            ></input>
+                        {!this.state.selectedImage.url && <label htmlFor="fileInput" style={this.style.updateProfileButton}>New Image</label>}
+                        {this.state.selectedImage.url && <button style={this.style.updateProfileButton} onClick={this.cancelUpload}>Cancel</button>}
+                        {this.state.selectedImage.url && <button style={this.style.updateProfileButton} onClick={this.uploadImage}>Submit</button>}
+                    </section>
                 </section>
                 <h2>Your groups</h2>
                 {this.state.groups}

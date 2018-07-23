@@ -10,7 +10,7 @@ CREATE TABLE users (
     mail VARCHAR(128) UNIQUE,
     phone VARCHAR(128),
     pw TEXT NOT NULL,
-    icon_url VARCHAR(64),
+    icon_url VARCHAR(256),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

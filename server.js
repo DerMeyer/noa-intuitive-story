@@ -1,12 +1,11 @@
 const express = require('express');
 const app = express();
-const nodemailer = require('nodemailer');
 
 const { s3upload } = require('./s3');
 const { s3Url, iconUrls } = require('./config');
 const { MY_SECRET, SMTP_USER, SMTP_PASS } = (process.env.NODE_ENV === 'production' && process.env) || require('./confidential.json');
 
-const { hashPW, checkPW, login, register, getVCode, setVCode, verifyAccount, newPW, updatePW, updateProfile, getAllGroups, getAllUsers, setGroup, setSoul } = require('./db');
+const { hashPW, checkPW, login, register, getVCode, setVCode, verifyAccount, newPW, updatePW, updateProfile, updateProfileImage, getAllGroups, getAllUsers, setGroup, setSoul } = require('./db');
 
 const multer = require('multer');
 const uidSafe = require('uid-safe');
@@ -48,6 +47,38 @@ app.use(compression());
 
 const bp = require('body-parser');
 app.use(bp.json());
+
+const nodemailer = require('nodemailer');
+const sendMail = (alias, mail, vCode, pw) => {
+    const transporter = nodemailer.createTransport({
+        host: 'smtp.1und1.de',
+        port: 587,
+        secure: false,
+        auth: {
+            user: SMTP_USER,
+            pass: SMTP_PASS
+        }
+    });
+    const mailOptions = vCode ? {
+        from: 'theintuitivestory@gmail.com',
+        to: mail,
+        subject: 'Please confirm your Intuitive Story account.',
+        html: `<h2>Hi ${alias}, your confirmation code is:</h2><h1>${vCode}</h1>`
+    }
+    : {
+        from: 'theintuitivestory@gmail.com',
+        to: mail,
+        subject: `New password for ${alias}.`,
+        html: `<h2>Hi ${alias}, your new password is:</h2><h1>${pw}</h1>`
+    }
+    transporter.sendMail(mailOptions, (err, info) => {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log('Message ID at register:', info.messageId);
+        }
+    });
+}
 
 const PORT = process.env.PORT || 5000;
 
@@ -109,37 +140,6 @@ app.post('/api/login', async (req, res) => {
     }
 });
 
-const sendMail = (alias, mail, vCode, pw) => {
-    const transporter = nodemailer.createTransport({
-        host: 'smtp.1und1.de',
-        port: 587,
-        secure: false,
-        auth: {
-            user: SMTP_USER,
-            pass: SMTP_PASS
-        }
-    });
-    const mailOptions = vCode ? {
-        from: 'theintuitivestory@gmail.com',
-        to: mail,
-        subject: 'Please confirm your Intuitive Story account.',
-        html: `<h2>Hi ${alias}, your confirmation code is:</h2><h1>${vCode}</h1>`
-    }
-    : {
-        from: 'theintuitivestory@gmail.com',
-        to: mail,
-        subject: `New password for ${alias}.`,
-        html: `<h2>Hi ${alias}, your new password is:</h2><h1>${pw}</h1>`
-    }
-    transporter.sendMail(mailOptions, (err, info) => {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log('Message ID at register:', info.messageId);
-        }
-    });
-}
-
 app.post('/api/register', async (req, res) => {
     try {
         const vCode = Math.floor(1000 + (Math.random() * 9000));
@@ -151,8 +151,7 @@ app.post('/api/register', async (req, res) => {
             req.body.alias,
             req.body.mail,
             req.body.phone,
-            hashedPW,
-            iconUrls[0]
+            hashedPW
         );
         sendMail(req.body.alias, req.body.mail, vCode);
         const { id, verified, first, last, alias, mail, phone, icon_url, created_at } = result.rows[0];
@@ -256,6 +255,31 @@ app.post('/api/update_profile', async (req, res) => {
         console.log(err);
         res.json({
             success: false
+        });
+    }
+});
+
+app.post('/api/upload_image', uploader.single('file'), s3upload, async (req, res) => {
+    if (req.file) {
+        try {
+            const url = `${s3Url}${req.file.filename}`;
+            const result = await updateProfileImage(req.body.user_id, url);
+            req.session.user.icon_url = result.rows[0].icon_url;
+            res.json({
+                success: true,
+                icon_url: req.session.user.icon_url
+            });
+        } catch (err) {
+            console.log(err);
+            res.json({
+                success: false,
+                message: 'Beim Upload ist etwas schiefgelaufen.'
+            });
+        }
+    } else {
+        res.json({
+            success: false,
+            message: 'Sieht aus, als ob das Bild zu groß wär. Bist du unter 4MB? '
         });
     }
 });

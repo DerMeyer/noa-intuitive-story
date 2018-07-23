@@ -44,7 +44,8 @@
     color: gray;
 }
 
-.page_container button {
+.page_container button,
+.page_container label {
     cursor: pointer;
     font-family: 'NTR', sans-serif;
     font-size: 3vh;
@@ -58,7 +59,13 @@
     transition-duration: .15s;
 }
 
-.page_container button:hover {
+.page_container label {
+    text-align: center;
+    padding-top: .9vh;
+}
+
+.page_container button:hover,
+.page_container label:hover {
     background-color: lightgray;
 }
 
@@ -128,11 +135,6 @@
     justify-content: space-around;
 }
 
-.profile_edit_container > img {
-    height: 15vw;
-    width: 15vw;
-}
-
 .profile_edit_container > section {
     width: 33vw;
 }
@@ -147,6 +149,23 @@
 .profile_edit_container div {
     display: flex;
     justify-content: space-between;
+}
+
+.profile-image-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-image-container > img {
+    height: 17vw;
+    width: 17vw;
+    border: 1vh solid white;
+    margin-bottom: 3vh;
+}
+
+#fileInput {
+    display: none;
 }
 
 .group-page {

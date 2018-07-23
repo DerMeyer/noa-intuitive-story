@@ -32,10 +32,10 @@ exports.login = alias =>
         'SELECT id, verified, first, last, mail, phone, pw, icon_url, created_at FROM users WHERE alias = $1', [alias]
     );
 
-exports.register = (vCode, first, last, alias, mail, phone, pw, iconUrl) =>
+exports.register = (vCode, first, last, alias, mail, phone, pw) =>
     db.query(
-        'INSERT INTO users (v_code, first, last, alias, mail, phone, pw, icon_url) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id, alias, verified',
-        [vCode, first, last, alias, mail, phone, pw, iconUrl]
+        'INSERT INTO users (v_code, first, last, alias, mail, phone, pw) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',
+        [vCode, first, last, alias, mail, phone, pw]
     );
 
 exports.getVCode = alias =>
@@ -84,6 +84,12 @@ exports.updateProfile = (id, first, last, alias, mail, phone) =>
     db.query(
         'UPDATE users SET first = $1, last = $2, alias = $3, mail = $4, phone = $5 WHERE id = $6 RETURNING *',
         [first, last, alias, mail, phone, id]
+    );
+
+exports.updateProfileImage = (id, url) =>
+    db.query(
+        'UPDATE users SET icon_url = $1 WHERE id = $2 RETURNING icon_url',
+        [url, id]
     );
 
 exports.getAllGroups = () =>

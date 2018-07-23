@@ -209,6 +209,13 @@ export const updateProfile = async (id, first, last, alias, mail, phone, newPW) 
     }
 };
 
+export const updateIconUrl = async url => {
+    return {
+        type: 'UPDATE_ICON_URL',
+        data: url
+    }
+};
+
 export const getGroups = async () => {
     try {
         const resp = await axios.get('/api/groups');

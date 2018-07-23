@@ -66,6 +66,15 @@ const reducer = (
             message: { ...action.message }
         }
     }
+    if (action.type === 'UPDATE_ICON_URL') {
+        return {
+            ...state,
+            user: {
+                ...state.user,
+                icon_url: action.data
+            }
+        }
+    }
     if (action.type === 'GET_GROUPS') {
         return {
             ...state,

@@ -22,11 +22,6 @@ class Verify extends Component {
     componentDidMount() {
         this.firstInput.current.focus();
     }
-    componentDidUpdate(prevProps) {
-        if (!this.props.loggedIn || this.props.verified) {
-            window.location.replace('/');
-        }
-    }
     componentWillUnmount() {
         this.props.message.registerText && this.props.dispatch(deleteMessage());
         clearTimeout(this.setTimeoutID);
@@ -49,6 +44,7 @@ class Verify extends Component {
         if (this.state.vCode) {
             this.setTimeoutID = setTimeout(() => {
                 this.props.dispatch(verifyAccount(this.props.alias, this.state.vCode));
+                window.location.replace('/');
             }, 500);
         } else {
             this.setState({
