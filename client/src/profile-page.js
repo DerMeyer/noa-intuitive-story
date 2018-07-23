@@ -21,6 +21,9 @@ class ProfilePage extends Component {
             confirmPW: ''
         };
         this.style = {
+            updateProfileButton: {
+                width: '16vw'
+            },
             row: {
                 height: '23vh',
                 borderBottom: '.5vh solid gray'
@@ -117,6 +120,11 @@ class ProfilePage extends Component {
             }, 4000);
         }
     }
+    cancelUpdate = () => {
+        this.props.user && this.setState({
+            ...this.props.user
+        });
+    }
     emptyField = event => {
         this.setState({
             [event.target.name]: '',
@@ -167,8 +175,8 @@ class ProfilePage extends Component {
                             <input name="confirmPW" type="password" value={this.state.confirmPW} placeholder="confirm password" onFocus={this.emptyField} onChange={this.compileData} onKeyDown={this.updateProfile} />
                         </div>
                         <div>
-                            <p>Cancel</p>
-                            <p>Submit</p>
+                            <button style={this.style.updateProfileButton} onClick={this.cancelUpdate}>Cancel</button>
+                            <button style={this.style.updateProfileButton} onClick={this.updateProfile}>Submit</button>
                         </div>
                     </section>}
                     <img src="/default.jpeg" alt="My Profile Pic"></img>
