@@ -6,7 +6,7 @@ const { s3upload } = require('./s3');
 const { s3Url, iconUrls } = require('./config');
 const { MY_SECRET, SMTP_USER, SMTP_PASS } = (process.env.NODE_ENV === 'production' && process.env) || require('./confidential.json');
 
-const { hashPW, checkPW, login, register, getVCode, setVCode, verifyAccount, getAllGroups, getAllUsers, setGroup, setSoul } = require('./db');
+const { hashPW, checkPW, login, register, getVCode, setVCode, verifyAccount, newPW, getAllGroups, getAllUsers, setGroup, setSoul } = require('./db');
 
 const multer = require('multer');
 const uidSafe = require('uid-safe');
@@ -106,7 +106,7 @@ app.post('/api/login', async (req, res) => {
     }
 });
 
-const sendMail = (alias, mail, vCode) => {
+const sendMail = (alias, mail, vCode, pw) => {
     const transporter = nodemailer.createTransport({
         host: 'smtp.1und1.de',
         port: 587,
@@ -116,12 +116,18 @@ const sendMail = (alias, mail, vCode) => {
             pass: SMTP_PASS
         }
     });
-    const mailOptions = {
+    const mailOptions = vCode ? {
         from: 'theintuitivestory@gmail.com',
         to: mail,
         subject: 'Please confirm your Intuitive Story account.',
         html: `<h2>Hi ${alias}, your confirmation code is:</h2><h1>${vCode}</h1>`
-    };
+    }
+    : {
+        from: 'theintuitivestory@gmail.com',
+        to: mail,
+        subject: `New password for ${alias}.`,
+        html: `<h2>Hi ${alias}, your new password is:</h2><h1>${pw}</h1>`
+    }
     transporter.sendMail(mailOptions, (err, info) => {
         if (err) {
             console.log(err);
@@ -179,8 +185,29 @@ app.post('/api/verify_account', async (req, res) => {
     try {
         const result = await getVCode(req.body.alias);
         if (result.rows[0].v_code == req.body.vCode) {
-            const result = await verifyAccount(req.body.alias);
+            await verifyAccount(req.body.alias);
             req.session.user.verified = 1;
+            res.json({
+                success: true
+            });
+        } else {
+            res.json({
+                success: false
+            });
+        }
+    } catch (err) {
+        console.log(err);
+        res.json({
+            success: false
+        });
+    }
+});
+
+app.post('/api/get_new_pw', async (req, res) => {
+    try {
+        const result = await newPW(req.body.alias);
+        if (result.newPW) {
+            sendMail(req.body.alias, result.mail, null, result.newPW)
             res.json({
                 success: true
             });

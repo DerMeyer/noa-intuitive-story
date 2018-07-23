@@ -132,7 +132,7 @@ class Register extends Component {
                 <div className="login_question">
                     <input style={this.state.aliasRed} name="alias" type="text" value={this.state.alias} placeholder="user name" onFocus={this.emptyField} onChange={this.compileData} onKeyDown={this.register} />
                     <p onClick={this.toggleAliasModal}>?</p>
-                    {this.state.aliasModal && <h2 onClick={this.toggleAliasModal}>This can be any name you like.<br/>Your user name will be the only data we show in the site.<br/>All your data will be handled securely and only ever accessed by staff of The Intuitive Story.</h2>}
+                    {this.state.aliasModal && <h2 onClick={this.toggleAliasModal}>This can be any name you like.<br/>Your user name will be the only data we display to third parties.<br/>All your data will be handled securely and only ever accessed by staff of The Intuitive Story.</h2>}
                 </div>
                 <input style={this.state.mailRed} name="mail" type="text" value={this.state.mail} placeholder="mail" onFocus={this.emptyField} onChange={this.compileData} onKeyDown={this.register} />
                 <input style={this.state.phoneRed} name="phone" type="text" value={this.state.phone} placeholder="phone" onFocus={this.emptyField} onChange={this.compileData} onKeyDown={this.register} />

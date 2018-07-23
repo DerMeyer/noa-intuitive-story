@@ -6,7 +6,7 @@ const { AWS_KEY, AWS_SECRET } = (process.env.NODE_ENV === 'production' && proces
 const client = knox.createClient({
     key: AWS_KEY,
     secret: AWS_SECRET,
-    bucket: 'basebookfoundation'
+    bucket: 'intuitivestory'
 });
 
 exports.s3upload = (req, res, next) => {

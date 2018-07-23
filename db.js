@@ -2,7 +2,7 @@ const spicedPg = require('spiced-pg');
 const db = spicedPg(process.env.DATABASE_URL || 'postgres:postgres:postgres@localhost:5432/intuitivestory');
 const bcrypt = require('bcryptjs');
 
-exports.hashPW = pw =>
+const hashPW = pw =>
     new Promise((resolve, reject) =>
         bcrypt.genSalt((err, salt) => {
             if (err) {
@@ -16,6 +16,7 @@ exports.hashPW = pw =>
         })
     );
 
+exports.hashPW = hashPW;
 
 exports.checkPW = (pwUser, pwDB) =>
     new Promise((resolve, reject) =>
@@ -51,6 +52,27 @@ exports.verifyAccount = alias =>
     db.query(
         'UPDATE users SET verified = 1 WHERE alias = $1', [alias]
     );
+
+exports.newPW = async alias => {
+    const chars = [
+        'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+        'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
+    ];
+    let newPassword = '';
+    for (let i = 0; i < 8; i++) {
+        newPassword += chars[Math.floor(Math.random() * chars.length)];
+    }
+    const newHash = await hashPW(newPassword);
+    const result = await db.query(
+        'UPDATE users SET pw = $1 WHERE alias = $2 RETURNING mail',
+        [newHash, alias]
+    );
+    return {
+        newPW: newPassword,
+        mail: result.rows[0].mail
+    }
+}
 
 exports.getAllGroups = () =>
     db.query(

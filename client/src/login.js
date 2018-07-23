@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './login.css';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import axios from './axios';
 
 import { login, deleteMessage } from './actions';
 
@@ -74,7 +75,38 @@ class Login extends Component {
         });
     }
     forgotPW = () => {
-        this.setState({ message: `We're working to send you a new password.` });
+        if (this.state.alias) {
+            axios
+                .post('/api/get_new_pw', {
+                    alias: this.state.alias
+                })
+                .then(resp => {
+                    if (resp.data.success) {
+                        this.setState({
+                            message: 'We sent a new password to your email address.',
+                            messageRed: {}
+                        });
+                    } else {
+                        this.setState({
+                            message: 'Something went wrong.',
+                            messageRed: { color: 'red'  }
+                        });
+                    }
+                })
+                .catch(function(err) {
+                    console.log(err);
+                    this.setState({
+                        message: 'No server response.',
+                        messageRed: { color: 'red'  }
+                    });
+                });
+        } else {
+            this.state.alias || this.setState({
+                alias: 'Please enter a user name',
+                aliasRed: { color: 'red' }
+            });
+        }
+
     }
     render() {
         return (
