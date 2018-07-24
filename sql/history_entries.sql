@@ -6,5 +6,6 @@ CREATE TABLE history_entries (
     name VARCHAR(64) NOT NULL,
     time_period INTEGER NOT NULL,
     place VARCHAR(64) NOT NULL,
-    wiki_link TEXT NOT NULL
+    link VARCHAR(512) NOT NULL,
+    comment TEXT
 );

@@ -14,7 +14,12 @@ class Timeline extends Component {
         this.state = {
             timelineLeft: ((window.innerHeight * this.timelineImageQuotient) - window.innerWidth) / 2,
             newHistoryEntry: false,
-            addHistory: {}
+            addHistoryStyle: {},
+            year: '',
+            name: '',
+            location: '',
+            link: '',
+            comment: ''
         };
         this.style = {
             expander: {
@@ -38,6 +43,32 @@ class Timeline extends Component {
             timeline: {
                 height: '82vh',
                 transform: 'scaleX(1.028)'
+            },
+            historyCreatorH3: {
+                fontSize: '3vh',
+                lineHeight: '1'
+            },
+            historyCreatorInput: {
+                fontFamily: 'NTR, sans-serif',
+                fontSize: '2vh',
+                height: '3vh',
+                width: '10vw',
+                marginBottom: '1vh'
+            },
+            historyCreatorButtonContainer: {
+                display: 'flex',
+                justifyContent: 'space-between',
+                width: '10vw',
+                marginTop: '.5vh'
+            },
+            historyCreatorButton: {
+                cursor: 'pointer',
+                fontFamily: 'NTR, sans-serif',
+                fontSize: '2vh',
+                width: '4.7vw',
+                borderRadius: '.5vh',
+                color: 'white',
+                backgroundColor: 'gray'
             }
         };
         this.timelineMap = [
@@ -168,27 +199,45 @@ class Timeline extends Component {
             })
         });
     }
+    compileData = event => {
+        this.setState({
+            [event.target.name]: event.target.value
+        });
+    }
     addHistoryEntry = event => {
+        if (this.state.newHistoryEntry || event.clientY < window.innerHeight * .53) {
+            return;
+        }
         this.setState({
             newHistoryEntry: true,
-            addHistory: {
+            addHistoryStyle: {
                 position: 'absolute',
                 top: `${event.clientY - window.innerHeight * .12}px`,
                 left: `${event.pageX - this.timelineSled.current.offsetLeft}px`,
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                height: '100px',
-                width: '100px',
+                padding: '1vh',
+                borderRadius: '1vh',
                 backgroundColor: 'whitesmoke',
-                transform: 'translate(-50%, -50%)'
-            }
+                transform: 'translate(-50%, -85%)'
+            },
+            year: this.mapPositionToTimeline(event)
         });
     }
-    createHistoryEntry = () => {
+    cancelHistoryEntry = () => {
         this.setState({
             newHistoryEntry: false,
-            addHistory: {}
+            addHistoryStyle: {}
+        });
+    }
+    createHistoryEntry = event => {
+        if (event.type !== 'click' && event.keyCode !== 13) {
+            return;
+        }
+        this.setState({
+            newHistoryEntry: false,
+            addHistoryStyle: {}
         });
     }
     mapPositionToTimeline = event => {
@@ -203,7 +252,6 @@ class Timeline extends Component {
             }
         });
         const exactYear = Math.floor(timelineSection[0][1] + ((timelineSection[1][1] - timelineSection[0][1]) * ((timelineSection[0][0] - timelineX) / (timelineSection[0][0] - timelineSection[1][0]))));
-        console.log(exactYear);
         return exactYear;
     }
     mapTimelineToPosition = year => {
@@ -235,8 +283,62 @@ class Timeline extends Component {
                         <Architypes />
                         {this.state.groups}
                         {this.state.history}
-                        {this.state.newHistoryEntry && <section style={this.state.addHistory} onClick={this.createHistoryEntry}>
-                            <p>Wahnsinn</p>
+                        {this.state.newHistoryEntry && <section style={this.state.addHistoryStyle} onClick={e => e.stopPropagation()}>
+                            <h3 style={this.style.historyCreatorH3}>Add a history event</h3>
+                            <input
+                                style={this.style.historyCreatorInput}
+                                name="year"
+                                type="text"
+                                value={this.state.year}
+                                placeholder="Year"
+                                onFocus={this.emptyField}
+                                onChange={this.compileData}
+                                onKeyDown={this.createHistoryEntry}
+                                />
+                            <input
+                                style={this.style.historyCreatorInput}
+                                name="name"
+                                type="text"
+                                value={this.state.name}
+                                placeholder="Name"
+                                onFocus={this.emptyField}
+                                onChange={this.compileData}
+                                onKeyDown={this.createHistoryEntry}
+                                />
+                            <input
+                                style={this.style.historyCreatorInput}
+                                name="location"
+                                type="text"
+                                value={this.state.location}
+                                placeholder="Location"
+                                onFocus={this.emptyField}
+                                onChange={this.compileData}
+                                onKeyDown={this.createHistoryEntry}
+                                />
+                            <input
+                                style={this.style.historyCreatorInput}
+                                name="link"
+                                type="text"
+                                value={this.state.link}
+                                placeholder="Link"
+                                onFocus={this.emptyField}
+                                onChange={this.compileData}
+                                onKeyDown={this.createHistoryEntry}
+                                />
+                            <input
+                                style={this.style.historyCreatorInput}
+                                name="comment"
+                                type="text"
+                                value={this.state.comment}
+                                placeholder="Comment"
+                                onFocus={this.emptyField}
+                                onChange={this.compileData}
+                                onKeyDown={this.createHistoryEntry}
+                                />
+                            <section style={this.style.historyCreatorButtonContainer}>
+                                <button style={this.style.historyCreatorButton} onClick={this.cancelHistoryEntry}>Cancel</button>
+                                <button style={this.style.historyCreatorButton} onClick={this.createHistoryEntry}>Add</button>
+                            </section>
                         </section>}
                     </section>
                 </section>

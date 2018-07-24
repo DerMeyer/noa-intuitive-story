@@ -64,13 +64,10 @@ class Admin extends Component {
     }
     componentDidMount() {
         window.scroll(0, 0);
-        this.firstInput.current.focus();
+        this.firstInput.current && this.firstInput.current.focus();
         this.getUsers();
     }
     componentDidUpdate() {
-        if (this.props.user.verified !== 2) {
-            window.location.replace('/');
-        }
         this.soul_list.forEach(soul => {
             const soulName = this.state[`${soul}_name`].endsWith(' (unverified)') ? this.state[`${soul}_name`].slice(0, -13) : this.state[`${soul}_name`]
             if (this.users.some(user => user.alias === soulName)) {
@@ -154,7 +151,6 @@ class Admin extends Component {
         });
     }
     emptyField = event => {
-        console.log('empty');
         event.stopPropagation();
         this.setState({
             [event.target.name]: '',
@@ -250,6 +246,14 @@ class Admin extends Component {
         }
     }
     render() {
+        if (this.props.user.verified !== 2) {
+            return (
+                <section className="page_container">
+                    <h1>Warning!</h1>
+                    <h2>This page is not for you.</h2>
+                </section>
+            )
+        }
         return (
             <section className="page_container" onClick={() => {
                     this.setSoulSearchMenu('');

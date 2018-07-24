@@ -82,6 +82,7 @@ class Login extends Component {
                 })
                 .then(resp => {
                     if (resp.data.success) {
+                        this.props.dispatch(deleteMessage());
                         this.setState({
                             message: 'We sent a new password to your email address.',
                             messageRed: {}
