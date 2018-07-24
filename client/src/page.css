@@ -30,6 +30,11 @@
     margin-top: 2vw;
 }
 
+.create-group-article {
+    display: flex;
+    flex-direction: column;
+}
+
 .page_container input,
 .page_container h4 {
     font-family: 'NTR', sans-serif;
@@ -41,7 +46,14 @@
 }
 
 .page_container h4 {
+    width: 4vw;
+    margin: 0 0 3vh 0;
     color: gray;
+}
+
+.create-group-image {
+    width: 5.5vh;
+    margin-bottom: 1vh;
 }
 
 .page_container button,

@@ -5,7 +5,7 @@ const { s3upload } = require('./s3');
 const { s3Url, iconUrls } = require('./config');
 const { MY_SECRET, SMTP_USER, SMTP_PASS } = (process.env.NODE_ENV === 'production' && process.env) || require('./confidential.json');
 
-const { hashPW, checkPW, login, register, getVCode, setVCode, verifyAccount, newPW, updatePW, updateProfile, updateProfileImage, getAllGroups, getHistory, getAllUsers, setGroup, setSoul, createHistory } = require('./db');
+const { hashPW, checkPW, login, register, getVCode, setVCode, verifyAccount, newPW, updatePW, updateProfile, updateProfileImage, getAllGroups, getHistory, getAllUsers, createGroup, createHistory } = require('./db');
 
 const multer = require('multer');
 const uidSafe = require('uid-safe');
@@ -343,33 +343,28 @@ app.post('/api/create_group', async (req, res) => {
     if (!req.session.user || req.session.user.id !== 1) {
         res.end();
     }
+    console.log(req.body);
     try {
-        const result = await setGroup(
-            req.body.group.name,
-            req.body.group.year,
-            req.body.group.story,
-            req.body.group.gul_id,
-            req.body.group.grun_id,
-            req.body.group.vermel_id,
-            req.body.group.bezrechu_id,
-            req.body.group.sagol_id
+        await createGroup(
+            req.body.name,
+            req.body.year,
+            req.body.story,
+            req.body.gul_id,
+            req.body.grun_id,
+            req.body.vermel_id,
+            req.body.bezrechu_id,
+            req.body.sagol_id,
+            req.body.gul_role,
+            req.body.grun_role,
+            req.body.vermel_role,
+            req.body.bezrechu_role,
+            req.body.sagol_role,
+            req.body.gul_character,
+            req.body.grun_character,
+            req.body.vermel_character,
+            req.body.bezrechu_character,
+            req.body.sagol_character
         );
-        const [ one, two, three, four, five ] = req.body.souls;
-        if (one) {
-            await setSoul(one.id, result.rows[0].id, one.soul);
-        }
-        if (two) {
-            await setSoul(two.id, result.rows[0].id, two.soul);
-        }
-        if (three) {
-            await setSoul(three.id, result.rows[0].id, three.soul);
-        }
-        if (four) {
-            await setSoul(four.id, result.rows[0].id, four.soul);
-        }
-        if (five) {
-            await setSoul(five.id, result.rows[0].id, five.soul);
-        }
         res.json({
             success: true
         });

@@ -78,7 +78,7 @@ const reducer = (
     if (action.type === 'GET_GROUPS') {
         return {
             ...state,
-            groups: { ...action.data }
+            groups: [ ...action.data ]
         };
     }
     if (action.type === 'GET_HISTORY') {

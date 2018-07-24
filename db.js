@@ -94,7 +94,7 @@ exports.updateProfileImage = (id, url) =>
 
 exports.getAllGroups = () =>
     db.query(
-        'SELECT name, time_period, group_id, user_id, gul_user_id, grun_user_id, vermel_user_id, bezrechu_user_id, sagol_user_id, soul, alias, groups.story AS group_story, souls.story AS soul_story, groups.created_at AS group_start, groups.updated_at AS group_update FROM groups JOIN souls ON groups.id = group_id JOIN users ON user_id = users.id'
+        'SELECT * FROM groups'
     );
 
 exports.getHistory = () =>
@@ -107,16 +107,67 @@ exports.getAllUsers = () =>
         'SELECT id, verified, alias FROM users'
     );
 
-exports.setGroup = (name, time_period, story, gul_user_id, grun_user_id, vermel_user_id, bezrechu_user_id, sagol_user_id) =>
+exports.createGroup = (
+    name,
+    time_period,
+    story,
+    gul_id,
+    grun_id,
+    vermel_id,
+    bezrechu_id,
+    sagol_id,
+    gul_role,
+    grun_role,
+    vermel_role,
+    bezrechu_role,
+    sagol_role,
+    gul_character,
+    grun_character,
+    vermel_character,
+    bezrechu_character,
+    sagol_character
+) =>
     db.query(
-        'INSERT INTO groups (name, time_period, story, gul_user_id, grun_user_id, vermel_user_id, bezrechu_user_id, sagol_user_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id',
-        [name, time_period, story, gul_user_id, grun_user_id, vermel_user_id, bezrechu_user_id, sagol_user_id]
-    );
-
-exports.setSoul = (user_id, group_id, soul) =>
-    db.query(
-        'INSERT INTO souls (user_id, group_id, soul) VALUES ($1, $2, $3)',
-        [user_id, group_id, soul]
+        `INSERT INTO groups (
+            name,
+            time_period,
+            story,
+            gul_user_id,
+            grun_user_id,
+            vermel_user_id,
+            bezrechu_user_id,
+            sagol_user_id,
+            gul_role,
+            grun_role,
+            vermel_role,
+            bezrechu_role,
+            sagol_role,
+            gul_character,
+            grun_character,
+            vermel_character,
+            bezrechu_character,
+            sagol_character
+        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)`,
+        [
+            name,
+            time_period,
+            story,
+            gul_id,
+            grun_id,
+            vermel_id,
+            bezrechu_id,
+            sagol_id,
+            gul_role,
+            grun_role,
+            vermel_role,
+            bezrechu_role,
+            sagol_role,
+            gul_character,
+            grun_character,
+            vermel_character,
+            bezrechu_character,
+            sagol_character
+        ]
     );
 
 exports.createHistory = (user_id, name, time_period, place, link, comment) =>

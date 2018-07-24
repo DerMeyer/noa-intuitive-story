@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const group = props => {
+    console.log(props.gul_character);
     const style = {
         container: {
             position: 'relative',
@@ -53,7 +54,7 @@ const group = props => {
         color: {
             height: '3.3vh'
         },
-        aliasContainer: {
+        characterContainer: {
             justifySelf: 'center',
             alignSelf: 'end',
             display: 'flex',
@@ -63,7 +64,7 @@ const group = props => {
             overflow: 'hidden',
             zIndex: '100'
         },
-        alias: {
+        character: {
             whiteSpace: 'nowrap',
             fontSize: '2vh',
             marginLeft: '.5vh',
@@ -81,12 +82,12 @@ const group = props => {
             </div>
             {props.gul
             ? <div style={style.colorContainer}>
-                <img style={style.color} src={`/images/color_${props.gul.soul}.png`} alt={`${props.gul.soul}`} />
+                <img style={style.color} src={`/images/color_${props.gul_role}.png`} alt={`${props.gul.soul}`} />
             </div>
             : <div></div>}
             {props.gul
-            ? <div style={style.aliasContainer}>
-                <p style={style.alias}>{props.gul.alias}</p>
+            ? <div style={style.characterContainer}>
+                <p style={style.character}>{props.gul_character}</p>
             </div>
             : <div></div>}
             <div style={style.colorContainer}>
@@ -94,12 +95,12 @@ const group = props => {
             </div>
             {props.grun
             ? <div style={style.colorContainer}>
-                <img style={style.color} src={`/images/color_${props.grun.soul}.png`} alt={`${props.grun.soul}`} />
+                <img style={style.color} src={`/images/color_${props.grun_role}.png`} alt={`${props.grun.soul}`} />
             </div>
             : <div></div>}
             {props.grun
-            ? <div style={style.aliasContainer}>
-                <p style={style.alias}>{props.grun.alias}</p>
+            ? <div style={style.characterContainer}>
+                <p style={style.character}>{props.grun_character}</p>
             </div>
             : <div></div>}
             <div style={style.colorContainer}>
@@ -107,12 +108,12 @@ const group = props => {
             </div>
             {props.vermel
             ? <div style={style.colorContainer}>
-                <img style={style.color} src={`/images/color_${props.vermel.soul}.png`} alt={`${props.vermel.soul}`} />
+                <img style={style.color} src={`/images/color_${props.vermel_role}.png`} alt={`${props.vermel.soul}`} />
             </div>
             : <div></div>}
             {props.vermel
-            ? <div style={style.aliasContainer}>
-                <p style={style.alias}>{props.vermel.alias}</p>
+            ? <div style={style.characterContainer}>
+                <p style={style.character}>{props.vermel_character}</p>
             </div>
             : <div></div>}
             <div style={style.colorContainer}>
@@ -120,12 +121,12 @@ const group = props => {
             </div>
             {props.bezrechu
             ? <div style={style.colorContainer}>
-                <img style={style.color} src={`/images/color_${props.bezrechu.soul}.png`} alt={`${props.bezrechu.soul}`} />
+                <img style={style.color} src={`/images/color_${props.bezrechu_role}.png`} alt={`${props.bezrechu.soul}`} />
             </div>
             : <div></div>}
             {props.bezrechu
-            ? <div style={style.aliasContainer}>
-                <p style={style.alias}>{props.bezrechu.alias}</p>
+            ? <div style={style.characterContainer}>
+                <p style={style.character}>{props.bezrechu_character}</p>
             </div>
             : <div></div>}
             <div style={style.colorContainer}>
@@ -133,12 +134,12 @@ const group = props => {
             </div>
             {props.sagol
             ? <div style={style.colorContainer}>
-                <img style={style.color} src={`/images/color_${props.sagol.soul}.png`} alt={`${props.sagol.soul}`} />
+                <img style={style.color} src={`/images/color_${props.sagol_role}.png`} alt={`${props.sagol.soul}`} />
             </div>
             : <div></div>}
             {props.sagol
-            ? <div style={style.aliasContainer}>
-                <p style={style.alias}>{props.sagol.alias}</p>
+            ? <div style={style.characterContainer}>
+                <p style={style.character}>{props.sagol_character}</p>
             </div>
             : <div></div>}
         </Link>

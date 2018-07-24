@@ -11,5 +11,20 @@ CREATE TABLE groups (
     grun_user_id INTEGER,
     vermel_user_id INTEGER,
     bezrechu_user_id INTEGER,
-    sagol_user_id INTEGER
+    sagol_user_id INTEGER,
+    gul_role VARCHAR(64),
+    grun_role VARCHAR(64),
+    vermel_role VARCHAR(64),
+    bezrechu_role VARCHAR(64),
+    sagol_role VARCHAR(64),
+    gul_character VARCHAR(64),
+    grun_character VARCHAR(64),
+    vermel_character VARCHAR(64),
+    bezrechu_character VARCHAR(64),
+    sagol_character VARCHAR(64),
+    gul_text TEXT,
+    grun_text TEXT,
+    vermel_text TEXT,
+    bezrechu_text TEXT,
+    sagol_text TEXT
 );
