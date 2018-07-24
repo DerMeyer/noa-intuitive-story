@@ -25,14 +25,9 @@ class GroupPage extends Component {
         if (!this.props.groups || this.state.group) {
             return this.state.group;
         }
-        const { name, time_period, gul, grun, vermel, bezrechu, sagol } = this.props.groups[this.props.match.params.id];
-        const groupProps = {
-            id: this.props.match.params,
-            name, time_period, gul, grun, vermel, bezrechu, sagol
-        }
         this.setState({
             group: (
-                <Group { ...groupProps } />
+                <Group { ...this.props.groups[this.props.match.params.id - 1] } />
             )
         });
     }

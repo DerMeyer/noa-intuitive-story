@@ -175,7 +175,6 @@ class Timeline extends Component {
         }
         this.setState({
             groups: this.props.groups.map(group => {
-                console.log(group);
                 const randomTop = 10 + (Math.random() * 12);
                 const groupStyle = {
                     position: 'absolute',
@@ -226,9 +225,8 @@ class Timeline extends Component {
                     backgroundColor: 'rgb(120, 120, 120)'
                 }
                 return (
-                    <section style={historyStyle} className="history-on-timeline">
+                    <section key={`historyEntry_${entry.id}`} style={historyStyle} className="history-on-timeline">
                         <a
-                            key={entry.id}
                             href={entry.link}
                             target="_blank"
                             rel="noopener noreferrer"

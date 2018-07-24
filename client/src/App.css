@@ -28,7 +28,7 @@ header {
     left: 1vw;
     display: grid;
     height: 12vh;
-    width: 50vw;
+    width: 37vw;
     z-index: 50;
     transition: .5s;
 }

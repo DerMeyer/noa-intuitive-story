@@ -7,14 +7,15 @@ class Navigation extends Component {
         return (
             <header>
                 <nav>
-                    <Link to="/group_collection"><img className="button" src="/images/about.png" alt="About the Intuitive Story" /></Link>
+                    <Link to="/about"><img className="button" src="/images/about.png" alt="About the Intuitive Story" /></Link>
                     <Link to="/group_collection"><img className="button" src="/images/groups.png" alt="Group Collection" /></Link>
-                    <Link to="/group_collection"><img className="button" src="/images/share.png" alt="Share an intuitive Note" /></Link>
                 </nav>
             </header>
         );
     }
 }
+
+// <Link to="/group_collection"><img className="button" src="/images/share.png" alt="Share an intuitive Note" /></Link>
 
 const mapStateToProps = state => state.navigation || {};
 

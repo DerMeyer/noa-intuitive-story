@@ -343,7 +343,6 @@ app.post('/api/create_group', async (req, res) => {
     if (!req.session.user || req.session.user.id !== 1) {
         res.end();
     }
-    console.log(req.body);
     try {
         await createGroup(
             req.body.name,
@@ -354,11 +353,11 @@ app.post('/api/create_group', async (req, res) => {
             req.body.vermel_id,
             req.body.bezrechu_id,
             req.body.sagol_id,
-            req.body.gul_role,
-            req.body.grun_role,
-            req.body.vermel_role,
-            req.body.bezrechu_role,
-            req.body.sagol_role,
+            req.body.gul_soul,
+            req.body.grun_soul,
+            req.body.vermel_soul,
+            req.body.bezrechu_soul,
+            req.body.sagol_soul,
             req.body.gul_character,
             req.body.grun_character,
             req.body.vermel_character,
