@@ -3,11 +3,7 @@ import './page.css';
 import { connect } from 'react-redux';
 import axios from './axios';
 
-import XMLParser from 'react-xml-parser';
-
 import { setMessage } from './actions';
-
-const xmlText = '';
 
 class Admin extends Component {
     constructor(props) {
@@ -59,8 +55,6 @@ class Admin extends Component {
             }
         };
         this.firstInput = React.createRef();
-        this.xml = new XMLParser().parseFromString(xmlText);
-        console.log(this.xml);
     }
     componentDidMount() {
         window.scroll(0, 0);
