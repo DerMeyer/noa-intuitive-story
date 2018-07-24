@@ -273,6 +273,33 @@ export const getGroups = async () => {
     }
 }
 
+export const getHistory = async () => {
+    try {
+        const resp = await axios.get('/api/get_history');
+        if (resp.data.success) {
+            return {
+                type: 'GET_HISTORY',
+                data: resp.data.history
+            };
+        } else {
+            return {
+                type: 'SET_MESSAGE',
+                message: {
+                    text: `The server didn't send any history entries.`
+                }
+            };
+        }
+    } catch (err) {
+        console.log(err);
+        return {
+            type: 'SET_MESSAGE',
+            message: {
+                text: `The server didn't respond.`
+            }
+        };
+    }
+}
+
 export const getNotes = async () => {
     try {
         const resp = await axios.get('/api/get_notes');
@@ -300,3 +327,30 @@ export const getNotes = async () => {
         };
     }
 }
+
+export const createHistory = async (user_id, name, time_period, place, link, comment) => {
+    try {
+        const resp = await axios.post('/api/create_history', { user_id, name, time_period, place, link, comment });
+        if (resp.data.success) {
+            return {
+                type: 'CREATE_HISTORY',
+                data: resp.data.historyEntry
+            };
+        } else {
+            return {
+                type: 'SET_MESSAGE',
+                message: {
+                    registerText: 'Something went wrong.'
+                }
+            };
+        }
+    } catch (err) {
+        console.log(err);
+        return {
+            type: 'SET_MESSAGE',
+            message: {
+                text: `The server didn't respond.`
+            }
+        };
+    }
+};

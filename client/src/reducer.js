@@ -81,6 +81,22 @@ const reducer = (
             groups: { ...action.data }
         };
     }
+    if (action.type === 'GET_HISTORY') {
+        return {
+            ...state,
+            history: { ...action.data }
+        };
+    }
+    if (action.type === 'CREATE_HISTORY') {
+        console.log(action.data);
+        return {
+            ...state,
+            history: [
+                ...state.history,
+                action.data
+            ]
+        };
+    }
     return state;
 }
 

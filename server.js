@@ -5,7 +5,7 @@ const { s3upload } = require('./s3');
 const { s3Url, iconUrls } = require('./config');
 const { MY_SECRET, SMTP_USER, SMTP_PASS } = (process.env.NODE_ENV === 'production' && process.env) || require('./confidential.json');
 
-const { hashPW, checkPW, login, register, getVCode, setVCode, verifyAccount, newPW, updatePW, updateProfile, updateProfileImage, getAllGroups, getAllUsers, setGroup, setSoul } = require('./db');
+const { hashPW, checkPW, login, register, getVCode, setVCode, verifyAccount, newPW, updatePW, updateProfile, updateProfileImage, getAllGroups, getHistory, getAllUsers, setGroup, setSoul, createHistory } = require('./db');
 
 const multer = require('multer');
 const uidSafe = require('uid-safe');
@@ -290,6 +290,46 @@ app.get('/api/groups', async (req, res) => {
         res.json({
             success: true,
             groups: result.rows
+        });
+    } catch (err) {
+        console.log(err);
+        res.json({
+            success: false
+        });
+    }
+});
+
+app.get('/api/get_history', async (req, res) => {
+    try {
+        const result = await getHistory();
+        res.json({
+            success: true,
+            history: result.rows
+        });
+    } catch (err) {
+        console.log(err);
+        res.json({
+            success: false
+        });
+    }
+});
+
+app.post('/api/create_history', async (req, res) => {
+    if (!req.session.user) {
+        res.end();
+    }
+    try {
+        const result = await createHistory(
+            req.body.user_id,
+            req.body.name,
+            req.body.time_period,
+            req.body.place,
+            req.body.link,
+            req.body.comment
+        );
+        res.json({
+            success: true,
+            historyEntry: result.rows[0]
         });
     } catch (err) {
         console.log(err);

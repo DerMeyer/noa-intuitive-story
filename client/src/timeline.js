@@ -5,7 +5,7 @@ import Architypes from './architypes';
 import Group from './group';
 import History from './history';
 
-import { getGroups } from './actions';
+import { setMessage, getGroups, getHistory, createHistory } from './actions';
 
 class Timeline extends Component {
     constructor(props) {
@@ -48,24 +48,37 @@ class Timeline extends Component {
                 fontSize: '3vh',
                 lineHeight: '1'
             },
+            verifyP: {
+                margin: '0'
+            },
+            historyCreatorYear: {
+                display: 'inline-block',
+                fontFamily: 'NTR, sans-serif',
+                fontSize: '2vh',
+                height: '3vh',
+                width: '6vw',
+                paddingLeft: '.2vw',
+                marginBottom: '1vh'
+            },
             historyCreatorInput: {
                 fontFamily: 'NTR, sans-serif',
                 fontSize: '2vh',
                 height: '3vh',
-                width: '10vw',
+                width: '12vw',
+                paddingLeft: '.2vw',
                 marginBottom: '1vh'
             },
             historyCreatorButtonContainer: {
                 display: 'flex',
                 justifyContent: 'space-between',
-                width: '10vw',
+                width: '12vw',
                 marginTop: '.5vh'
             },
             historyCreatorButton: {
                 cursor: 'pointer',
                 fontFamily: 'NTR, sans-serif',
                 fontSize: '2vh',
-                width: '4.7vw',
+                width: '5.5vw',
                 borderRadius: '.5vh',
                 color: 'white',
                 backgroundColor: 'gray'
@@ -87,11 +100,10 @@ class Timeline extends Component {
     }
     componentDidMount() {
         this.scrollFactor = ((window.innerHeight * this.timelineImageQuotient) - window.innerWidth) / (2 * window.innerHeight);
-        // window.addEventListener('scroll', this.setTimelineLeft);
         window.scroll(0, window.innerHeight);
-        // Polling for Scroll
         this.setTimelineLeft();
         this.props.dispatch(getGroups());
+        this.props.dispatch(getHistory());
     }
     componentDidUpdate() {
         this.scrollFactor = ((window.innerHeight * this.timelineImageQuotient) - window.innerWidth) / (2 * window.innerHeight);
@@ -99,11 +111,8 @@ class Timeline extends Component {
     }
     componentWillUnmount() {
         clearTimeout(this.setTimeoutID);
-        // Polling for Scroll
-        // window.removeEventListener('scroll', this.setTimelineLeft);
     }
     setTimelineLeft = () => {
-        // Polling for Scroll
         if (this.state.timelineLeft !== window.scrollY * this.scrollFactor) {
             this.setState({
                 timelineLeft: window.scrollY * this.scrollFactor
@@ -120,8 +129,6 @@ class Timeline extends Component {
         this.isDragging = true;
         this.extractLeftDelta(event);
         this.hasDragged(event);
-        // Polling for Scroll
-        // window.removeEventListener('scroll', this.setTimelineLeft);
     };
     onMove = event => {
         event.preventDefault();
@@ -142,8 +149,6 @@ class Timeline extends Component {
         if (this.isDragging) {
             window.scroll(0, - this.timelineSled.current.offsetLeft / this.scrollFactor);
             this.isDragging = false;
-            // window.addEventListener('scroll', this.setTimelineLeft);
-            // Polling for Scroll
             this.setTimelineLeft();
         }
         if (!this.hasDragged(event)) {
@@ -199,31 +204,30 @@ class Timeline extends Component {
             })
         });
     }
-    compileData = event => {
-        this.setState({
-            [event.target.name]: event.target.value
-        });
-    }
     addHistoryEntry = event => {
-        if (this.state.newHistoryEntry || event.clientY < window.innerHeight * .53) {
+        if (event.clientY < window.innerHeight * .53 || !this.props.loggedIn) {
             return;
+        } else if (this.state.newHistoryEntry) {
+            this.cancelHistoryEntry();
+        } else {
+            this.setState({
+                newHistoryEntry: true,
+                addHistoryStyle: {
+                    position: 'absolute',
+                    top: `${event.clientY - window.innerHeight * .12}px`,
+                    left: `${event.pageX - this.timelineSled.current.offsetLeft}px`,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    padding: '1vh',
+                    border: '.2vh solid lightgray',
+                    borderRadius: '1vh',
+                    backgroundColor: 'whitesmoke',
+                    transform: 'translate(-50%, -85%)'
+                },
+                year: this.mapPositionToTimeline(event)
+            });
         }
-        this.setState({
-            newHistoryEntry: true,
-            addHistoryStyle: {
-                position: 'absolute',
-                top: `${event.clientY - window.innerHeight * .12}px`,
-                left: `${event.pageX - this.timelineSled.current.offsetLeft}px`,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                padding: '1vh',
-                borderRadius: '1vh',
-                backgroundColor: 'whitesmoke',
-                transform: 'translate(-50%, -85%)'
-            },
-            year: this.mapPositionToTimeline(event)
-        });
     }
     cancelHistoryEntry = () => {
         this.setState({
@@ -235,10 +239,20 @@ class Timeline extends Component {
         if (event.type !== 'click' && event.keyCode !== 13) {
             return;
         }
-        this.setState({
-            newHistoryEntry: false,
-            addHistoryStyle: {}
-        });
+        if (!this.props.verified) {
+            return this.props.dispatch(setMessage('You need to verify your account before you can add history entries.'));
+        }
+        event.preventDefault();
+        if (this.state.year && this.state.name && this.state.location && this.state.link && this.state.comment) {
+            const { name, year, location, link, comment } = this.state;
+            this.props.dispatch(createHistory(this.props.id, name, year, location, link, comment));
+            this.setState({
+                newHistoryEntry: false,
+                addHistoryStyle: {}
+            });
+        } else {
+            this.props.dispatch(setMessage('Please fill out every field to add a history entry.'));
+        }
     }
     mapPositionToTimeline = event => {
         const currentTimelineScale = 2980 / (window.innerHeight * this.timelineImageQuotient);
@@ -267,6 +281,17 @@ class Timeline extends Component {
         const exactPosition = (timelineSection[0][0] + ((timelineSection[1][0] - timelineSection[0][0]) * ((year - timelineSection[0][1]) / (timelineSection[1][1] - timelineSection[0][1])))) * currentTimelineScale;
         return exactPosition;
     }
+    compileData = event => {
+        this.setState({
+            [event.target.name]: event.target.value
+        });
+    }
+    emptyField = event => {
+        this.setState({
+            [event.target.name]: '',
+            [`${event.target.name}Red`]: {}
+        });
+    }
     render() {
         return (
             <section style={this.style.expander}>
@@ -283,24 +308,28 @@ class Timeline extends Component {
                         <Architypes />
                         {this.state.groups}
                         {this.state.history}
-                        {this.state.newHistoryEntry && <section style={this.state.addHistoryStyle} onClick={e => e.stopPropagation()}>
+                        {this.state.newHistoryEntry && <section style={this.state.addHistoryStyle} onMouseDown={e => e.stopPropagation()} onMouseUp={e => e.stopPropagation()}>
                             <h3 style={this.style.historyCreatorH3}>Add a history event</h3>
-                            <input
-                                style={this.style.historyCreatorInput}
-                                name="year"
-                                type="text"
-                                value={this.state.year}
-                                placeholder="Year"
-                                onFocus={this.emptyField}
-                                onChange={this.compileData}
-                                onKeyDown={this.createHistoryEntry}
-                                />
+                            {!this.props.verified && <p style={this.style.verifyP}>Verify your account to add history entries</p>}
+                            <div>
+                                <p style={this.style.historyCreatorYear}>Year</p>
+                                <input
+                                    style={this.style.historyCreatorYear}
+                                    name="year"
+                                    type="text"
+                                    value={this.state.year}
+                                    placeholder="event year"
+                                    onFocus={this.emptyField}
+                                    onChange={this.compileData}
+                                    onKeyDown={this.createHistoryEntry}
+                                    />
+                            </div>
                             <input
                                 style={this.style.historyCreatorInput}
                                 name="name"
                                 type="text"
                                 value={this.state.name}
-                                placeholder="Name"
+                                placeholder="event name"
                                 onFocus={this.emptyField}
                                 onChange={this.compileData}
                                 onKeyDown={this.createHistoryEntry}
@@ -310,7 +339,7 @@ class Timeline extends Component {
                                 name="location"
                                 type="text"
                                 value={this.state.location}
-                                placeholder="Location"
+                                placeholder="event location"
                                 onFocus={this.emptyField}
                                 onChange={this.compileData}
                                 onKeyDown={this.createHistoryEntry}
@@ -320,7 +349,7 @@ class Timeline extends Component {
                                 name="link"
                                 type="text"
                                 value={this.state.link}
-                                placeholder="Link"
+                                placeholder="external link"
                                 onFocus={this.emptyField}
                                 onChange={this.compileData}
                                 onKeyDown={this.createHistoryEntry}
@@ -330,7 +359,7 @@ class Timeline extends Component {
                                 name="comment"
                                 type="text"
                                 value={this.state.comment}
-                                placeholder="Comment"
+                                placeholder="your comment"
                                 onFocus={this.emptyField}
                                 onChange={this.compileData}
                                 onKeyDown={this.createHistoryEntry}
@@ -348,7 +377,9 @@ class Timeline extends Component {
 }
 
 const mapStateToProps = state => ({
+    id: state.user && state.user.id,
     loggedIn: state.loggedIn,
+    verified: state.user && state.user.verified,
     groups: state.groups,
     history: state.history
 });

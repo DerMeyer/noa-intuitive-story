@@ -97,6 +97,11 @@ exports.getAllGroups = () =>
         'SELECT name, time_period, group_id, user_id, gul_user_id, grun_user_id, vermel_user_id, bezrechu_user_id, sagol_user_id, soul, alias, groups.story AS group_story, souls.story AS soul_story, groups.created_at AS group_start, groups.updated_at AS group_update FROM groups JOIN souls ON groups.id = group_id JOIN users ON user_id = users.id'
     );
 
+exports.getHistory = () =>
+    db.query(
+        'SELECT * FROM history_entries'
+    );
+
 exports.getAllUsers = () =>
     db.query(
         'SELECT id, verified, alias FROM users'
@@ -112,4 +117,10 @@ exports.setSoul = (user_id, group_id, soul) =>
     db.query(
         'INSERT INTO souls (user_id, group_id, soul) VALUES ($1, $2, $3)',
         [user_id, group_id, soul]
+    );
+
+exports.createHistory = (user_id, name, time_period, place, link, comment) =>
+    db.query(
+        'INSERT INTO history_entries (user_id, name, time_period, place, link, comment) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+        [user_id, name, time_period, place, link, comment]
     );
