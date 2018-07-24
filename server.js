@@ -329,7 +329,7 @@ app.post('/api/create_history', async (req, res) => {
         );
         res.json({
             success: true,
-            historyEntry: result.rows[0]
+            historyEntry: result.rows
         });
     } catch (err) {
         console.log(err);

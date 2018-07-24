@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 
 import Architypes from './architypes';
 import Group from './group';
-import History from './history';
 
 import { setMessage, getGroups, getHistory, createHistory } from './actions';
 
@@ -108,6 +107,7 @@ class Timeline extends Component {
     componentDidUpdate() {
         this.scrollFactor = ((window.innerHeight * this.timelineImageQuotient) - window.innerWidth) / (2 * window.innerHeight);
         this.createGroupsForRender();
+        this.createHistoryForRender();
     }
     componentWillUnmount() {
         clearTimeout(this.setTimeoutID);
@@ -169,9 +169,9 @@ class Timeline extends Component {
             return true;
         }
     }
-    createGroupsForRender = () => {
+    createGroupsForRender() {
         if (!this.props.groups || this.state.groups) {
-            return this.state.groups;
+            return;
         }
         this.setState({
             groups: Object.keys(this.props.groups).map(groupID => {
@@ -198,6 +198,51 @@ class Timeline extends Component {
                 return (
                     <section key={groupID} style={groupStyle} className="group_on_timeline">
                         <Group { ...groupProps } />
+                        <section style={arrowStyle}></section>
+                    </section>
+                )
+            })
+        });
+    }
+    createHistoryForRender() {
+        if (!this.props.history) {
+            return;
+        }
+        if (this.props.history && this.state.history) {
+            if (this.props.history.length === this.state.history.length) {
+                return;
+            }
+        }
+        this.setState({
+            history: this.props.history.map(entry => {
+                const randomTop = 46 + (Math.random() * 16);
+                const historyStyle = {
+                    left: `${this.mapTimelineToPosition(entry.time_period)}px`,
+                    top: `${randomTop}vh`,
+                    transform: 'translatex(-50%)'
+                }
+                const arrowStyle = {
+                    position: 'absolute',
+                    top: `${43 - randomTop}vh`,
+                    left: '7.5vh',
+                    height: `${randomTop - 43}vh`,
+                    width: '.2vh',
+                    backgroundColor: 'rgb(120, 120, 120)'
+                }
+                return (
+                    <section style={historyStyle} className="history-on-timeline">
+                        <a
+                            key={entry.id}
+                            href={entry.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="history-link-on-timeline"
+                        >
+                            <p>{entry.name}</p>
+                            <p>{entry.time_period}</p>
+                            <p>{entry.place}</p>
+                            <h4>{entry.comment}</h4>
+                        </a>
                         <section style={arrowStyle}></section>
                     </section>
                 )
@@ -248,7 +293,12 @@ class Timeline extends Component {
             this.props.dispatch(createHistory(this.props.id, name, year, location, link, comment));
             this.setState({
                 newHistoryEntry: false,
-                addHistoryStyle: {}
+                addHistoryStyle: {},
+                year: '',
+                name: '',
+                location: '',
+                link: '',
+                comment: ''
             });
         } else {
             this.props.dispatch(setMessage('Please fill out every field to add a history entry.'));

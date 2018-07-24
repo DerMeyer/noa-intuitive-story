@@ -84,11 +84,10 @@ const reducer = (
     if (action.type === 'GET_HISTORY') {
         return {
             ...state,
-            history: { ...action.data }
+            history: [ ...action.data ]
         };
     }
     if (action.type === 'CREATE_HISTORY') {
-        console.log(action.data);
         return {
             ...state,
             history: [

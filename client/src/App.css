@@ -98,6 +98,46 @@ nav .button {
     height: 9vh;
 }
 
-.group_on_timeline:hover {
+.group_on_timeline:hover,
+.history-on-timeline:hover {
     z-index: 100;
+}
+
+.history-on-timeline {
+    position: absolute;
+    height: 15vh;
+    width: 15vh;
+}
+
+.history-link-on-timeline {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 15vh;
+    width: 15vh;
+    text-decoration: none;
+    border: .2vh solid rgb(120, 120, 120);
+    border-radius: 1vh;
+    color: rgb(100, 100, 100);
+    overflow: hidden;
+}
+
+.history-link-on-timeline p {
+    line-height: 1;
+    margin: .5vh 0;
+}
+
+.history-link-on-timeline h4 {
+    line-height: 1;
+    min-height: 5.5vh;
+    width: 14vh;
+    padding: .5vh;
+    border-radius: .5vh;
+    background-color: whitesmoke;
+    margin: .5vh 0;
+    color: rgb(12, 73, 117);
+    overflow: scroll;
 }

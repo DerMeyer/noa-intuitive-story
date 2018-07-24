@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
 
 const style = {
     historyBoxContainer: {
@@ -28,11 +27,7 @@ const style = {
     }
 }
 
-class History extends Component {
-    state = {
-        box_1: <div style={style.placeHolder}></div>,
-        editingName: false
-    }
+const history = props => {
     render() {
         return (
             <section>
@@ -44,8 +39,4 @@ class History extends Component {
     }
 }
 
-const mapStateToProps = state => state;
-
-const ConnectedHistory = connect(mapStateToProps)(History);
-
-export default ConnectedHistory;
+export default history;
