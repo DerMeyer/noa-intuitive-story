@@ -5,5 +5,6 @@ CREATE TABLE souls (
     user_id INTEGER NOT NULL,
     group_id INTEGER NOT NULL,
     soul VARCHAR(32) NOT NULL,
+    figur VARCHAR(32),
     story text
 );

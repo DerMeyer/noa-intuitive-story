@@ -122,10 +122,12 @@ nav .button {
     border: .2vh solid rgb(120, 120, 120);
     border-radius: 1vh;
     color: rgb(100, 100, 100);
+    background-color: white;
     overflow: hidden;
 }
 
 .history-link-on-timeline p {
+    text-align: center;
     line-height: 1;
     margin: .5vh 0;
 }

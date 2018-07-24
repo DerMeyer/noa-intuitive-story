@@ -369,7 +369,6 @@ class Timeline extends Component {
                                     type="text"
                                     value={this.state.year}
                                     placeholder="event year"
-                                    onFocus={this.emptyField}
                                     onChange={this.compileData}
                                     onKeyDown={this.createHistoryEntry}
                                     />
