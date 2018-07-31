@@ -220,7 +220,7 @@ class ProfilePage extends Component {
         return (
             <section className="page_container">
                 <h1>{this.props.message.updateProfileText || this.state.message || `Hello ${this.props.user && this.props.user.alias}!`}</h1>
-                <Link to="/avira" style={this.style.adminButton}><button>Manage Page Content</button></Link>
+                {this.props.user && this.props.user.verified === 2 && <Link to="/avira" style={this.style.adminButton}><button>Manage Page Content</button></Link>}
                 <h2>Edit your profile</h2>
                 <section className="profile_edit_container">
                     {this.props.user && !this.props.user.verified && <p>Please verify your account.</p>}
