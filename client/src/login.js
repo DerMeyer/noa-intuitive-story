@@ -22,9 +22,7 @@ class Login extends Component {
         this.firstInput.current.focus();
     }
     componentDidUpdate(prevProps) {
-        if (this.props.loggedIn && this.props.verified === 2) {
-            window.location.replace('/avira');
-        } else if (this.props.loggedIn && this.props.verified) {
+        if (this.props.loggedIn && this.props.verified) {
             window.location.replace('/');
         } else if (this.props.loggedIn && !this.props.verified) {
             window.location.replace('/verify_account');

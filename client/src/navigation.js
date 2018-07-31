@@ -53,7 +53,7 @@ export class Footer extends Component {
                 <p style={p}>&copy; Noa Golan</p>
                 <div style={div}>
                     <p style={p}>Impressum</p>
-                    <p style={p}>Contact</p>
+                    <a href="mailto:theintuitivestory@gmail.com"><p style={p}>Contact</p></a>
                 </div>
             </section>
         );

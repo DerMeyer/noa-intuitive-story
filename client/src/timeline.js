@@ -218,9 +218,9 @@ class Timeline extends Component {
                 }
                 const arrowStyle = {
                     position: 'absolute',
-                    top: `${43 - randomTop}vh`,
+                    top: `${45 - randomTop}vh`,
                     left: '7.5vh',
-                    height: `${randomTop - 43}vh`,
+                    height: `${randomTop - 45}vh`,
                     width: '.2vh',
                     backgroundColor: 'rgb(120, 120, 120)'
                 }
@@ -235,7 +235,6 @@ class Timeline extends Component {
                             <p>{entry.name}</p>
                             <p>{entry.time_period}</p>
                             <p>{entry.place}</p>
-                            <h4>{entry.comment}</h4>
                         </a>
                         <section style={arrowStyle}></section>
                     </section>

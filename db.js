@@ -170,6 +170,71 @@ exports.createGroup = (
         ]
     );
 
+    exports.updateGroup = (
+        id,
+        name,
+        time_period,
+        story,
+        gul_id,
+        grun_id,
+        vermel_id,
+        bezrechu_id,
+        sagol_id,
+        gul_role,
+        grun_role,
+        vermel_role,
+        bezrechu_role,
+        sagol_role,
+        gul_character,
+        grun_character,
+        vermel_character,
+        bezrechu_character,
+        sagol_character
+    ) =>
+        db.query(
+            `UPDATE groups SET
+                name = $1,
+                time_period = $2,
+                story = $3,
+                gul_user_id = $4,
+                grun_user_id = $5,
+                vermel_user_id = $6,
+                bezrechu_user_id = $7,
+                sagol_user_id = $8,
+                gul_role = $9,
+                grun_role = $10,
+                vermel_role = $11,
+                bezrechu_role = $12,
+                sagol_role = $13,
+                gul_character = $14,
+                grun_character = $15,
+                vermel_character = $16,
+                bezrechu_character = $17,
+                sagol_character = $18
+            WHERE id = $19`,
+            [
+                name,
+                time_period,
+                story,
+                gul_id,
+                grun_id,
+                vermel_id,
+                bezrechu_id,
+                sagol_id,
+                gul_role,
+                grun_role,
+                vermel_role,
+                bezrechu_role,
+                sagol_role,
+                gul_character,
+                grun_character,
+                vermel_character,
+                bezrechu_character,
+                sagol_character,
+                id
+            ]
+        );
+
 exports.createHistory = (user_id, name, time_period, place, link, comment) =>
     db.query(
         'INSERT INTO history_entries (user_id, name, time_period, place, link, comment) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',

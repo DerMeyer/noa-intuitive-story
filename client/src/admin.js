@@ -1,22 +1,23 @@
 import React, { Component } from 'react';
 import './page.css';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import axios from './axios';
 
-import { setMessage } from './actions';
+import { setMessage, getGroups } from './actions';
 
 class Admin extends Component {
     constructor(props) {
         super(props);
         this.state = {
             name: '',
-            year: '',
+            time_period: '',
             story: '',
-            gul_soul: '',
-            grun_soul: '',
-            vermel_soul: '',
-            bezrechu_soul: '',
-            sagol_soul: '',
+            gul_role: '',
+            grun_role: '',
+            vermel_role: '',
+            bezrechu_role: '',
+            sagol_role: '',
             gul_character: '',
             grun_character: '',
             vermel_character: '',
@@ -37,12 +38,25 @@ class Admin extends Component {
             user_search_vermel: false,
             user_search_bezrechu: false,
             user_search_sagol: false,
-            user_search: []
+            user_search: [],
+            group_search_overlay: false,
+            group_search: [],
+            group_for_edit: {}
         };
         this.soul_list = ['gul', 'grun', 'vermel', 'bezrechu', 'sagol'];
         this.users = [];
         this.style = {
+            adminButton: {
+                position: 'absolute',
+                top: '-6vh',
+                left: '12vw'
+            },
             extraSpace: {
+                marginBottom: '3.5vh'
+            },
+            extraSpaceCancelButton: {
+                width: '9.5vw',
+                marginRight: '.5vw',
                 marginBottom: '3.5vh'
             },
             userSearchResult: {
@@ -54,18 +68,21 @@ class Admin extends Component {
                 color: 'rgb(80, 80, 80)'
             }
         };
-        this.firstInput = React.createRef();
     }
     componentDidMount() {
         window.scroll(0, 0);
-        this.firstInput.current && this.firstInput.current.focus();
         this.getUsers();
+        this.props.dispatch(getGroups());
     }
     compileData = event => {
         this.setState({
-            [event.target.name]: event.target.value
+            [event.target.name]: event.target.value || (event.target.name === 'name' ? '' : this.state.group_for_edit[event.target.name])
         });
-        event.target.name.endsWith('name') && this.setUserSearchMenu(event.target.name, event.target.value);
+        if (event.target.name === 'name') {
+            this.setGroupSearchMenu(event.target.name, event.target.value);
+        } else if (event.target.name.endsWith('name')) {
+            this.setUserSearchMenu(event.target.name, event.target.value);
+        }
     }
     setSoulSearchMenu = inputName => {
         if (typeof inputName !== 'string') {
@@ -110,11 +127,32 @@ class Admin extends Component {
             }
         });
     }
+    setGroupSearchMenu = (inputName, inputValue) => {
+        if (inputName !== 'name') {
+            return this.setState({
+                group_search_overlay: false,
+                group_search: []
+            });
+        }
+        if (typeof inputValue !== 'string') {
+            return;
+        }
+        const groupSearchMenu = [];
+        this.props.groups.forEach(group => {
+            if (group.name.startsWith(inputValue)) {
+                groupSearchMenu.push(group.name);
+            }
+        });
+        this.setState({
+            group_search_overlay: true,
+            group_search: groupSearchMenu.sort()
+        });
+    }
     setSoul = event => {
         this.soul_list.forEach(soul => {
             if (this.state[`soul_search_${soul}`] === true) {
                 this.setState({
-                    [`${soul}_soul`]: event.target.innerHTML
+                    [`${soul}_role`]: event.target.innerHTML
                 });
             }
         });
@@ -128,11 +166,66 @@ class Admin extends Component {
             }
         });
     }
+    setGroup = event => {
+        const groupForEdit = this.props.groups.filter(group => group.name === event.target.innerHTML)[0];
+        const {
+            gul_user_id,
+            grun_user_id,
+            vermel_user_id,
+            bezrechu_user_id,
+            sagol_user_id
+        } = groupForEdit;
+        groupForEdit.gul_name = this.getUserName(gul_user_id),
+        groupForEdit.grun_name = this.getUserName(grun_user_id),
+        groupForEdit.vermel_name = this.getUserName(vermel_user_id),
+        groupForEdit.bezrechu_name = this.getUserName(bezrechu_user_id),
+        groupForEdit.sagol_name = this.getUserName(sagol_user_id)
+        const {
+            name,
+            time_period,
+            story,
+            gul_role,
+            grun_role,
+            vermel_role,
+            bezrechu_role,
+            sagol_role,
+            gul_character,
+            grun_character,
+            vermel_character,
+            bezrechu_character,
+            sagol_character,
+            gul_name,
+            grun_name,
+            vermel_name,
+            bezrechu_name,
+            sagol_name
+        } = groupForEdit;
+        this.setState({
+            group_for_edit: groupForEdit,
+            name,
+            time_period,
+            story,
+            gul_role,
+            grun_role,
+            vermel_role,
+            bezrechu_role,
+            sagol_role,
+            gul_character,
+            grun_character,
+            vermel_character,
+            bezrechu_character,
+            sagol_character,
+            gul_name,
+            grun_name,
+            vermel_name,
+            bezrechu_name,
+            sagol_name
+        });
+    }
     emptyField = event => {
         event.stopPropagation();
         this.setState({
-            [event.target.name]: '',
-            [`${event.target.name}Red`]: {}
+            [event.target.name]: this.state.group_for_edit[event.target.name] || ''
         });
     }
     getUsers = async () => {
@@ -140,6 +233,7 @@ class Admin extends Component {
             const resp = await axios.get('/api/get_users');
             if (resp.data.success) {
                 this.users = resp.data.users;
+                console.log(this.users);
             } else {
                 this.props.dispatch(setMessage(`The server didn't send any user data.`, 'red'));
             }
@@ -157,16 +251,26 @@ class Admin extends Component {
         });
         return id;
     }
+    getUserName(id) {
+        let name;
+        this.users.forEach(user => {
+            if (user.id === id) {
+                name = user.alias
+            }
+        });
+        console.log(name);
+        return name;
+    }
     createGroup = async () => {
         const {
             name,
-            year,
+            time_period,
             story,
-            gul_soul,
-            grun_soul,
-            vermel_soul,
-            bezrechu_soul,
-            sagol_soul,
+            gul_role,
+            grun_role,
+            vermel_role,
+            bezrechu_role,
+            sagol_role,
             gul_character,
             grun_character,
             vermel_character,
@@ -186,18 +290,18 @@ class Admin extends Component {
         try {
             const resp = await axios.post('/api/create_group', {
                 name,
-                year,
+                time_period,
                 story,
                 gul_id,
                 grun_id,
                 vermel_id,
                 bezrechu_id,
                 sagol_id,
-                gul_soul,
-                grun_soul,
-                vermel_soul,
-                bezrechu_soul,
-                sagol_soul,
+                gul_role,
+                grun_role,
+                vermel_role,
+                bezrechu_role,
+                sagol_role,
                 gul_character,
                 grun_character,
                 vermel_character,
@@ -205,16 +309,16 @@ class Admin extends Component {
                 sagol_character
             });
             if (resp.data.success) {
-                this.props.dispatch(setMessage(`${name} ${year} has been created.`, 'white'));
+                this.props.dispatch(setMessage(`${name} ${time_period} has been created.`, 'white'));
                 this.setState({
                     name: '',
-                    year: '',
+                    time_period: '',
                     story: '',
-                    gul_soul: '',
-                    grun_soul: '',
-                    vermel_soul: '',
-                    bezrechu_soul: '',
-                    sagol_soul: '',
+                    gul_role: '',
+                    grun_role: '',
+                    vermel_role: '',
+                    bezrechu_role: '',
+                    sagol_role: '',
                     gul_character: '',
                     grun_character: '',
                     vermel_character: '',
@@ -235,8 +339,12 @@ class Admin extends Component {
                     user_search_vermel: false,
                     user_search_bezrechu: false,
                     user_search_sagol: false,
-                    user_search: []
+                    user_search: [],
+                    group_search_overlay: false,
+                    group_search: [],
+                    group_for_edit: {}
                 });
+                this.props.dispatch(getGroups());
             } else {
                 this.props.dispatch(setMessage(`The group couldn't be created.`, 'red'));
             }
@@ -244,6 +352,135 @@ class Admin extends Component {
             console.log(err);
             this.props.dispatch(setMessage(`The server didn't respond.`, 'red'));
         }
+    }
+    updateGroup = async () => {
+        const {
+            name,
+            time_period,
+            story,
+            gul_role,
+            grun_role,
+            vermel_role,
+            bezrechu_role,
+            sagol_role,
+            gul_character,
+            grun_character,
+            vermel_character,
+            bezrechu_character,
+            sagol_character,
+            gul_name,
+            grun_name,
+            vermel_name,
+            bezrechu_name,
+            sagol_name
+        } = this.state;
+        const gul_id = this.getUserID(gul_name) || 0;
+        const grun_id = this.getUserID(grun_name) || 0;
+        const vermel_id = this.getUserID(vermel_name) || 0;
+        const bezrechu_id = this.getUserID(bezrechu_name) || 0;
+        const sagol_id = this.getUserID(sagol_name) || 0;
+        try {
+            const resp = await axios.post('/api/update_group', {
+                id: this.state.group_for_edit.id,
+                name,
+                time_period,
+                story,
+                gul_id,
+                grun_id,
+                vermel_id,
+                bezrechu_id,
+                sagol_id,
+                gul_role,
+                grun_role,
+                vermel_role,
+                bezrechu_role,
+                sagol_role,
+                gul_character,
+                grun_character,
+                vermel_character,
+                bezrechu_character,
+                sagol_character
+            });
+            if (resp.data.success) {
+                this.props.dispatch(setMessage(`${name} ${time_period} has been updated.`, 'white'));
+                this.setState({
+                    name: '',
+                    time_period: '',
+                    story: '',
+                    gul_role: '',
+                    grun_role: '',
+                    vermel_role: '',
+                    bezrechu_role: '',
+                    sagol_role: '',
+                    gul_character: '',
+                    grun_character: '',
+                    vermel_character: '',
+                    bezrechu_character: '',
+                    sagol_character: '',
+                    gul_name: '',
+                    grun_name: '',
+                    vermel_name: '',
+                    bezrechu_name: '',
+                    sagol_name: '',
+                    soul_search_gul: false,
+                    soul_search_grun: false,
+                    soul_search_vermel: false,
+                    soul_search_bezrechu: false,
+                    soul_search_sagol: false,
+                    user_search_gul: false,
+                    user_search_grun: false,
+                    user_search_vermel: false,
+                    user_search_bezrechu: false,
+                    user_search_sagol: false,
+                    user_search: [],
+                    group_search_overlay: false,
+                    group_search: [],
+                    group_for_edit: {}
+                });
+                this.props.dispatch(getGroups());
+            } else {
+                this.props.dispatch(setMessage(`The group couldn't be updated.`, 'red'));
+            }
+        } catch (err) {
+            console.log(err);
+            this.props.dispatch(setMessage(`The server didn't respond.`, 'red'));
+        }
+    }
+    cancelGroupUpdate = () => {
+        this.setState({
+            name: '',
+            time_period: '',
+            story: '',
+            gul_role: '',
+            grun_role: '',
+            vermel_role: '',
+            bezrechu_role: '',
+            sagol_role: '',
+            gul_character: '',
+            grun_character: '',
+            vermel_character: '',
+            bezrechu_character: '',
+            sagol_character: '',
+            gul_name: '',
+            grun_name: '',
+            vermel_name: '',
+            bezrechu_name: '',
+            sagol_name: '',
+            soul_search_gul: false,
+            soul_search_grun: false,
+            soul_search_vermel: false,
+            soul_search_bezrechu: false,
+            soul_search_sagol: false,
+            user_search_gul: false,
+            user_search_grun: false,
+            user_search_vermel: false,
+            user_search_bezrechu: false,
+            user_search_sagol: false,
+            user_search: [],
+            group_search_overlay: false,
+            group_search: [],
+            group_for_edit: {}
+        });
     }
     render() {
         if (this.props.user.verified !== 2) {
@@ -258,9 +495,11 @@ class Admin extends Component {
             <section className="page_container" onClick={() => {
                     this.setSoulSearchMenu('');
                     this.setUserSearchMenu('', '');
+                    this.setGroupSearchMenu('', '');
                 }}>
-                <h1>Hi Noa!</h1>
-                <h2>Create a new Group</h2>
+                <h1>Hello Noa!</h1>
+                <Link to="/profile/Noa" style={this.style.adminButton}><button>Back to your Profile</button></Link>
+                <h2>Manage your groups</h2>
                 <section className="create_group_container">
                     <article className="create-group-article">
                         <h4>Title</h4>
@@ -271,38 +510,42 @@ class Admin extends Component {
                         <img className="create-group-image" src="/images/color_sagol.png" alt="Sagol" />
                     </article>
                     <section>
-                        <input
-                            ref={this.firstInput}
-                            style={this.style.extraSpace}
-                            name="name"
-                            type="text"
-                            value={this.state.name}
-                            placeholder="name"
-                            onChange={this.compileData}
+                        <div className="overlay_container">
+                            <input
+                                style={this.style.extraSpace}
+                                name="name"
+                                type="text"
+                                value={this.state.name}
+                                placeholder="name"
+                                onChange={this.compileData}
+                                onFocus={event => {this.setGroupSearchMenu(event.target.name, event.target.value)}}
+                                onClick={this.emptyField}
                             />
+                        {this.state.group_search_overlay && <div className="search_menu">{this.state.group_search.map((groupName, i) => (<p key={i} onClick={this.setGroup}>{groupName}</p>))}</div>}
+                        </div>
                             <div className="overlay_container">
-                                <input name="gul_soul" type="text" value={this.state.gul_soul} placeholder="role" onChange={this.compileData} onFocus={event => {this.setSoulSearchMenu(event.target.name)}} onClick={this.emptyField} />
+                                <input name="gul_role" type="text" value={this.state.gul_role} placeholder="role" onChange={this.compileData} onFocus={event => {this.setSoulSearchMenu(event.target.name)}} onClick={this.emptyField} />
                                 {this.state.soul_search_gul && <div className="search_menu">{this.soul_list.map((soul, i) => (<p key={i} onClick={this.setSoul}>{soul}</p>))}</div>}
                             </div>
                             <div className="overlay_container">
-                                <input name="grun_soul" type="text" value={this.state.grun_soul} placeholder="role" onChange={this.compileData} onFocus={event => {this.setSoulSearchMenu(event.target.name)}} onClick={this.emptyField} />
+                                <input name="grun_role" type="text" value={this.state.grun_role} placeholder="role" onChange={this.compileData} onFocus={event => {this.setSoulSearchMenu(event.target.name)}} onClick={this.emptyField} />
                                 {this.state.soul_search_grun && <div className="search_menu">{this.soul_list.map((soul, i) => (<p key={i} onClick={this.setSoul}>{soul}</p>))}</div>}
                             </div>
                             <div className="overlay_container">
-                                <input name="vermel_soul" type="text" value={this.state.vermel_soul} placeholder="role" onChange={this.compileData} onFocus={event => {this.setSoulSearchMenu(event.target.name)}} onClick={this.emptyField} />
+                                <input name="vermel_role" type="text" value={this.state.vermel_role} placeholder="role" onChange={this.compileData} onFocus={event => {this.setSoulSearchMenu(event.target.name)}} onClick={this.emptyField} />
                                 {this.state.soul_search_vermel && <div className="search_menu">{this.soul_list.map((soul, i) => (<p key={i} onClick={this.setSoul}>{soul}</p>))}</div>}
                             </div>
                             <div className="overlay_container">
-                                <input name="bezrechu_soul" type="text" value={this.state.bezrechu_soul} placeholder="role" onChange={this.compileData} onFocus={event => {this.setSoulSearchMenu(event.target.name)}} onClick={this.emptyField} />
+                                <input name="bezrechu_role" type="text" value={this.state.bezrechu_role} placeholder="role" onChange={this.compileData} onFocus={event => {this.setSoulSearchMenu(event.target.name)}} onClick={this.emptyField} />
                                 {this.state.soul_search_bezrechu && <div className="search_menu">{this.soul_list.map((soul, i) => (<p key={i} onClick={this.setSoul}>{soul}</p>))}</div>}
                             </div>
                             <div className="overlay_container">
-                                <input name="sagol_soul" type="text" value={this.state.sagol_soul} placeholder="role" onChange={this.compileData} onFocus={event => {this.setSoulSearchMenu(event.target.name)}} onClick={this.emptyField} />
+                                <input name="sagol_role" type="text" value={this.state.sagol_role} placeholder="role" onChange={this.compileData} onFocus={event => {this.setSoulSearchMenu(event.target.name)}} onClick={this.emptyField} />
                                 {this.state.soul_search_sagol && <div className="search_menu">{this.soul_list.map((soul, i) => (<p key={i} onClick={this.setSoul}>{soul}</p>))}</div>}
                             </div>
                     </section>
                     <section>
-                        <input style={this.style.extraSpace} name="year" type="text" value={this.state.year} placeholder="year" onChange={this.compileData} />
+                        <input style={this.style.extraSpace} name="time_period" type="text" value={this.state.time_period} placeholder="year" onChange={this.compileData} onClick={this.emptyField} />
                         <input name="gul_character" type="text" value={this.state.gul_character} placeholder="character" onChange={this.compileData} onFocus={event => {this.setSoulSearchMenu(event.target.name)}} onClick={this.emptyField} />
                         <input name="grun_character" type="text" value={this.state.grun_character} placeholder="character" onChange={this.compileData} onFocus={event => {this.setSoulSearchMenu(event.target.name)}} onClick={this.emptyField} />
                         <input name="vermel_character" type="text" value={this.state.vermel_character} placeholder="character" onChange={this.compileData} onFocus={event => {this.setSoulSearchMenu(event.target.name)}} onClick={this.emptyField} />
@@ -310,7 +553,12 @@ class Admin extends Component {
                         <input name="sagol_character" type="text" value={this.state.sagol_character} placeholder="character" onChange={this.compileData} onFocus={event => {this.setSoulSearchMenu(event.target.name)}} onClick={this.emptyField} />
                     </section>
                     <section>
-                        <button style={this.style.extraSpace} onClick={this.createGroup}>Create Group</button>
+                        {this.state.group_for_edit.id
+                            ? <div>
+                                <button style={this.style.extraSpaceCancelButton} onClick={this.cancelGroupUpdate}>Cancel</button>
+                                <button style={this.style.extraSpaceCancelButton} onClick={this.updateGroup}>Update</button>
+                              </div>
+                            : <button style={this.style.extraSpace} onClick={this.createGroup}>Create Group</button>}
                         <div className="overlay_container">
                             <input name="gul_name" type="text" value={this.state.gul_name} placeholder="user one" onChange={this.compileData} onFocus={event => this.setUserSearchMenu(event.target.name, event.target.value)} onClick={this.emptyField} />
                             {this.state.user_search_gul && <div className="search_menu">{this.state.user_search.map((result, i) => (<p key={i} onClick={this.setName}>{result}</p>))}</div>}

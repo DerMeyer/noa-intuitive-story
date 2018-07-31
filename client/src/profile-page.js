@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './page.css';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import axios from './axios';
 
 import Group from './group';
@@ -24,6 +25,11 @@ class ProfilePage extends Component {
             selectedImage: {}
         };
         this.style = {
+            adminButton: {
+                position: 'absolute',
+                top: '-6vh',
+                left: '12vw'
+            },
             updateProfileButton: {
                 width: '16vw'
             },
@@ -214,6 +220,7 @@ class ProfilePage extends Component {
         return (
             <section className="page_container">
                 <h1>{this.props.message.updateProfileText || this.state.message || `Hello ${this.props.user && this.props.user.alias}!`}</h1>
+                <Link to="/avira" style={this.style.adminButton}><button>Manage Page Content</button></Link>
                 <h2>Edit your profile</h2>
                 <section className="profile_edit_container">
                     {this.props.user && !this.props.user.verified && <p>Please verify your account.</p>}
