@@ -56,14 +56,19 @@ class Login extends Component {
                 message: 'Please wait...'
             });
         } else {
-            this.state.alias || this.setState({
-                alias: 'Please enter a user name',
-                aliasRed: { color: 'red' }
-            });
-            this.state.pw || this.setState({
-                message: 'Please enter a password.',
-                messageRed: { color: 'red' }
-            });
+            if (!this.state.alias) {
+                this.firstInput.current.blur();
+                this.setState({
+                    alias: 'Please enter a user name',
+                    aliasRed: { color: 'red' }
+                });
+            }
+            if (!this.state.pw) {
+                this.setState({
+                    message: 'Please enter a password.',
+                    messageRed: { color: 'red' }
+                });
+            }
         }
     }
     emptyField = event => {

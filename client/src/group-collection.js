@@ -25,7 +25,8 @@ class GroupCollection extends Component {
                 lineHeight: '1.3',
                 height: '20vh',
                 width: '48vw',
-                margin: '0 0 0 2vw'
+                margin: '0 0 0 2vw',
+                overflow: 'hidden'
             }
         };
     }
@@ -53,7 +54,7 @@ class GroupCollection extends Component {
                                     <section style={this.style.group}>
                                         <Group { ...group } />
                                     </section>
-                                    <p style={this.style.story}>{group.story}</p>
+                                    <p style={this.style.story}>{group.story || 'This group has no description.'}</p>
                                 </section>
                             )
                         })

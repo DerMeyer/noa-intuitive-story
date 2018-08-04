@@ -25,6 +25,7 @@ class Register extends Component {
             repeat: '',
             aliasModal: false
         };
+        this.goToLogin = React.createRef();
         this.firstInput = React.createRef();
     }
     componentDidMount() {
@@ -73,6 +74,7 @@ class Register extends Component {
                 message: 'Please wait...'
             });
         } else {
+            this.goToLogin.current.focus();
             this.state.first || this.setErrorMessage('first', 'first name');
             this.state.last || this.setErrorMessage('last', 'last name');
             this.state.alias || this.setErrorMessage('alias', 'user name');
@@ -139,7 +141,7 @@ class Register extends Component {
                 <input name="pw" type="password" placeholder="password" onChange={this.compileData} onKeyDown={this.register} />
                 <input name="repeat" type="password" placeholder="repeat password" onChange={this.compileData} onKeyDown={this.register} />
                 <button onClick={this.register}>Sign up</button>
-                <Link to="/login"><button>Already have an account?</button></Link>
+                <Link to="/login"><button ref={this.goToLogin}>Already have an account?</button></Link>
             </section>
         )
     }

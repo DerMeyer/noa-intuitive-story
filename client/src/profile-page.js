@@ -28,17 +28,27 @@ class ProfilePage extends Component {
             adminButton: {
                 position: 'absolute',
                 top: '-6vh',
-                left: '12vw'
+                left: '50vw'
             },
             updateProfileButton: {
                 width: '16vw'
             },
             row: {
+                display: 'flex',
                 height: '23vh',
                 borderBottom: '.5vh solid gray'
             },
             group:{
                 margin: '4vh 2vw 0 2vw'
+            },
+            story: {
+                fontSize: '2vh',
+                whiteSpace: 'pre-line',
+                lineHeight: '1.3',
+                height: '20vh',
+                width: '48vw',
+                margin: '0 0 0 2vw',
+                overflow: 'hidden'
             }
         };
         this.soul_list = ['gul', 'grun', 'vermel', 'bezrechu', 'sagol'];
@@ -70,30 +80,18 @@ class ProfilePage extends Component {
             return this.state.groups;
         }
         this.setState({
-            groups: Object.keys(this.props.groups)
-                          .filter(groupID => {
-                              for (let i = 0; i < 5; i++) {
-                                  if (this.props.groups[groupID][this.soul_list[i]] && this.props.groups[groupID][this.soul_list[i]].user_id === this.props.user.id) {
-                                      return true;
-                                  }
-                              }
-                              return false;
-                          })
-                          .sort((a, b) => this.props.groups[a].group_start - this.props.groups[b].group_start)
-                          .map(groupID => {
-                const { name, time_period, gul, grun, vermel, bezrechu, sagol } = this.props.groups[groupID];
-                const groupProps = {
-                    id: groupID,
-                    name, time_period, gul, grun, vermel, bezrechu, sagol
-                }
-                return (
-                    <section key={groupID} style={this.style.row}>
-                        <section style={this.style.group}>
-                            <Group { ...groupProps } />
-                        </section>
-                    </section>
-                )
-            })
+            groups: this.props.groups
+                        .sort((a, b) => a.group_start - b.group_start)
+                        .map(group => {
+                            return (
+                                <section key={group.id} style={this.style.row}>
+                                    <section style={this.style.group}>
+                                        <Group { ...group } />
+                                    </section>
+                                    <p style={this.style.story}>{group.story || 'This group has no description.'}</p>
+                                </section>
+                            )
+                        })
         });
     }
     compileData = event => {

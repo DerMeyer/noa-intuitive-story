@@ -281,7 +281,7 @@ class Timeline extends Component {
             return this.props.dispatch(setMessage('You need to verify your account before you can add history entries.'));
         }
         event.preventDefault();
-        if (this.state.year && this.state.name && this.state.location && this.state.link && this.state.comment) {
+        if (this.state.year && this.state.name && this.state.location && this.state.link) {
             const { name, year, location, link, comment } = this.state;
             this.props.dispatch(createHistory(this.props.id, name, year, location, link, comment));
             this.setState({
@@ -401,7 +401,7 @@ class Timeline extends Component {
                                 name="comment"
                                 type="text"
                                 value={this.state.comment}
-                                placeholder="your comment"
+                                placeholder="comment (optional)"
                                 onFocus={this.emptyField}
                                 onChange={this.compileData}
                                 onKeyDown={this.createHistoryEntry}

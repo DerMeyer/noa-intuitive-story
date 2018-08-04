@@ -22,34 +22,22 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            server_message: 'There has been no request from my side.'
+            messageStyle: {}
         }
     }
     componentDidMount() {
         this.props.dispatch(checkLogin());
-        this.serverSaysHi();
     }
-    componentDidUpdate() {
+    componentDidUpdate(nextProps) {
         if (!this.currentMessage && this.props.message.text) {
             this.showMessage();
         }
-    }
-    serverSaysHi = async () => {
-        try {
-            const resp = await axios.get('/api/hello');
-            if (resp.data.success) {
-                this.setState({
-                    server_message: resp.data.message
-                });
-            } else {
-                this.setState({
-                    server_message: 'I could not get the requested data.'
-                });
-            }
-        } catch (err) {
-            console.log(err);
+        if (this.props.message.text !== nextProps.message.text) {
             this.setState({
-                server_message: 'The server did not respond.'
+                messageStyle: {
+                    color: this.props.message.color,
+                    top: this.props.message.text ? '1vh' : '-10vh'
+                }
             });
         }
     }
@@ -57,13 +45,24 @@ class App extends Component {
         this.currentMessage = true;
         setTimeout(() => {
             this.currentMessage = false;
-            this.props.dispatch(deleteMessage());
-        }, 4000);
+            this.setState({
+                messageStyle: {
+                    color: this.props.message.color,
+                    top: '-10vh'
+                }
+            });
+            setTimeout(() => {
+                this.props.dispatch(deleteMessage());
+            }, 1000);
+        }, 3500);
     }
     render() {
         return (
             <BrowserRouter>
                 <main>
+                    <p style={this.state.messageStyle} className="server-greeting">
+                        {this.props.message.text || 'No message.'}
+                    </p>
                     <Link to="/" className="logo">
                         <img src="/images/logo.png" alt="Galaxy Logo"/>
                     </Link>
@@ -83,9 +82,6 @@ class App extends Component {
                     <Route path="/verify_account" component={Verify} />
                     <Route path="/avira" component={Admin} />
                     <Footer />
-                    <p style={this.props.message.color} className="server_greeting">
-                        {this.props.message.text || this.state.server_message}
-                    </p>
                 </main>
             </BrowserRouter>
         );

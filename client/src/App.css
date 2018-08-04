@@ -12,14 +12,18 @@ main {
     text-decoration: none;
 }
 
-.server_greeting {
+.server-greeting {
     cursor: pointer;
     position: fixed;
-    top: 3vh;
-    left: 50vw;
-    font-size: 2vh;
-    color: whitesmoke;
+    top: -10vh;
+    left: 40vw;
+    font-size: 2.5vh;
+    padding: 0 3vw;
+    border-radius: 1vh;
+    color: rgb(12, 73, 117);
+    background-color: whitesmoke;
     z-index: 150;
+    transition-duration: .7s;
 }
 
 header {

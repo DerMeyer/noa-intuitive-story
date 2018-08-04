@@ -49,7 +49,7 @@ class Admin extends Component {
             adminButton: {
                 position: 'absolute',
                 top: '-6vh',
-                left: '12vw'
+                left: '50vw'
             },
             extraSpace: {
                 marginBottom: '3.5vh'
@@ -175,11 +175,11 @@ class Admin extends Component {
             bezrechu_user_id,
             sagol_user_id
         } = groupForEdit;
-        groupForEdit.gul_name = this.getUserName(gul_user_id),
-        groupForEdit.grun_name = this.getUserName(grun_user_id),
-        groupForEdit.vermel_name = this.getUserName(vermel_user_id),
-        groupForEdit.bezrechu_name = this.getUserName(bezrechu_user_id),
-        groupForEdit.sagol_name = this.getUserName(sagol_user_id)
+        groupForEdit.gul_name = this.getUserName(gul_user_id);
+        groupForEdit.grun_name = this.getUserName(grun_user_id);
+        groupForEdit.vermel_name = this.getUserName(vermel_user_id);
+        groupForEdit.bezrechu_name = this.getUserName(bezrechu_user_id);
+        groupForEdit.sagol_name = this.getUserName(sagol_user_id);
         const {
             name,
             time_period,

@@ -14,20 +14,22 @@ class GroupPage extends Component {
     componentDidMount() {
         if (!this.props.groups) {
             this.props.dispatch(getGroups());
-        } else {
+        }
+        this.createGroupForRender();
+    }
+    componentDidUpdate() {
+        if (!this.state.group) {
             this.createGroupForRender();
         }
     }
-    componentDidUpdate() {
-        this.createGroupForRender();
-    }
     createGroupForRender = () => {
-        if (!this.props.groups || this.state.group) {
-            return this.state.group;
+        if (!this.props.groups) {
+            return;
         }
+        const currentGroup = this.props.groups.filter(group => group.id == this.props.match.params.id)[0];
         this.setState({
             group: (
-                <Group { ...this.props.groups[this.props.match.params.id - 1] } />
+                <Group { ...currentGroup } />
             )
         });
     }
