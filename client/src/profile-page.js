@@ -82,6 +82,14 @@ class ProfilePage extends Component {
         this.setState({
             groups: this.props.groups
                         .sort((a, b) => a.group_start - b.group_start)
+                        .filter(group => {
+                              for (let i = 0; i < 5; i++) {
+                                  if (group[`${this.soul_list[i]}_user_id`] === this.props.user.id) {
+                                      return true;
+                                  }
+                              }
+                              return false;
+                          })
                         .map(group => {
                             return (
                                 <section key={group.id} style={this.style.row}>

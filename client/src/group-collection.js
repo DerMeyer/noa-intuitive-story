@@ -26,7 +26,7 @@ class GroupCollection extends Component {
                 height: '20vh',
                 width: '48vw',
                 margin: '0 0 0 2vw',
-                overflow: 'hidden'
+                overflow: 'scroll'
             }
         };
     }
