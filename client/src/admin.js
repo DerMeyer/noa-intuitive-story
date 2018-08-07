@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import axios from './axios';
 
-import { setMessage, getGroups } from './actions';
+import { setMessage, getGroups, getHistory } from './actions';
 
 class Admin extends Component {
     constructor(props) {
@@ -41,10 +41,10 @@ class Admin extends Component {
             user_search: [],
             group_search_overlay: false,
             group_search: [],
-            group_for_edit: {}
+            group_for_edit: {},
+            users: []
         };
         this.soul_list = ['gul', 'grun', 'vermel', 'bezrechu', 'sagol'];
-        this.users = [];
         this.style = {
             adminButton: {
                 position: 'absolute',
@@ -73,13 +73,15 @@ class Admin extends Component {
         window.scroll(0, 0);
         this.getUsers();
         this.props.dispatch(getGroups());
+        this.props.dispatch(getHistory());
     }
     getUsers = async () => {
         try {
             const resp = await axios.get('/api/get_users');
             if (resp.data.success) {
-                this.users = resp.data.users;
-                console.log(this.users);
+                this.setState({
+                    users: resp.data.users
+                });
             } else {
                 this.props.dispatch(setMessage(`The server didn't send any user data.`, 'red'));
             }
@@ -119,7 +121,7 @@ class Admin extends Component {
             return;
         }
         const userSearchMenu = [];
-        this.users.forEach(user => {
+        this.state.users.forEach(user => {
             if (user.alias.startsWith(inputValue)) {
                 user.verified
                 ? userSearchMenu.push(user.alias)
@@ -244,7 +246,7 @@ class Admin extends Component {
     }
     getUserID(name) {
         let id;
-        this.users.forEach(user => {
+        this.state.users.forEach(user => {
             if (user.alias === name) {
                 id = user.id
             }
@@ -253,7 +255,7 @@ class Admin extends Component {
     }
     getUserName(id) {
         let name;
-        this.users.forEach(user => {
+        this.state.users.forEach(user => {
             if (user.id === id) {
                 name = user.alias
             }
@@ -499,8 +501,8 @@ class Admin extends Component {
                 }}>
                 <h1>Hello Noa!</h1>
                 <Link to="/profile/Noa" style={this.style.adminButton}><button>Back to your Profile</button></Link>
-                <h2>Manage your groups</h2>
-                <section className="create_group_container">
+                <h2>Groups</h2>
+                <section className="manage-groups-container">
                     <article className="create-group-article">
                         <h4>Title</h4>
                         <img className="create-group-image" src="/images/color_gul.png" alt="Gul" />
@@ -581,6 +583,58 @@ class Admin extends Component {
                         </div>
                     </section>
                     <textarea name="story" value={this.state.story} onChange={this.compileData}></textarea>
+                </section>
+                <h2>History</h2>
+                <section>
+                    <section className="manage-history-container">
+                        <h4>Name</h4>
+                        <h4>Year</h4>
+                        <h4>Place</h4>
+                        <h4>Link</h4>
+                        <h4>Comment</h4>
+                    </section>
+                    {Array.isArray(this.props.history) && this.props.history.map(history => (
+                        <section className="manage-history-container">
+                            <p>{history.name}</p>
+                            <p>{history.time_period}</p>
+                            <p>{history.place}</p>
+                            <p>{history.link}</p>
+                            <p>{history.comment}</p>
+                            <button>Edit</button>
+                            <button>Delete</button>
+                            <button>User?</button>
+                        </section>
+                    ))}
+                </section>
+                <h2>Users</h2>
+                <section>
+                    <section className="manage-user-container">
+                        <h4>Username</h4>
+                        <h4>Firstname</h4>
+                        <h4>Lastname</h4>
+                        <h4>Mail</h4>
+                        <h4>Phone</h4>
+                        <h4>Registered</h4>
+                        <h4>Verified</h4>
+                    </section>
+                    {this.state.users.map(user => {
+                        if (user.verified !== 2) {
+                            return (
+                                <section className="manage-user-container">
+                                    <p>{user.alias}</p>
+                                    <p>{user.first}</p>
+                                    <p>{user.last}</p>
+                                    <p>{user.mail}</p>
+                                    <p>{user.phone}</p>
+                                    <p>{user.created_at.slice(0, 10).split('-').reverse().join('. ')}</p>
+                                    <p>{user.verified ? 'yes' : 'no'}</p>
+                                    <button>Ban</button>
+                                </section>
+                            )
+                        } else {
+                            return false;
+                        }
+                    })}
                 </section>
             </section>
         )

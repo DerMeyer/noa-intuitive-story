@@ -104,7 +104,7 @@ exports.getHistory = () =>
 
 exports.getAllUsers = () =>
     db.query(
-        'SELECT id, verified, alias FROM users'
+        'SELECT id, verified, first, last, alias, mail, phone, created_at FROM users'
     );
 
 exports.createGroup = (

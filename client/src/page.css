@@ -81,32 +81,31 @@
     background-color: lightgray;
 }
 
-.create_group_container {
+.manage-groups-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
 }
 
-.create_group_container section {
+.manage-groups-container section {
     display: flex;
     flex-direction: column;
 }
 
-.create_group_container textarea {
+.manage-groups-container textarea {
     font-family: 'NTR', sans-serif;
     font-size: 2vh;
     line-height: 1.2;
-    /* white-space: pre-line; */
     height: 23vh;
     width: 48vw;
     padding: 1vw;
 }
 
-.create_group_container .overlay_container {
+.manage-groups-container .overlay_container {
     position: relative;
 }
 
-.create_group_container .overlay {
+.manage-groups-container .overlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -115,7 +114,7 @@
     background-color: rgba(255, 255, 255, .6);
 }
 
-.create_group_container .search_menu {
+.manage-groups-container .search_menu {
     position: absolute;
     top: 4.7vh;
     left: 0;
@@ -127,7 +126,7 @@
     overflow: scroll;
 }
 
-.create_group_container .search_menu p {
+.manage-groups-container .search_menu p {
     cursor: pointer;
     font-size: 2.5vh;
     width: 20vw;
@@ -138,8 +137,38 @@
     transition-duration: .15s;
 }
 
-.create_group_container .search_menu p:hover {
+.manage-groups-container .search_menu p:hover {
     background-color: lightgray;
+}
+
+.manage-user-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 2fr 1.5fr 1fr .5fr 1fr;
+}
+
+.manage-user-container h4,
+.manage-history-container h4 {
+    padding: 0;
+    margin: 0 0 2vh 0;
+}
+
+.manage-user-container p,
+.manage-history-container p {
+    max-width: 10vw;
+    max-height: 10vh;
+    overflow: auto;
+}
+
+.manage-user-container button,
+.manage-history-container button {
+    justify-self: end;
+    width: 5vw;
+    transform: translateY(10%);
+}
+
+.manage-history-container {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 2fr 2fr 1fr 1fr 1fr;
 }
 
 .profile_edit_container {

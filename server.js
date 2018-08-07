@@ -413,6 +413,9 @@ app.post('/api/update_group', async (req, res) => {
 });
 
 app.get('/api/get_users', async (req, res) => {
+    if (!req.session.user || req.session.user.id !== 1) {
+        res.end();
+    }
     try {
         const result = await getAllUsers();
         res.json({
