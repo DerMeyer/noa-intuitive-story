@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 import { connect } from 'react-redux';
 import { BrowserRouter, Route, Link } from 'react-router-dom';
-import axios from './axios';
 
 import Timeline from './timeline';
 import { ConnectedNavigation, Footer } from './navigation';

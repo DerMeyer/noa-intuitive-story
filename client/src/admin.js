@@ -74,6 +74,20 @@ class Admin extends Component {
         this.getUsers();
         this.props.dispatch(getGroups());
     }
+    getUsers = async () => {
+        try {
+            const resp = await axios.get('/api/get_users');
+            if (resp.data.success) {
+                this.users = resp.data.users;
+                console.log(this.users);
+            } else {
+                this.props.dispatch(setMessage(`The server didn't send any user data.`, 'red'));
+            }
+        } catch (err) {
+            console.log(err);
+            this.props.dispatch(setMessage(`The server didn't respond to the user data request.`, 'red'));
+        }
+    }
     compileData = event => {
         this.setState({
             [event.target.name]: event.target.value || (event.target.name === 'name' ? '' : this.state.group_for_edit[event.target.name])
@@ -227,20 +241,6 @@ class Admin extends Component {
         this.setState({
             [event.target.name]: this.state.group_for_edit[event.target.name] || ''
         });
-    }
-    getUsers = async () => {
-        try {
-            const resp = await axios.get('/api/get_users');
-            if (resp.data.success) {
-                this.users = resp.data.users;
-                console.log(this.users);
-            } else {
-                this.props.dispatch(setMessage(`The server didn't send any user data.`, 'red'));
-            }
-        } catch (err) {
-            console.log(err);
-            this.props.dispatch(setMessage(`The server didn't respond to the user data request.`, 'red'));
-        }
     }
     getUserID(name) {
         let id;

@@ -42,6 +42,7 @@ const group = props => {
         colorContainer: {
             justifySelf: 'center',
             alignSelf: 'center',
+            position: 'relative',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
@@ -56,6 +57,7 @@ const group = props => {
         characterContainer: {
             justifySelf: 'center',
             alignSelf: 'end',
+            position: 'relative',
             display: 'flex',
             alignItems: 'center',
             height: '2.6vh',
