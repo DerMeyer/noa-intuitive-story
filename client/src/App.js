@@ -66,7 +66,7 @@ class App extends Component {
                         <nav>
                             <Link
                                 to="/"
-                                className="logo"
+                                className="main-navigation-button"
                             >
                                 <img src="favicon.png" alt="Galaxy Logo" />
                             </Link>
@@ -124,7 +124,7 @@ class App extends Component {
 
                     <p
                         style={this.state.messageStyle}
-                        className="server-greeting"
+                        className="message-modal"
                     >
                         {this.props.message.text || 'Welcome to The Intuitive Story.'}
                     </p>
@@ -144,8 +144,10 @@ class App extends Component {
                     <Route path="/avira" component={Admin} />
 
                     <footer>
-                        <p className="copyright">&copy; Noa Golan</p>
-                        <div className="impressum">
+                        <p>
+                            &copy; Noa Golan
+                        </p>
+                        <div>
                             <Link
                                 to="/about"
                                 className="footer-button"

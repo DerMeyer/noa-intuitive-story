@@ -1,102 +1,74 @@
 main {
     position: relative;
+    width: 100vw;
     min-height: 100vh;
-    min-width: 100vw;
 }
 
-.router_link  {
-    text-decoration: none;
+/* dev */
+header, footer {
+    z-index: 300;
 }
+/* dev */
 
-.server-greeting {
-    cursor: pointer;
+header,
+footer,
+.message-modal {
     position: fixed;
-    top: -10vh;
-    left: 40vw;
-    font-size: 2.5vh;
-    padding: 0 3vw;
-    border-radius: 1vh;
-    color: rgb(12, 73, 117);
-    background-color: whitesmoke;
-    z-index: 150;
-    transition-duration: .7s;
+}
+
+header,
+footer {
+    left: 0;
+    width: 100%;
+    border: 1px solid black;
+    background-color: white;
 }
 
 header {
-    position: fixed;
-    top: 0.5vh;
-    left: 1vw;
-    display: grid;
-    height: 12vh;
-    width: 37vw;
-    z-index: 50;
-    transition: .5s;
+    top: 0;
+    height: 13vh;
 }
 
-.logo {
-    cursor: pointer;
-    position: fixed;
-    top: 2.5vh;
-    left: 2vw;
-}
-
-.logo img {
+footer {
+    bottom: 0;
     height: 8vh;
 }
 
 nav {
-    justify-self: center;
-    align-self: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    
 }
 
-nav .button {
-    cursor: pointer;
-    height: 9vh;
-    margin: 0 1vw 0 0;
+nav,
+.profile-menu,
+footer > p,
+footer > div {
+    display: inline-block;
 }
 
-.profile_menu {
-    position: fixed;
-    top: 1.5vh;
-    left: 85vw;
-    display: grid;
-    grid-template-columns: 1.5fr 1fr;
-    width: 14vw;
-    padding: 1vh;
-    border-radius: .5vh;
-    background-color: rgb(12, 73, 117);
+.profile-menu,
+footer > div {
+    position: absolute;
+    right: 0;
 }
 
-.profile_menu div {
-    justify-self: center;
-    align-self: center;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+.impressum {
+
 }
 
-.profile_menu p {
-    cursor: pointer;
-    font-size: 2vh;
-    margin: 0;
-    color: whitesmoke;
+.main-navigation-button {
+    display: inline-block;
+    height: 10vh;
 }
 
-.profile_menu p:hover {
-    color: darkgray;
+.main-navigation-button > img {
+    height: 10vh;
 }
 
-.profile_menu .profile_image {
-    justify-self: center;
-    align-self: center;
-    height: 9vh;
+.profile-navigation-button {
+
 }
-.profile_menu img {
-    height: 9vh;
-}
+
+/* timeline css */
 
 .group_on_timeline:hover,
 .history-on-timeline:hover {
