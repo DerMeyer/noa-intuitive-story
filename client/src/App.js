@@ -4,8 +4,7 @@ import { connect } from 'react-redux';
 import { BrowserRouter, Route, Link } from 'react-router-dom';
 
 import Timeline from './timeline';
-import { ConnectedNavigation, Footer } from './navigation';
-import Profile from './profile';
+
 import About from './about';
 import GroupCollection from './group-collection';
 import ProfilePage from './profile-page';
@@ -15,7 +14,7 @@ import Register from './register';
 import Verify from './verify';
 import Admin from './admin';
 
-import { checkLogin, deleteMessage } from './actions';
+import { checkLogin, deleteMessage, logout } from './actions';
 
 class App extends Component {
     constructor(props) {
@@ -55,32 +54,112 @@ class App extends Component {
             }, 1000);
         }, 3500);
     }
+    logout = () => {
+        this.props.dispatch(logout());
+        window.location.replace('/');
+    }
     render() {
         return (
             <BrowserRouter>
                 <main>
-                    <p style={this.state.messageStyle} className="server-greeting">
-                        {this.props.message.text || 'No message.'}
+                    <header>
+                        <nav>
+                            <Link
+                                to="/"
+                                className="logo"
+                            >
+                                <img src="favicon.png" alt="Galaxy Logo" />
+                            </Link>
+                            <Link
+                                to="/about"
+                                className="main-navigation-button"
+                            >
+                                About the Intuitive Story
+                            </Link>
+                            <Link
+                                to="/groups"
+                                className="main-navigation-button"
+                            >
+                                The Intuitive Story Groups Collection
+                            </Link>
+                        </nav>
+                        {this.props.loggedIn ? (
+                            <div className="profile-menu">
+                                {this.props.verified ? (
+                                    <Link
+                                        to={`/profile/${this.props.alias}`}
+                                        className="profile-navigation-button"
+                                    >
+                                        Hello {this.props.alias}!
+                                    </Link>
+                                ) : (
+                                    <Link
+                                        to="/verify"
+                                        className="profile-navigation-button"
+                                    >
+                                        Confirm your account
+                                    </Link>
+                                )}
+                                <p onClick={this.logout}>
+                                    Log out
+                                </p>
+                            </div >
+                        ) : (
+                            <div className="profile-menu">
+                                <Link
+                                    to="/login"
+                                    className="profile-navigation-button"
+                                >
+                                    Log in
+                                </Link>
+                                <Link
+                                    to="/register"
+                                    className="profile-navigation-button"
+                                >
+                                    Register
+                                </Link>
+                            </div >
+                        )}
+                    </header>
+
+                    <p
+                        style={this.state.messageStyle}
+                        className="server-greeting"
+                    >
+                        {this.props.message.text || 'Welcome to The Intuitive Story.'}
                     </p>
-                    <Link to="/" className="logo">
-                        <img src="/images/logo.png" alt="Galaxy Logo"/>
-                    </Link>
+
                     <Route exact path="/" component={Timeline} />
-                    <Route exact path="/" component={ConnectedNavigation} />
-                    <Route exact path="/" component={Profile} />
                     <Route path="/profile/:user" render={props => (
                             <ProfilePage match={props.match} />
                         )} />
                     <Route path="/about" component={About} />
-                    <Route path="/group_collection" component={GroupCollection} />
+                    <Route path="/groups" component={GroupCollection} />
                     <Route path="/group/:id" render={props => (
                             <GroupPage match={props.match} />
                         )} />
                     <Route path="/login" component={Login} />
                     <Route path="/register" component={Register} />
-                    <Route path="/verify_account" component={Verify} />
+                    <Route path="/verify" component={Verify} />
                     <Route path="/avira" component={Admin} />
-                    <Footer />
+
+                    <footer>
+                        <p className="copyright">&copy; Noa Golan</p>
+                        <div className="impressum">
+                            <Link
+                                to="/about"
+                                className="footer-button"
+                            >
+                                Impressum
+                            </Link>
+                            <Link
+                                to="/groups"
+                                className="footer-button"
+                            >
+                                Contact
+                            </Link>
+                        </div>
+                    </footer>
                 </main>
             </BrowserRouter>
         );
@@ -88,6 +167,7 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
+    ...state.user,
     message: state.message,
     loggedIn: state.loggedIn
 });

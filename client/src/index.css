@@ -1,11 +1,12 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat Alternates', sans-serif; */
+}
+
 body {
-    font-family: 'NTR', sans-serif;
-    /* font-family: 'Marvel', sans-serif; */
-    /* font-family: 'Pontano Sans', sans-serif; */
     margin: 0;
-    padding: 0;
-    background-color: rgb(7, 40, 64);
-    /* background-image: url('/images/background_photo.jpg');
-    background-size: 100vw 100vh;
-    background-attachment: fixed; */
 }

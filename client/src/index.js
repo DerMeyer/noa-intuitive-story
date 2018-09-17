@@ -1,11 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { composeWithDevTools } from 'redux-devtools-extension';
+// import { BrowserRouter } from 'react-router-dom';
+
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import reduxPromise from 'redux-promise';
-import reducer from './reducer';
+import { composeWithDevTools } from 'redux-devtools-extension';
+
 import './index.css';
+import reducer from './reducer';
 
 import App from './App';
 

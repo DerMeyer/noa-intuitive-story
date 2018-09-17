@@ -36,7 +36,7 @@ class Login extends Component {
         this.setState({
             [event.target.name]: event.target.value
         });
-    }
+    };
     login = event => {
         if (event.type !== 'click' && event.keyCode !== 13) {
             return;
@@ -70,13 +70,13 @@ class Login extends Component {
                 });
             }
         }
-    }
+    };
     emptyField = event => {
         this.setState({
             [event.target.name]: '',
             [`${event.target.name}Red`]: {}
         });
-    }
+    };
     forgotPW = () => {
         if (this.state.alias) {
             axios
@@ -87,13 +87,14 @@ class Login extends Component {
                     if (resp.data.success) {
                         this.props.dispatch(deleteMessage());
                         this.setState({
-                            message: 'We sent a new password to your email address.',
+                            message:
+                                'We sent a new password to your email address.',
                             messageRed: {}
                         });
                     } else {
                         this.setState({
                             message: 'Something went wrong.',
-                            messageRed: { color: 'red'  }
+                            messageRed: { color: 'red' }
                         });
                     }
                 })
@@ -101,21 +102,27 @@ class Login extends Component {
                     console.log(err);
                     this.setState({
                         message: 'No server response.',
-                        messageRed: { color: 'red'  }
+                        messageRed: { color: 'red' }
                     });
                 });
         } else {
-            this.state.alias || this.setState({
-                alias: 'Please enter a user name',
-                aliasRed: { color: 'red' }
-            });
+            this.state.alias ||
+                this.setState({
+                    alias: 'Please enter a user name',
+                    aliasRed: { color: 'red' }
+                });
         }
-
-    }
+    };
     render() {
         return (
             <section className="login_component_frame">
-                <h1 style={this.props.message.loginColor || this.state.messageRed}>{this.props.message.loginText || this.state.message}</h1>
+                <h1
+                    style={
+                        this.props.message.loginColor || this.state.messageRed
+                    }
+                >
+                    {this.props.message.loginText || this.state.message}
+                </h1>
                 <input
                     ref={this.firstInput}
                     style={this.state.aliasRed}
@@ -126,13 +133,21 @@ class Login extends Component {
                     onFocus={this.emptyField}
                     onChange={this.compileData}
                     onKeyDown={this.login}
-                    />
-                <input name="pw" type="password" placeholder="password" onChange={this.compileData} onKeyDown={this.login} />
+                />
+                <input
+                    name="pw"
+                    type="password"
+                    placeholder="password"
+                    onChange={this.compileData}
+                    onKeyDown={this.login}
+                />
                 <button onClick={this.login}>Log in</button>
-                <Link to="/register"><button>Not a member yet?</button></Link>
+                <Link to="/register">
+                    <button>Not a member yet?</button>
+                </Link>
                 <button onClick={this.forgotPW}>Forgot your password?</button>
             </section>
-        )
+        );
     }
 }
 
