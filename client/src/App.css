@@ -1,6 +1,5 @@
 main {
-    position: relative;
-    width: 100vw;
+    width: 100%;
     min-height: 100vh;
 }
 
@@ -8,20 +7,21 @@ main {
 header, footer {
     z-index: 300;
 }
-/* dev */
 
-header,
-footer,
-.message-modal {
-    position: fixed;
-}
-
+.main-background,
 header,
 footer {
-    left: 0;
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
     width: 100%;
-    border: 1px solid black;
-    background-color: white;
+    background-color: whitesmoke;
+}
+
+.main-background {
+    top: 13vh;
+    height: 79%;
+    background-color: lightblue;
 }
 
 header {
@@ -34,8 +34,17 @@ footer {
     height: 8vh;
 }
 
+@media only screen and (min-width: 2000px) {
+    main,
+    .main-background,
+    header,
+    footer {
+        width: 2000px;
+    }
+}
+
 nav {
-    
+
 }
 
 nav,

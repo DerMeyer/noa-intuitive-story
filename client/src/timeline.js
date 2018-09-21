@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Architypes from './architypes';
 import Group from './group';
 
 import { setMessage, getGroups, getHistory, createHistory } from './actions';
@@ -348,7 +347,6 @@ class Timeline extends Component {
                         onMouseLeave={this.onUp}
                         >
                         <img style={this.style.timeline} src="/images/timeline.png" alt="Timeline" />
-                        <Architypes />
                         {this.state.groups}
                         {this.state.history}
                         {this.state.newHistoryEntry && <section style={this.state.addHistoryStyle} onMouseDown={e => e.stopPropagation()} onMouseUp={e => e.stopPropagation()}>

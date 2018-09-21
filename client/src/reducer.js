@@ -55,7 +55,7 @@ const reducer = (
                 verified: 1
             },
             message: { ...action.message }
-        }
+        };
     }
     if (action.type === 'UPDATE_PROFILE') {
         return {
@@ -64,7 +64,7 @@ const reducer = (
                 ...action.data
             },
             message: { ...action.message }
-        }
+        };
     }
     if (action.type === 'UPDATE_ICON_URL') {
         return {
@@ -73,30 +73,27 @@ const reducer = (
                 ...state.user,
                 icon_url: action.data
             }
-        }
+        };
     }
     if (action.type === 'GET_GROUPS') {
         return {
             ...state,
-            groups: [ ...action.data ]
+            groups: [...action.data]
         };
     }
     if (action.type === 'GET_HISTORY') {
         return {
             ...state,
-            history: [ ...action.data ]
+            history: [...action.data]
         };
     }
     if (action.type === 'CREATE_HISTORY') {
         return {
             ...state,
-            history: [
-                ...state.history,
-                action.data
-            ]
+            history: [...state.history, action.data]
         };
     }
     return state;
-}
+};
 
 export default reducer;
