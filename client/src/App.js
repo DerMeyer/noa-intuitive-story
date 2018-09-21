@@ -17,9 +17,6 @@ import Admin from './admin';
 import { checkLogin, deleteMessage, logout } from './actions';
 
 class App extends Component {
-    constructor(props) {
-        super(props);
-    }
     componentDidMount() {
         this.props.dispatch(checkLogin());
     }

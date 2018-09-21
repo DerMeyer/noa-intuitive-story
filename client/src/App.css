@@ -1,5 +1,4 @@
 main {
-    width: 100%;
     min-height: 100vh;
 }
 
@@ -35,7 +34,6 @@ footer {
 }
 
 @media only screen and (min-width: 2000px) {
-    main,
     .main-background,
     header,
     footer {
