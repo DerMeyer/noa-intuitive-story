@@ -2,14 +2,12 @@ main {
     min-height: 100vh;
 }
 
-/* dev */
-header, footer {
-    z-index: 300;
-}
-
 .main-background,
 header,
 footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     position: fixed;
     left: 50%;
     transform: translateX(-50%);
@@ -41,38 +39,22 @@ footer {
     }
 }
 
-nav {
-
+.inline-flex {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
 }
 
-nav,
-.profile-menu,
-footer > p,
-footer > div {
-    display: inline-block;
-}
-
-.profile-menu,
-footer > div {
-    position: absolute;
-    right: 0;
-}
-
-.impressum {
-
+.column {
+    flex-direction: column;
 }
 
 .main-navigation-button {
-    display: inline-block;
-    height: 10vh;
+    
 }
 
 .main-navigation-button > img {
     height: 10vh;
-}
-
-.profile-navigation-button {
-
 }
 
 /* timeline css */

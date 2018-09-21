@@ -48,7 +48,7 @@ class App extends Component {
                 <main>
                     <div className="main-background"></div>
                     <header>
-                        <nav className="page-menu">
+                        <nav className="main-navigation inline-flex">
                             <Link to="/" className="main-navigation-button">
                                 <img src="favicon.png" alt="Galaxy Logo" />
                             </Link>
@@ -65,7 +65,7 @@ class App extends Component {
                                 The Intuitive Story Groups Collection
                             </Link>
                         </nav>
-                        <nav className="profile-menu">
+                        <nav className="profile-navigation inline-flex column">
                             <p style={this.props.message.style}>
                                 {this.props.message.text || this.message}
                             </p>
@@ -104,16 +104,16 @@ class App extends Component {
                     <Route path="/avira" component={Admin} />
 
                     <footer>
-                        <p>&copy; Noa Golan</p>
-                        <p onClick={this.logout}>Log out</p>
-                        <div>
+                        <span>&copy; Noa Golan</span>
+                        <span onClick={this.logout}>Log out</span>
+                        <nav className="footer-navigation inline-flex">
                             <Link to="/about" className="footer-button">
                                 Impressum
                             </Link>
                             <Link to="/groups" className="footer-button">
                                 Contact
                             </Link>
-                        </div>
+                        </nav>
                     </footer>
                 </main>
             </BrowserRouter>
