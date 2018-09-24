@@ -47,6 +47,7 @@ class App extends Component {
             <BrowserRouter>
                 <main>
                     <div className="main-background"></div>
+                    
                     <header>
                         <nav className="main-navigation inline-flex">
                             <Link to="/" className="main-navigation-button">
@@ -62,7 +63,7 @@ class App extends Component {
                                 to="/groups"
                                 className="main-navigation-button"
                             >
-                                The Intuitive Story Groups Collection
+                                Group Collection
                             </Link>
                         </nav>
                         <nav className="profile-navigation inline-flex column">
@@ -105,12 +106,12 @@ class App extends Component {
 
                     <footer>
                         <span>&copy; Noa Golan</span>
-                        <span onClick={this.logout}>Log out</span>
+                        <span onClick={this.logout}>(Log out)</span>
                         <nav className="footer-navigation inline-flex">
-                            <Link to="/about" className="footer-button">
+                            <Link to="/impressum" className="footer-navigation-button">
                                 Impressum
                             </Link>
-                            <Link to="/groups" className="footer-button">
+                            <Link to="/contact" className="footer-navigation-button">
                                 Contact
                             </Link>
                         </nav>

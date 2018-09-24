@@ -12,6 +12,7 @@ footer {
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
+    padding: 2%;
     background-color: whitesmoke;
 }
 
@@ -49,8 +50,9 @@ footer {
     flex-direction: column;
 }
 
-.main-navigation-button {
-    
+.main-navigation-button,
+.footer-navigation-button {
+    padding: 20px;
 }
 
 .main-navigation-button > img {
