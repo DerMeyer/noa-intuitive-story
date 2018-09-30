@@ -1,71 +1,87 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import './App.css';
 import { connect } from 'react-redux';
-import { BrowserRouter, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Route, Link, NavLink } from 'react-router-dom';
 
 import Timeline from './Timeline';
 import About from './About';
 import Groups from './Groups';
 import ProfilePage from './ProfilePage';
 import GroupPage from './GroupPage';
-import Login from './SignIn';
-import Register from './SignUp';
+import SignIn from './SignIn';
+import SignUp from './SignUp';
 import Verify from './Verify';
 import Admin from './Admin';
 
 import { checkLogin, logout } from './actions';
 
-class App extends Component {
+class App extends PureComponent {
     componentDidMount() {
         this.props.dispatch(checkLogin());
     }
+
     logout = () => {
         this.props.dispatch(logout());
         window.location.replace('/');
     };
+
     render() {
         return (
             <BrowserRouter>
                 <main>
-                    <header>
-                        <nav className="main-navigation inline-flex">
-                            <Link to="/" className="main-navigation-button">
-                                <img
-                                    title="home"
-                                    src="favicon.png"
-                                    alt="Galaxy Logo"
-                                />
-                            </Link>
-                            <Link
+                    <header className="header flex">
+                        <nav className="header__nav inline-flex">
+                            <img
+                                className="header__nav__image"
+                                title="home"
+                                src="favicon.png"
+                                alt="Logo"
+                            />
+                            <NavLink
+                                exact
+                                to="/"
+                                className="header__nav__button"
+                            >
+                                Timeline
+                            </NavLink>
+                            <NavLink
                                 to="/about"
-                                className="main-navigation-button"
+                                className="header__nav__button"
                             >
                                 About the Intuitive Story
-                            </Link>
-                            <Link
+                            </NavLink>
+                            <NavLink
                                 to="/groups"
-                                className="main-navigation-button"
+                                className="header__nav__button"
                             >
                                 Group Collection
-                            </Link>
+                            </NavLink>
                         </nav>
-                        <nav className="profile-navigation inline-flex column">
-                            {this.props.loggedIn ? (
+                        {this.props.loggedIn ? (
+                            <nav className="header__profile inline-flex">
                                 <Link
                                     to={`/profile/${this.props.user.alias}`}
-                                    className="profile-navigation-button"
+                                    className="header__profile__button"
                                 >
                                     {`Hello ${this.props.user.alias}`}
                                 </Link>
-                            ) : (
+                            </nav>
+                        ) : (
+                            <nav className="header__profile inline-flex">
                                 <Link
-                                    to="/login"
-                                    className="profile-navigation-button"
+                                    to="/signin"
+                                    className="header__profile__button"
                                 >
                                     Sign in
                                 </Link>
-                            )}
-                        </nav>
+                                <Link
+                                    to="/signup"
+                                    className="header__profile__button"
+                                >
+                                    Get started
+                                </Link>
+                            </nav>
+                        )}
                     </header>
 
                     <Route exact path="/" component={Timeline} />
@@ -79,24 +95,29 @@ class App extends Component {
                         path="/group/:id"
                         render={props => <GroupPage match={props.match} />}
                     />
-                    <Route path="/login" component={Login} />
-                    <Route path="/register" component={Register} />
+                    <Route path="/signin" component={SignIn} />
+                    <Route path="/signup" component={SignUp} />
                     <Route path="/verify" component={Verify} />
                     <Route path="/avira" component={Admin} />
 
-                    <footer>
+                    <footer className="footer flex">
                         <span>&copy; Noa Golan</span>
-                        <span onClick={this.logout}>| Log out |</span>
-                        <nav className="footer-navigation inline-flex">
+                        <span
+                            style={{ color: 'lightgrey' }}
+                            onClick={this.logout}
+                        >
+                            | Log out |
+                        </span>
+                        <nav className="footer__nav inline-flex">
                             <Link
                                 to="/impressum"
-                                className="footer-navigation-button"
+                                className="footer__nav__button"
                             >
                                 Impressum
                             </Link>
                             <Link
                                 to="/contact"
-                                className="footer-navigation-button"
+                                className="footer__nav__button"
                             >
                                 Contact
                             </Link>
