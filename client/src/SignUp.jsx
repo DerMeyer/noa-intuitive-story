@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './login.css';
+import './signIn.css';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -116,7 +116,7 @@ class Register extends Component {
     }
     render() {
         return (
-            <section className="login_component_frame">
+            <section className="signIn_component_frame">
                 <h1 style={this.props.message.registerColor || this.state.messageRed}>{this.props.message.registerText || this.state.message}</h1>
                 <h3>( All fields are required )</h3>
                 <input
@@ -131,7 +131,7 @@ class Register extends Component {
                     onKeyDown={this.register}
                     />
                 <input style={this.state.lastRed} name="last" type="text" value={this.state.last} placeholder="last name" onFocus={this.emptyField} onChange={this.compileData} onKeyDown={this.register} />
-                <div className="login_question">
+                <div className="signIn_question">
                     <input style={this.state.aliasRed} name="alias" type="text" value={this.state.alias} placeholder="user name" onFocus={this.emptyField} onChange={this.compileData} onKeyDown={this.register} />
                     <p onClick={this.toggleAliasModal}>?</p>
                     {this.state.aliasModal && <h2 onClick={this.toggleAliasModal}>This can be any name you like.<br/>Your user name will be the only data we display to third parties.<br/>All your data will be handled securely and only ever accessed by staff of The Intuitive Story.</h2>}
@@ -141,7 +141,7 @@ class Register extends Component {
                 <input name="pw" type="password" placeholder="password" onChange={this.compileData} onKeyDown={this.register} />
                 <input name="repeat" type="password" placeholder="repeat password" onChange={this.compileData} onKeyDown={this.register} />
                 <button onClick={this.register}>Sign up</button>
-                <Link to="/login"><button ref={this.goToLogin}>Already have an account?</button></Link>
+                <Link to="/signIn"><button ref={this.goToLogin}>Already have an account?</button></Link>
             </section>
         )
     }

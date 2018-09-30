@@ -1,4 +1,4 @@
-.login_component_frame {
+.signIn_component_frame {
     position: absolute;
     top: 7vh;
     left: 17vw;
@@ -10,18 +10,18 @@
     width: 66vw;
 }
 
-.login_component_frame h1 {
+.signIn_component_frame h1 {
     font-size: 3vh;
     color: whitesmoke;
 }
 
-.login_component_frame h3 {
+.signIn_component_frame h3 {
     font-size: 2vh;
     margin-top: -4vh;
     color: whitesmoke;
 }
 
-.login_component_frame input {
+.signIn_component_frame input {
     font-family: 'NTR', sans-serif;
     font-size: 2.5vh;
     height: 4.5vh;
@@ -30,7 +30,7 @@
     margin-bottom: 2vh;
 }
 
-.login_component_frame button {
+.signIn_component_frame button {
     cursor: pointer;
     font-family: 'NTR', sans-serif;
     font-size: 3vh;
@@ -45,15 +45,15 @@
     transition-duration: .15s;
 }
 
-.login_component_frame button:hover {
+.signIn_component_frame button:hover {
     background-color: lightgray;
 }
 
-.login_question {
+.signIn_question {
     position: relative;
 }
 
-.login_question p {
+.signIn_question p {
     cursor: pointer;
     position: absolute;
     top: 1vh;
@@ -67,7 +67,7 @@
     background-color: whitesmoke;
 }
 
-.login_question h2 {
+.signIn_question h2 {
     cursor: pointer;
     position: absolute;
     top: 1vh;

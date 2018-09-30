@@ -11,12 +11,12 @@ export const setMessage = (text, color, time) => ({
     }
 });
 
-export const logout = async () => {
+export const signOut = async () => {
     try {
         const resp = await axios.get('/api/logout');
         if (resp.data.success) {
             return {
-                type: 'LOG_OUT'
+                type: 'SIGN_OUT'
             };
         }
     } catch (err) {
@@ -30,12 +30,12 @@ export const logout = async () => {
     }
 }
 
-export const checkLogin = async () => {
+export const checkSignIn = async () => {
     try {
         const resp = await axios.get('/api/check_login');
         if (resp.data.success) {
             return {
-                type: 'LOG_IN',
+                type: 'SIGN_IN',
                 data: { ...resp.data.user }
             };
         } else {
@@ -55,20 +55,20 @@ export const checkLogin = async () => {
     }
 }
 
-export const login = async (alias, pw) => {
+export const signIn = async (alias, pw) => {
     try {
         const resp = await axios.post('/api/login', { alias, pw });
         if (resp.data.success) {
             return {
-                type: 'LOG_IN',
+                type: 'SIGN_IN',
                 data: { ...resp.data.user }
             };
         } else {
             return {
                 type: 'SET_MESSAGE',
                 message: {
-                    loginText: 'Wrong user name or password. Please try again.',
-                    loginColor: { color: 'red' }
+                    signInText: 'Wrong user name or password. Please try again.',
+                    signInColor: { color: 'red' }
                 }
             };
         }
@@ -89,7 +89,7 @@ export const register = async (first, last, alias, mail, phone, pw) => {
         const resp = await axios.post('/api/register', { first, last, alias, mail, phone, pw });
         if (resp.data.success) {
             return {
-                type: 'LOG_IN',
+                type: 'SIGN_IN',
                 data: { ...resp.data.user }
             };
         } else {

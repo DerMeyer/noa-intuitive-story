@@ -13,16 +13,15 @@ import SignUp from './SignUp';
 import Verify from './Verify';
 import Admin from './Admin';
 
-import { checkLogin, logout } from './actions';
+import { checkSignIn, signOut } from './actions';
 
 class App extends PureComponent {
     componentDidMount() {
-        this.props.dispatch(checkLogin());
+        this.props.dispatch(checkSignIn());
     }
 
-    logout = () => {
-        this.props.dispatch(logout());
-        window.location.replace('/');
+    signOut = () => {
+        this.props.dispatch(signOut());
     };
 
     render() {
@@ -57,13 +56,20 @@ class App extends PureComponent {
                                 Group Collection
                             </NavLink>
                         </nav>
-                        {this.props.loggedIn ? (
+                        {this.props.signedIn ? (
                             <nav className="header__profile inline-flex">
+                                <Link
+                                    to="/"
+                                    className="header__profile__button"
+                                    onClick={this.signOut}
+                                >
+                                    Sign out
+                                </Link>
                                 <Link
                                     to={`/profile/${this.props.user.alias}`}
                                     className="header__profile__button"
                                 >
-                                    {`Hello ${this.props.user.alias}`}
+                                    {this.props.user.alias}
                                 </Link>
                             </nav>
                         ) : (
@@ -101,13 +107,7 @@ class App extends PureComponent {
                     <Route path="/avira" component={Admin} />
 
                     <footer className="footer flex">
-                        <span>&copy; Noa Golan</span>
-                        <span
-                            style={{ color: 'lightgrey' }}
-                            onClick={this.logout}
-                        >
-                            | Log out |
-                        </span>
+                        <span className="footer__nav__button">&copy; Noa Golan</span>
                         <nav className="footer__nav inline-flex">
                             <Link
                                 to="/impressum"
@@ -129,8 +129,9 @@ class App extends PureComponent {
     }
 }
 
-const mapStateToProps = ({ loggedIn, user = {} }) => ({
-    loggedIn,
+const mapStateToProps = ({ signedIn, message = {}, user = {} }) => ({
+    signedIn,
+    message,
     user
 });
 

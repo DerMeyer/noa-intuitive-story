@@ -1,7 +1,7 @@
 const reducer = (
     state = {
         message: {},
-        loggedIn: false,
+        signedIn: false,
         user: {
             alias: '',
             userId: 0,
@@ -24,10 +24,10 @@ const reducer = (
             message: { ...action.message }
         };
     }
-    if (action.type === 'LOG_OUT') {
+    if (action.type === 'SIGN_OUT') {
         return {
             ...state,
-            loggedIn: false,
+            signedIn: false,
             user: {
                 alias: '',
                 userId: 0,
@@ -38,10 +38,10 @@ const reducer = (
             message: { ...action.message }
         };
     }
-    if (action.type === 'LOG_IN') {
+    if (action.type === 'SIGN_IN') {
         return {
             ...state,
-            loggedIn: true,
+            signedIn: true,
             user: {
                 ...action.data
             }

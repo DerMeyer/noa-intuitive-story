@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import './login.css';
+import './signIn.css';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import axios from './axios';
 
-import { login, deleteMessage } from './actions';
+import { signIn, deleteMessage } from './actions';
 
-class Login extends Component {
+class SignIn extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -18,31 +18,37 @@ class Login extends Component {
         };
         this.firstInput = React.createRef();
     }
+
     componentDidMount() {
         this.firstInput.current.focus();
     }
+
     componentDidUpdate(prevProps) {
-        if (this.props.loggedIn && this.props.verified) {
+        if (this.props.signedIn && this.props.user.verified) {
             window.location.replace('/');
-        } else if (this.props.loggedIn && !this.props.verified) {
+        } else if (this.props.signedIn && !this.props.user.verified) {
             window.location.replace('/verify_account');
         }
     }
+
     componentWillUnmount() {
-        this.props.message.loginText && this.props.dispatch(deleteMessage());
+        this.props.message.signInText && this.props.dispatch(deleteMessage());
         clearTimeout(this.setTimeoutID);
     }
+
     compileData = event => {
         this.setState({
             [event.target.name]: event.target.value
         });
     };
-    login = event => {
+
+    signIn = event => {
+        console.log(this.state.alias, this.state.pw);
         if (event.type !== 'click' && event.keyCode !== 13) {
             return;
         }
         event.preventDefault();
-        this.props.message.loginText && this.props.dispatch(deleteMessage());
+        this.props.message.signInText && this.props.dispatch(deleteMessage());
         this.setState({
             message: 'Please log in to the Intuitive Story.',
             messageRed: {}
@@ -50,7 +56,7 @@ class Login extends Component {
         if (this.state.alias && !this.state.aliasRed.color && this.state.pw) {
             const { alias, pw } = this.state;
             this.setTimeoutID = setTimeout(() => {
-                this.props.dispatch(login(alias, pw));
+                this.props.dispatch(signIn(alias, pw));
             }, 500);
             this.setState({
                 message: 'Please wait...'
@@ -71,12 +77,14 @@ class Login extends Component {
             }
         }
     };
+
     emptyField = event => {
         this.setState({
             [event.target.name]: '',
             [`${event.target.name}Red`]: {}
         });
     };
+
     forgotPW = () => {
         if (this.state.alias) {
             axios
@@ -113,15 +121,16 @@ class Login extends Component {
                 });
         }
     };
+
     render() {
         return (
-            <section className="login_component_frame">
+            <section className="signIn_component_frame">
                 <h1
                     style={
-                        this.props.message.loginColor || this.state.messageRed
+                        this.props.message.signInColor || this.state.messageRed
                     }
                 >
-                    {this.props.message.loginText || this.state.message}
+                    {this.props.message.signInText || this.state.message}
                 </h1>
                 <input
                     ref={this.firstInput}
@@ -132,17 +141,17 @@ class Login extends Component {
                     placeholder="user name"
                     onFocus={this.emptyField}
                     onChange={this.compileData}
-                    onKeyDown={this.login}
+                    onKeyDown={this.signIn}
                 />
                 <input
                     name="pw"
                     type="password"
                     placeholder="password"
                     onChange={this.compileData}
-                    onKeyDown={this.login}
+                    onKeyDown={this.signIn}
                 />
-                <button onClick={this.login}>Log in</button>
-                <Link to="/register">
+                <button onClick={this.signIn}>Log in</button>
+                <Link to="/signup">
                     <button>Not a member yet?</button>
                 </Link>
                 <button onClick={this.forgotPW}>Forgot your password?</button>
@@ -151,12 +160,12 @@ class Login extends Component {
     }
 }
 
-const mapStateToProps = state => ({
-    message: state.message,
-    loggedIn: state.loggedIn,
-    verified: state.user.verified
+const mapStateToProps = ({ signedIn, message, user = {} }) => ({
+    signedIn,
+    message,
+    user
 });
 
-const ConnectedLogin = connect(mapStateToProps)(Login);
+const ConnectedSignIn = connect(mapStateToProps)(SignIn);
 
-export default ConnectedLogin;
+export default ConnectedSignIn;
