@@ -2,7 +2,6 @@ main {
     min-height: 100vh;
 }
 
-.main-background,
 header,
 footer {
     display: flex;
@@ -16,12 +15,6 @@ footer {
     background-color: whitesmoke;
 }
 
-.main-background {
-    top: 13vh;
-    height: 79%;
-    background-color: lightblue;
-}
-
 header {
     top: 0;
     height: 13vh;
@@ -33,7 +26,6 @@ footer {
 }
 
 @media only screen and (min-width: 2000px) {
-    .main-background,
     header,
     footer {
         width: 2000px;
