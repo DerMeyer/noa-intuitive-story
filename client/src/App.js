@@ -58,32 +58,38 @@ class App extends PureComponent {
                             </NavLink>
                         </nav>
                         {this.props.signedIn ? (
-                            <nav className="header__profile inline-flex">
+                            <nav className="profile__nav inline-flex">
                                 <Link
                                     to="/"
-                                    className="header__profile__button"
+                                    className="profile__nav__button"
                                     onClick={this.signOut}
                                 >
                                     Sign out
                                 </Link>
                                 <Link
                                     to={`/profile/${this.props.user.alias}`}
-                                    className="header__profile__button"
+                                    className="profile__nav__button"
                                 >
-                                    {this.props.user.alias}
+                                    <div
+                                        style={{
+                                            backgroundImage: `url(${this.props.user.icon_url || 'favicon.png'})`
+                                        }}
+                                        className="profile__nav__image"
+                                        title="view your profile"
+                                    />
                                 </Link>
                             </nav>
                         ) : (
-                            <nav className="header__profile inline-flex">
+                            <nav className="profile__nav inline-flex">
                                 <Link
                                     to="/signin"
-                                    className="header__profile__button"
+                                    className="profile__nav__button"
                                 >
                                     Sign in
                                 </Link>
                                 <Link
                                     to="/signup"
-                                    className="header__profile__button"
+                                    className="profile__nav__button profile__nav__button--border"
                                 >
                                     Get started
                                 </Link>
@@ -108,7 +114,7 @@ class App extends PureComponent {
                     <Route path="/avira" component={Admin} />
 
                     <footer className="footer flex">
-                        <span className="footer__nav__button">&copy; Noa Golan</span>
+                        <span className="footer__note">&copy; Noa Golan</span>
                         <nav className="footer__nav inline-flex">
                             <Link
                                 to="/impressum"
@@ -116,10 +122,7 @@ class App extends PureComponent {
                             >
                                 Impressum
                             </Link>
-                            <Link
-                                to="/contact"
-                                className="footer__nav__button"
-                            >
+                            <Link to="/contact" className="footer__nav__button">
                                 Contact
                             </Link>
                         </nav>

@@ -69,24 +69,48 @@
     color: var(--darkColor);
 }
 
-.header__profile__button {
+.profile__nav__image {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.profile__nav__button {
     text-decoration: none;
     padding: 8px 15px;
     color: var(--darkColor);
 }
 
-.header__profile__button:last-child {
+.profile__nav__button--border {
     border: 1px solid var(--lightColor);
     border-radius: 6px;
 }
 
-.footer__nav__button {
-    text-decoration: none;
+.footer__note {
     color: var(--mediumColor);
 }
 
-.footer__nav__button:last-child {
+.footer__nav__button {
+    text-decoration: none;
     padding: 0 0 0 30px;
+    color: var(--mediumColor);
+}
+
+/* sing in / sign up */
+
+.sign-user-form {
+    position: absolute;
+    top: 7vh;
+    left: 17vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 75vh;
+    width: 66vw;
 }
 
 

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './signIn.css';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import axios from './axios';
@@ -12,7 +11,6 @@ class SignIn extends Component {
         this.state = {
             message: 'Please log in to the Intuitive Story.',
             alias: '',
-            aliasRed: {},
             pw: ''
         };
         this.firstInput = React.createRef();
@@ -24,7 +22,8 @@ class SignIn extends Component {
 
     componentDidUpdate(prevProps) {
         if (this.props.signedIn && this.props.user.verified) {
-            window.location.replace('/');
+            window.location.pathname = '/';
+            // window.location.replace('/');
         } else if (this.props.signedIn && !this.props.user.verified) {
             window.location.replace('/verify_account');
         }
@@ -35,7 +34,7 @@ class SignIn extends Component {
         clearTimeout(this.setTimeoutID);
     }
 
-    compileData = event => {
+    getUserInput = event => {
         this.setState({
             [event.target.name]: event.target.value
         });
@@ -45,12 +44,11 @@ class SignIn extends Component {
         if (event.type !== 'click' && event.keyCode !== 13) {
             return;
         }
+
         event.preventDefault();
         this.props.message && this.props.dispatch(deleteMessage());
-        this.setState({
-            message: 'Please log in to the Intuitive Story.'
-        });
-        if (this.state.alias && !this.state.aliasRed.color && this.state.pw) {
+
+        if (this.state.alias && this.state.pw) {
             const { alias, pw } = this.state;
             this.setTimeoutID = setTimeout(() => {
                 this.props.dispatch(signIn(alias, pw));
@@ -58,40 +56,38 @@ class SignIn extends Component {
             this.setState({
                 message: 'Please wait...'
             });
-        } else {
-            if (!this.state.alias) {
-                this.firstInput.current.blur();
-                this.setState({
-                    alias: 'Please enter a user name',
-                    aliasRed: { color: 'red' }
-                });
-            }
-            if (!this.state.pw) {
-                this.setState({
-                    message: 'Please enter a password.'
-                });
-            }
+        } else if (!this.state.alias && !this.state.pw) {
+            this.setState({
+                message: 'Please enter a user name and password.'
+            });
+        } else if (this.state.alias && !this.state.pw) {
+            this.setState({
+                message: 'Please enter a password.'
+            });
+        } else if (!this.state.alias && this.state.pw) {
+            this.setState({
+                message: 'Please enter a user name.'
+            });
         }
     };
 
-    emptyField = event => {
+    emptyInputField = event => {
         this.setState({
-            [event.target.name]: '',
-            [`${event.target.name}Red`]: {}
+            [event.target.name]: ''
         });
     };
 
     forgotPW = () => {
         if (this.state.alias) {
+            this.props.dispatch(deleteMessage());
+            const { alias } = this.state;
             axios
-                .post('/api/get_new_pw', {
-                    alias: this.state.alias
-                })
+                .post('/api/get_new_pw', { alias })
                 .then(resp => {
                     if (resp.data.success) {
-                        this.props.dispatch(deleteMessage());
                         this.setState({
-                            message: 'We sent a new password to your email address.'
+                            message:
+                                'We sent a new password to your email address.'
                         });
                     } else {
                         this.setState({
@@ -102,40 +98,35 @@ class SignIn extends Component {
                 .catch(function(err) {
                     console.log(err);
                     this.setState({
-                        message: 'No server response.'
+                        message: `The server didn't respond.`
                     });
                 });
         } else {
-            this.state.alias ||
-                this.setState({
-                    alias: 'Please enter a user name',
-                    aliasRed: { color: 'red' }
-                });
+            this.setState({
+                message: 'Please enter a user name.'
+            });
         }
     };
 
     render() {
         return (
-            <section className="signIn_component_frame">
-                <h1>
-                    {this.props.message || this.state.message}
-                </h1>
+            <div className="sign-user-form">
+                <h1>{this.props.message || this.state.message}</h1>
                 <input
                     ref={this.firstInput}
-                    style={this.state.aliasRed}
                     name="alias"
                     type="text"
                     value={this.state.alias}
                     placeholder="user name"
-                    onFocus={this.emptyField}
-                    onChange={this.compileData}
+                    onFocus={this.emptyInputField}
+                    onChange={this.getUserInput}
                     onKeyDown={this.signIn}
                 />
                 <input
                     name="pw"
                     type="password"
                     placeholder="password"
-                    onChange={this.compileData}
+                    onChange={this.getUserInput}
                     onKeyDown={this.signIn}
                 />
                 <button onClick={this.signIn}>Log in</button>
@@ -143,7 +134,7 @@ class SignIn extends Component {
                     <button>Not a member yet?</button>
                 </Link>
                 <button onClick={this.forgotPW}>Forgot your password?</button>
-            </section>
+            </div>
         );
     }
 }
