@@ -3,21 +3,41 @@ const app = express();
 
 const { s3upload } = require('./s3');
 const { s3Url, iconUrls } = require('./config');
-const { MY_SECRET, SMTP_USER, SMTP_PASS } = (process.env.NODE_ENV === 'production' && process.env) || require('./confidential.json');
+const { MY_SECRET, SMTP_USER, SMTP_PASS } =
+    (process.env.NODE_ENV === 'production' && process.env) ||
+    require('./confidential.json');
 
-const { hashPW, checkPW, login, register, getVCode, setVCode, verifyAccount, newPW, updatePW, updateProfile, updateProfileImage, getAllGroups, getHistory, getAllUsers, createGroup, updateGroup, createHistory } = require('./db');
+const {
+    hashPW,
+    checkPW,
+    signin,
+    signup,
+    getVerificationCode,
+    setVerificationCode,
+    verifyAccount,
+    newPW,
+    updatePW,
+    updateProfile,
+    updateProfileImage,
+    getGroups,
+    getHistory,
+    createHistory,
+    createGroup,
+    updateGroup,
+    getUsers
+} = require('./db');
 
 const multer = require('multer');
 const uidSafe = require('uid-safe');
 const path = require('path');
 const diskStorage = multer.diskStorage({
-    destination: function (req, file, callback) {
+    destination: function(req, file, callback) {
         callback(null, `${__dirname}/uploads`);
     },
-    filename: function (req, file, callback) {
-      uidSafe(24).then(function(uid) {
-          callback(null, uid + path.extname(file.originalname));
-      });
+    filename: function(req, file, callback) {
+        uidSafe(24).then(function(uid) {
+            callback(null, uid + path.extname(file.originalname));
+        });
     }
 });
 
@@ -49,7 +69,7 @@ const bp = require('body-parser');
 app.use(bp.json());
 
 const nodemailer = require('nodemailer');
-const sendMail = (alias, mail, vCode, pw) => {
+const sendMail = (alias, mail, verificationCode, pw) => {
     const transporter = nodemailer.createTransport({
         host: 'smtp.1und1.de',
         port: 587,
@@ -59,18 +79,19 @@ const sendMail = (alias, mail, vCode, pw) => {
             pass: SMTP_PASS
         }
     });
-    const mailOptions = vCode ? {
-        from: 'theintuitivestory@gmail.com',
-        to: mail,
-        subject: 'Please confirm your Intuitive Story account.',
-        html: `<h2>Hi ${alias}, your confirmation code is:</h2><h1>${vCode}</h1>`
-    }
-    : {
-        from: 'theintuitivestory@gmail.com',
-        to: mail,
-        subject: `New password for ${alias}.`,
-        html: `<h2>Hi ${alias}, your new password is:</h2><h1>${pw}</h1>`
-    }
+    const mailOptions = verificationCode
+        ? {
+              from: 'theintuitivestory@gmail.com',
+              to: mail,
+              subject: 'Please confirm your Intuitive Story account.',
+              html: `<h2>Hi ${alias}, your confirmation code is:</h2><h1>${verificationCode}</h1>`
+          }
+        : {
+              from: 'theintuitivestory@gmail.com',
+              to: mail,
+              subject: `New password for ${alias}.`,
+              html: `<h2>Hi ${alias}, your new password is:</h2><h1>${pw}</h1>`
+          };
     transporter.sendMail(mailOptions, (err, info) => {
         if (err) {
             console.log(err);
@@ -78,23 +99,23 @@ const sendMail = (alias, mail, vCode, pw) => {
             console.log('Message ID at register:', info.messageId);
         }
     });
-}
+};
 
 const PORT = process.env.PORT || 5000;
 
-app.get('/api/logout', (req, res) => {
+app.get('/api/signout', (req, res) => {
     req.session = null;
     res.json({
         success: true
     });
 });
 
-app.get('/api/check_login', (req, res) => {
+app.get('/api/check_signin', (req, res) => {
     if (req.session.user) {
         res.json({
             success: true,
             user: {
-                 ...req.session.user
+                ...req.session.user
             }
         });
     } else {
@@ -104,12 +125,22 @@ app.get('/api/check_login', (req, res) => {
     }
 });
 
-app.post('/api/login', async (req, res) => {
+app.post('/api/signin', async (req, res) => {
+    console.log(req.body.alias, req.body.pw);
     try {
-        const result = await login(req.body.alias);
+        const result = await signin(req.body.alias);
         const correctPW = await checkPW(req.body.pw, result.rows[0].pw);
         if (correctPW) {
-            const { id, verified, first, last, mail, phone, icon_url, created_at } = result.rows[0];
+            const {
+                id,
+                verified,
+                first,
+                last,
+                mail,
+                phone,
+                icon_url,
+                created_at
+            } = result.rows[0];
             req.session.user = {
                 id,
                 verified,
@@ -124,7 +155,7 @@ app.post('/api/login', async (req, res) => {
             res.json({
                 success: true,
                 user: {
-                     ...req.session.user
+                    ...req.session.user
                 }
             });
         } else {
@@ -140,12 +171,12 @@ app.post('/api/login', async (req, res) => {
     }
 });
 
-app.post('/api/register', async (req, res) => {
+app.post('/api/signup', async (req, res) => {
     try {
-        const vCode = Math.floor(1000 + (Math.random() * 9000));
+        const verificationCode = Math.floor(1000 + Math.random() * 9000);
         const hashedPW = await hashPW(req.body.pw);
-        const result = await register(
-            vCode,
+        const result = await signup(
+            verificationCode,
             req.body.first,
             req.body.last,
             req.body.alias,
@@ -153,13 +184,34 @@ app.post('/api/register', async (req, res) => {
             req.body.phone,
             hashedPW
         );
-        sendMail(req.body.alias, req.body.mail, vCode);
-        const { id, verified, first, last, alias, mail, phone, icon_url, created_at } = result.rows[0];
-        req.session.user = { id, verified, first, last, alias, mail, phone, icon_url, created_at };
+
+        sendMail(req.body.alias, req.body.mail, verificationCode);
+        const {
+            id,
+            verified,
+            first,
+            last,
+            alias,
+            mail,
+            phone,
+            icon_url,
+            created_at
+        } = result.rows[0];
+        req.session.user = {
+            id,
+            verified,
+            first,
+            last,
+            alias,
+            mail,
+            phone,
+            icon_url,
+            created_at
+        };
         res.json({
             success: true,
             user: {
-                 ...req.session.user
+                ...req.session.user
             }
         });
     } catch (err) {
@@ -170,11 +222,15 @@ app.post('/api/register', async (req, res) => {
     }
 });
 
-app.post('/api/new_v_code', async (req, res) => {
+app.post('/api/new_verification_code', async (req, res) => {
     try {
-        const vCode = Math.floor(1000 + (Math.random() * 9000));
-        const result = await setVCode(vCode, req.body.alias);
-        sendMail(req.body.alias, result.rows[0].mail, vCode);
+        const verificationCode = Math.floor(1000 + Math.random() * 9000);
+        const result = await setVerificationCode(
+            verificationCode,
+            req.body.alias
+        );
+
+        sendMail(req.body.alias, result.rows[0].mail, verificationCode);
         res.json({
             success: true
         });
@@ -188,8 +244,8 @@ app.post('/api/new_v_code', async (req, res) => {
 
 app.post('/api/verify_account', async (req, res) => {
     try {
-        const result = await getVCode(req.body.alias);
-        if (result.rows[0].v_code == req.body.vCode) {
+        const result = await getVerificationCode(req.body.alias);
+        if (result.rows[0].v_code == req.body.verificationCode) {
             await verifyAccount(req.body.alias);
             req.session.user.verified = 1;
             res.json({
@@ -212,7 +268,7 @@ app.post('/api/get_new_pw', async (req, res) => {
     try {
         const result = await newPW(req.body.alias);
         if (result.newPW) {
-            sendMail(req.body.alias, result.mail, null, result.newPW)
+            sendMail(req.body.alias, result.mail, null, result.newPW);
             res.json({
                 success: true
             });
@@ -243,12 +299,32 @@ app.post('/api/update_profile', async (req, res) => {
             req.body.mail,
             req.body.phone
         );
-        const { id, verified, first, last, alias, mail, phone, icon_url, created_at } = result.rows[0];
-        req.session.user = { id, verified, first, last, alias, mail, phone, icon_url, created_at };
+        const {
+            id,
+            verified,
+            first,
+            last,
+            alias,
+            mail,
+            phone,
+            icon_url,
+            created_at
+        } = result.rows[0];
+        req.session.user = {
+            id,
+            verified,
+            first,
+            last,
+            alias,
+            mail,
+            phone,
+            icon_url,
+            created_at
+        };
         res.json({
             success: true,
             user: {
-                 ...req.session.user
+                ...req.session.user
             }
         });
     } catch (err) {
@@ -259,34 +335,38 @@ app.post('/api/update_profile', async (req, res) => {
     }
 });
 
-app.post('/api/upload_image', uploader.single('file'), s3upload, async (req, res) => {
-    if (req.file) {
-        try {
-            const url = `${s3Url}${req.file.filename}`;
-            const result = await updateProfileImage(req.body.user_id, url);
-            req.session.user.icon_url = result.rows[0].icon_url;
-            res.json({
-                success: true,
-                icon_url: req.session.user.icon_url
-            });
-        } catch (err) {
-            console.log(err);
+app.post(
+    '/api/upload_image',
+    uploader.single('file'),
+    s3upload,
+    async (req, res) => {
+        if (req.file) {
+            try {
+                const url = `${s3Url}${req.file.filename}`;
+                const result = await updateProfileImage(req.body.user_id, url);
+                req.session.user.icon_url = result.rows[0].icon_url;
+                res.json({
+                    success: true,
+                    icon_url: req.session.user.icon_url
+                });
+            } catch (err) {
+                console.log(err);
+                res.json({
+                    success: false
+                });
+            }
+        } else {
             res.json({
                 success: false,
-                message: 'Beim Upload ist etwas schiefgelaufen.'
+                fileTooLarge: true
             });
         }
-    } else {
-        res.json({
-            success: false,
-            message: 'Sieht aus, als ob das Bild zu groß wär. Bist du unter 4MB? '
-        });
     }
-});
+);
 
-app.get('/api/groups', async (req, res) => {
+app.get('/api/get_groups', async (req, res) => {
     try {
-        const result = await getAllGroups();
+        const result = await getGroups();
         res.json({
             success: true,
             groups: result.rows
@@ -417,7 +497,7 @@ app.get('/api/get_users', async (req, res) => {
         res.end();
     }
     try {
-        const result = await getAllUsers();
+        const result = await getUsers();
         res.json({
             success: true,
             users: result.rows
@@ -432,6 +512,8 @@ app.get('/api/get_users', async (req, res) => {
 
 app.use(express.static(`${__dirname}/client/build`));
 
-app.get('*', (req, res) => res.sendFile(`${__dirname}/client/build/index.html`));
+app.get('*', (req, res) =>
+    res.sendFile(`${__dirname}/client/build/index.html`)
+);
 
 app.listen(PORT, () => console.log(`I'm listening on port ${PORT}`));

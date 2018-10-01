@@ -3,7 +3,7 @@ import './signIn.css';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { deleteMessage, newVCode, verifyAccount } from './actions';
+import { deleteMessage, newVerificationCode, verifyAccount } from './actions';
 
 class Verify extends Component {
     constructor(props) {
@@ -54,7 +54,7 @@ class Verify extends Component {
     }
     newCode = () => {
         this.setTimeoutID = setTimeout(() => {
-            this.props.dispatch(newVCode(this.props.alias));
+            this.props.dispatch(newVerificationCode(this.props.alias));
         }, 500);
     }
     render() {

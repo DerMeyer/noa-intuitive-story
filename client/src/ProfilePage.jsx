@@ -196,9 +196,15 @@ class ProfilePage extends Component {
                         });
                     }, 3000);
                 } else {
-                    this.setState({
-                        message: 'Something went wrong.'
-                    });
+                    if (resp.data.fileTooLarge) {
+                        this.setState({
+                            message: 'Your image exceeds the maximum size of 4 MB.'
+                        });
+                    } else {
+                        this.setState({
+                            message: 'Something went wrong.'
+                        });
+                    }
                     this.timeoutID = window.setTimeout(() => {
                         this.setState({
                             message: ''
@@ -208,7 +214,7 @@ class ProfilePage extends Component {
             } catch (err) {
                 console.log(err);
                 this.setState({
-                    message: 'No Server response.'
+                    message: `The server didn't respond.`
                 });
             }
         } else {

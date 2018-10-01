@@ -1,43 +1,29 @@
-const reducer = (
-    state = {
-        message: {},
-        signedIn: false,
-        user: {
-            alias: '',
-            userId: 0,
-            verified: 0,
-            unreadMessages: false,
-            unreadGroups: []
-        }
-    },
-    action
-) => {
+const reducer = (state = {}, action) => {
     if (action.type === 'DELETE_MESSAGE') {
         return {
             ...state,
-            message: {}
+            message: ''
         };
     }
+
     if (action.type === 'SET_MESSAGE') {
+        const { message } = action;
         return {
             ...state,
-            message: { ...action.message }
+            message
         };
     }
+
     if (action.type === 'SIGN_OUT') {
+        const { message } = action;
         return {
             ...state,
             signedIn: false,
-            user: {
-                alias: '',
-                userId: 0,
-                verified: 0,
-                unreadMessages: false,
-                unreadGroups: []
-            },
-            message: { ...action.message }
+            user: {},
+            message
         };
     }
+
     if (action.type === 'SIGN_IN') {
         return {
             ...state,
@@ -47,25 +33,30 @@ const reducer = (
             }
         };
     }
+
     if (action.type === 'VERIFY_ACCOUNT') {
+        const { message } = action;
         return {
             ...state,
             user: {
                 ...state.user,
                 verified: 1
             },
-            message: { ...action.message }
+            message
         };
     }
+
     if (action.type === 'UPDATE_PROFILE') {
+        const { message } = action;
         return {
             ...state,
             user: {
                 ...action.data
             },
-            message: { ...action.message }
+            message
         };
     }
+
     if (action.type === 'UPDATE_ICON_URL') {
         return {
             ...state,
@@ -75,24 +66,35 @@ const reducer = (
             }
         };
     }
+
     if (action.type === 'GET_GROUPS') {
         return {
             ...state,
             groups: [...action.data]
         };
     }
+
     if (action.type === 'GET_HISTORY') {
         return {
             ...state,
             history: [...action.data]
         };
     }
+
+    if (action.type === 'GET_NOTES') {
+        return {
+            ...state,
+            notes: [...action.data]
+        };
+    }
+
     if (action.type === 'CREATE_HISTORY') {
         return {
             ...state,
             history: [...state.history, action.data]
         };
     }
+
     return state;
 };
 

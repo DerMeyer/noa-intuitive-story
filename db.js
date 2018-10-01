@@ -1,5 +1,8 @@
 const spicedPg = require('spiced-pg');
-const db = spicedPg(process.env.DATABASE_URL || 'postgres:postgres:postgres@localhost:5432/intuitivestory');
+const db = spicedPg(
+    process.env.DATABASE_URL ||
+        'postgres:postgres:postgres@localhost:5432/intuitivestory'
+);
 const bcrypt = require('bcryptjs');
 
 const hashPW = pw =>
@@ -27,31 +30,29 @@ exports.checkPW = (pwUser, pwDB) =>
         )
     );
 
-exports.login = alias =>
+exports.signin = alias =>
     db.query(
-        'SELECT id, verified, first, last, mail, phone, pw, icon_url, created_at FROM users WHERE alias = $1', [alias]
+        'SELECT id, verified, first, last, mail, phone, pw, icon_url, created_at FROM users WHERE alias = $1',
+        [alias]
     );
 
-exports.register = (vCode, first, last, alias, mail, phone, pw) =>
+exports.signup = (vCode, first, last, alias, mail, phone, pw) =>
     db.query(
         'INSERT INTO users (v_code, first, last, alias, mail, phone, pw) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',
         [vCode, first, last, alias, mail, phone, pw]
     );
 
-exports.getVCode = alias =>
-    db.query(
-        'SELECT v_code FROM users WHERE alias = $1', [alias]
-    );
+exports.getVerificationCode = alias =>
+    db.query('SELECT v_code FROM users WHERE alias = $1', [alias]);
 
-exports.setVCode = (vCode, alias) =>
-    db.query(
-        'UPDATE users SET v_code = $1 WHERE alias = $2 RETURNING mail', [vCode, alias]
-    );
+exports.setVerificationCode = (vCode, alias) =>
+    db.query('UPDATE users SET v_code = $1 WHERE alias = $2 RETURNING mail', [
+        vCode,
+        alias
+    ]);
 
 exports.verifyAccount = alias =>
-    db.query(
-        'UPDATE users SET verified = 1 WHERE alias = $1', [alias]
-    );
+    db.query('UPDATE users SET verified = 1 WHERE alias = $1', [alias]);
 
 exports.newPW = async alias => {
     const chars = [
@@ -71,14 +72,11 @@ exports.newPW = async alias => {
     return {
         newPW: newPassword,
         mail: result.rows[0].mail
-    }
-}
+    };
+};
 
 exports.updatePW = (alias, newPW) =>
-    db.query(
-        'UPDATE users SET pw = $1 WHERE alias = $2',
-        [newPW, alias]
-    );
+    db.query('UPDATE users SET pw = $1 WHERE alias = $2', [newPW, alias]);
 
 exports.updateProfile = (id, first, last, alias, mail, phone) =>
     db.query(
@@ -92,19 +90,14 @@ exports.updateProfileImage = (id, url) =>
         [url, id]
     );
 
-exports.getAllGroups = () =>
-    db.query(
-        'SELECT * FROM groups'
-    );
+exports.getGroups = () => db.query('SELECT * FROM groups');
 
-exports.getHistory = () =>
-    db.query(
-        'SELECT * FROM history_entries'
-    );
+exports.getHistory = () => db.query('SELECT * FROM history_entries');
 
-exports.getAllUsers = () =>
+exports.createHistory = (user_id, name, time_period, place, link, comment) =>
     db.query(
-        'SELECT id, verified, first, last, alias, mail, phone, created_at FROM users'
+        'INSERT INTO history_entries (user_id, name, time_period, place, link, comment) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+        [user_id, name, time_period, place, link, comment]
     );
 
 exports.createGroup = (
@@ -170,73 +163,72 @@ exports.createGroup = (
         ]
     );
 
-    exports.updateGroup = (
-        id,
-        name,
-        time_period,
-        story,
-        gul_id,
-        grun_id,
-        vermel_id,
-        bezrechu_id,
-        sagol_id,
-        gul_role,
-        grun_role,
-        vermel_role,
-        bezrechu_role,
-        sagol_role,
-        gul_character,
-        grun_character,
-        vermel_character,
-        bezrechu_character,
-        sagol_character
-    ) =>
-        db.query(
-            `UPDATE groups SET
-                name = $1,
-                time_period = $2,
-                story = $3,
-                gul_user_id = $4,
-                grun_user_id = $5,
-                vermel_user_id = $6,
-                bezrechu_user_id = $7,
-                sagol_user_id = $8,
-                gul_role = $9,
-                grun_role = $10,
-                vermel_role = $11,
-                bezrechu_role = $12,
-                sagol_role = $13,
-                gul_character = $14,
-                grun_character = $15,
-                vermel_character = $16,
-                bezrechu_character = $17,
-                sagol_character = $18
-            WHERE id = $19`,
-            [
-                name,
-                time_period,
-                story,
-                gul_id,
-                grun_id,
-                vermel_id,
-                bezrechu_id,
-                sagol_id,
-                gul_role,
-                grun_role,
-                vermel_role,
-                bezrechu_role,
-                sagol_role,
-                gul_character,
-                grun_character,
-                vermel_character,
-                bezrechu_character,
-                sagol_character,
-                id
-            ]
-        );
-
-exports.createHistory = (user_id, name, time_period, place, link, comment) =>
+exports.updateGroup = (
+    id,
+    name,
+    time_period,
+    story,
+    gul_id,
+    grun_id,
+    vermel_id,
+    bezrechu_id,
+    sagol_id,
+    gul_role,
+    grun_role,
+    vermel_role,
+    bezrechu_role,
+    sagol_role,
+    gul_character,
+    grun_character,
+    vermel_character,
+    bezrechu_character,
+    sagol_character
+) =>
     db.query(
-        'INSERT INTO history_entries (user_id, name, time_period, place, link, comment) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
-        [user_id, name, time_period, place, link, comment]
+        `UPDATE groups SET
+            name = $1,
+            time_period = $2,
+            story = $3,
+            gul_user_id = $4,
+            grun_user_id = $5,
+            vermel_user_id = $6,
+            bezrechu_user_id = $7,
+            sagol_user_id = $8,
+            gul_role = $9,
+            grun_role = $10,
+            vermel_role = $11,
+            bezrechu_role = $12,
+            sagol_role = $13,
+            gul_character = $14,
+            grun_character = $15,
+            vermel_character = $16,
+            bezrechu_character = $17,
+            sagol_character = $18
+        WHERE id = $19`,
+        [
+            name,
+            time_period,
+            story,
+            gul_id,
+            grun_id,
+            vermel_id,
+            bezrechu_id,
+            sagol_id,
+            gul_role,
+            grun_role,
+            vermel_role,
+            bezrechu_role,
+            sagol_role,
+            gul_character,
+            grun_character,
+            vermel_character,
+            bezrechu_character,
+            sagol_character,
+            id
+        ]
+    );
+
+exports.getUsers = () =>
+    db.query(
+        'SELECT id, verified, first, last, alias, mail, phone, created_at FROM users'
     );

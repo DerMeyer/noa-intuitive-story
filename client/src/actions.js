@@ -2,18 +2,14 @@ import axios from './axios';
 
 export const deleteMessage = () => ({ type: 'DELETE_MESSAGE' });
 
-export const setMessage = (text, color, time) => ({
+export const setMessage = message => ({
     type: 'SET_MESSAGE',
-    message: {
-        text,
-        color: { color },
-        time
-    }
+    message
 });
 
 export const signOut = async () => {
     try {
-        const resp = await axios.get('/api/logout');
+        const resp = await axios.get('/api/signout');
         if (resp.data.success) {
             return {
                 type: 'SIGN_OUT'
@@ -23,16 +19,14 @@ export const signOut = async () => {
         console.log(err);
         return {
             type: 'SET_MESSAGE',
-            message: {
-                text: `The server didn't respond.`
-            }
+            message: `The server didn't respond.`
         };
     }
-}
+};
 
 export const checkSignIn = async () => {
     try {
-        const resp = await axios.get('/api/check_login');
+        const resp = await axios.get('/api/check_signin');
         if (resp.data.success) {
             return {
                 type: 'SIGN_IN',
@@ -47,175 +41,164 @@ export const checkSignIn = async () => {
         console.log(err);
         return {
             type: 'SET_MESSAGE',
-            message: {
-                text: `The server didn't respond to show if you're logged in.`,
-                color: { color: 'red' }
-            }
-        };
-    }
-}
-
-export const signIn = async (alias, pw) => {
-    try {
-        const resp = await axios.post('/api/login', { alias, pw });
-        if (resp.data.success) {
-            return {
-                type: 'SIGN_IN',
-                data: { ...resp.data.user }
-            };
-        } else {
-            return {
-                type: 'SET_MESSAGE',
-                message: {
-                    signInText: 'Wrong user name or password. Please try again.',
-                    signInColor: { color: 'red' }
-                }
-            };
-        }
-    } catch (err) {
-        console.log(err);
-        return {
-            type: 'SET_MESSAGE',
-            message: {
-                text: `The server didn't respond.`,
-                color: { color: 'red' }
-            }
-        };
-    }
-}
-
-export const register = async (first, last, alias, mail, phone, pw) => {
-    try {
-        const resp = await axios.post('/api/register', { first, last, alias, mail, phone, pw });
-        if (resp.data.success) {
-            return {
-                type: 'SIGN_IN',
-                data: { ...resp.data.user }
-            };
-        } else {
-            return {
-                type: 'SET_MESSAGE',
-                message: {
-                    registerText: 'That user name or mail already exists.',
-                    registerColor: { color: 'red' }
-                }
-            };
-        }
-    } catch (err) {
-        console.log(err);
-        return {
-            type: 'SET_MESSAGE',
-            message: {
-                text: `The server didn't respond.`,
-                color: { color: 'red' }
-            }
+            message: `The server didn't respond.`
         };
     }
 };
 
-export const newVCode = async alias => {
+export const signIn = async (alias, pw) => {
     try {
-        const resp = await axios.post('/api/new_v_code', { alias });
+        const resp = await axios.post('/api/signin', { alias, pw });
         if (resp.data.success) {
             return {
-                type: 'SET_MESSAGE',
-                message: {
-                    verifyText: 'We sent you a new confirmation code to your e mail address.',
-                    verifyColor: {}
-                }
+                type: 'SIGN_IN',
+                data: { ...resp.data.user }
             };
         } else {
             return {
                 type: 'SET_MESSAGE',
-                message: {
-                    verifyText: 'Sorry, something went wrong.',
-                    verifyColor: { color: 'red' }
-                }
+                message: 'Wrong user name or password. Please try again.'
             };
         }
     } catch (err) {
         console.log(err);
         return {
             type: 'SET_MESSAGE',
-            message: {
-                text: `The server didn't respond.`,
-                color: { color: 'red' }
-            }
+            message: `The server didn't respond.`
         };
     }
-}
+};
 
-export const verifyAccount = async (alias, vCode) => {
+export const signup = async (first, last, alias, mail, phone, pw) => {
     try {
-        const resp = await axios.post('/api/verify_account', { alias, vCode });
+        const resp = await axios.post('/api/signup', {
+            first,
+            last,
+            alias,
+            mail,
+            phone,
+            pw
+        });
+        if (resp.data.success) {
+            return {
+                type: 'SIGN_IN',
+                data: { ...resp.data.user }
+            };
+        } else {
+            return {
+                type: 'SET_MESSAGE',
+                message: 'That user name or mail already exists.'
+            };
+        }
+    } catch (err) {
+        console.log(err);
+        return {
+            type: 'SET_MESSAGE',
+            message: `The server didn't respond.`
+        };
+    }
+};
+
+export const newVerificationCode = async alias => {
+    try {
+        const resp = await axios.post('/api/new_verification_code', { alias });
+        if (resp.data.success) {
+            return {
+                type: 'SET_MESSAGE',
+                message:
+                    'We sent you a new confirmation code to your e mail address.'
+            };
+        } else {
+            return {
+                type: 'SET_MESSAGE',
+                message: 'Sorry, something went wrong.'
+            };
+        }
+    } catch (err) {
+        console.log(err);
+        return {
+            type: 'SET_MESSAGE',
+            message: `The server didn't respond.`
+        };
+    }
+};
+
+export const verifyAccount = async (alias, verificationCode) => {
+    try {
+        const resp = await axios.post('/api/verify_account', {
+            alias,
+            verificationCode
+        });
         if (resp.data.success) {
             return {
                 type: 'VERIFY_ACCOUNT',
-                message: {
-                    text: 'Your account has been verified.'
-                }
+                message: 'Your account has been verified.'
             };
         } else {
             return {
                 type: 'SET_MESSAGE',
-                message: {
-                    verifyText: 'You entered a wrong verification code.',
-                    verifyColor: { color: 'red' }
-                }
+                message: 'You entered a wrong verification code.'
             };
         }
     } catch (err) {
         console.log(err);
         return {
             type: 'SET_MESSAGE',
-            message: {
-                text: `The server didn't respond.`,
-                color: { color: 'red' }
-            }
+            message: `The server didn't respond.`
         };
     }
-}
+};
 
-export const updateProfile = async (id, first, last, alias, mail, phone, newPW) => {
+export const updateProfile = async (
+    id,
+    first,
+    last,
+    alias,
+    mail,
+    phone,
+    newPW
+) => {
     try {
-        const resp = await axios.post('/api/update_profile', { id, first, last, alias, mail, phone, newPW });
+        const resp = await axios.post('/api/update_profile', {
+            id,
+            first,
+            last,
+            alias,
+            mail,
+            phone,
+            newPW
+        });
         if (resp.data.success) {
             return {
                 type: 'UPDATE_PROFILE',
                 data: { ...resp.data.user },
-                message: {
-                    updateProfileText: 'Your profile was updated.'
-                }
-            }
+                message: 'Your profile was updated.'
+            };
         } else {
             return {
                 type: 'SET_MESSAGE',
-                message: {
-                    updateProfileText: 'Something went wrong.'
-                }
+                message: 'Something went wrong.'
             };
         }
     } catch (err) {
         console.log(err);
         return {
             type: 'SET_MESSAGE',
-            message: {
-                updateProfileText: `The server didn't respond.`
-            }
+            message: `The server didn't respond.`
         };
     }
 };
 
-export const updateIconUrl = async url => {
+export const updateIconUrl = url => {
     return {
         type: 'UPDATE_ICON_URL',
         data: url
-    }
+    };
 };
 
 export const getGroups = async () => {
     try {
-        const resp = await axios.get('/api/groups');
+        const resp = await axios.get('/api/get_groups');
         if (resp.data.success) {
             return {
                 type: 'GET_GROUPS',
@@ -224,21 +207,17 @@ export const getGroups = async () => {
         } else {
             return {
                 type: 'SET_MESSAGE',
-                message: {
-                    text: `The server didn't send any group data.`
-                }
+                message: `The server didn't send any group data.`
             };
         }
     } catch (err) {
         console.log(err);
         return {
             type: 'SET_MESSAGE',
-            message: {
-                text: `The server didn't respond to show data on groups.`
-            }
+            message: `The server didn't respond.`
         };
     }
-}
+};
 
 export const getHistory = async () => {
     try {
@@ -251,21 +230,17 @@ export const getHistory = async () => {
         } else {
             return {
                 type: 'SET_MESSAGE',
-                message: {
-                    text: `The server didn't send any history entries.`
-                }
+                message: `The server didn't send any history entries.`
             };
         }
     } catch (err) {
         console.log(err);
         return {
             type: 'SET_MESSAGE',
-            message: {
-                text: `The server didn't respond.`
-            }
+            message: `The server didn't respond.`
         };
     }
-}
+};
 
 export const getNotes = async () => {
     try {
@@ -279,25 +254,35 @@ export const getNotes = async () => {
         } else {
             return {
                 type: 'SET_MESSAGE',
-                message: {
-                    text: `The server didn't send any notes.`
-                }
+                message: `The server didn't send any notes.`
             };
         }
     } catch (err) {
         console.log(err);
         return {
             type: 'SET_MESSAGE',
-            message: {
-                text: `The server didn't respond.`
-            }
+            message: `The server didn't respond.`
         };
     }
-}
+};
 
-export const createHistory = async (user_id, name, time_period, place, link, comment) => {
+export const createHistory = async (
+    user_id,
+    name,
+    time_period,
+    place,
+    link,
+    comment
+) => {
     try {
-        const resp = await axios.post('/api/create_history', { user_id, name, time_period, place, link, comment });
+        const resp = await axios.post('/api/create_history', {
+            user_id,
+            name,
+            time_period,
+            place,
+            link,
+            comment
+        });
         if (resp.data.success) {
             return {
                 type: 'CREATE_HISTORY',
@@ -306,18 +291,14 @@ export const createHistory = async (user_id, name, time_period, place, link, com
         } else {
             return {
                 type: 'SET_MESSAGE',
-                message: {
-                    registerText: 'Something went wrong.'
-                }
+                message: 'Something went wrong.'
             };
         }
     } catch (err) {
         console.log(err);
         return {
             type: 'SET_MESSAGE',
-            message: {
-                text: `The server didn't respond.`
-            }
+            message: `The server didn't respond.`
         };
     }
 };

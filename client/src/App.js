@@ -22,6 +22,7 @@ class App extends PureComponent {
 
     signOut = () => {
         this.props.dispatch(signOut());
+        window.location.replace('/');
     };
 
     render() {
