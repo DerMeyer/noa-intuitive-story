@@ -12,7 +12,7 @@ class ProfileNavigation extends Component {
     signOut = () => {
         this.props.dispatch(signOut());
         window.location.replace('/');
-    }
+    };
 
     render() {
         if (this.props.signedIn) {
@@ -38,14 +38,11 @@ class ProfileNavigation extends Component {
                         />
                     </Link>
                 </nav>
-            )
+            );
         }
         return (
             <nav className="profile__nav inline-flex">
-                <Link
-                    to="/signin"
-                    className="profile__nav__button"
-                >
+                <Link to="/signin" className="profile__nav__button">
                     Sign in
                 </Link>
                 <Link
@@ -55,7 +52,7 @@ class ProfileNavigation extends Component {
                     Get started
                 </Link>
             </nav>
-        )
+        );
     }
 }
 

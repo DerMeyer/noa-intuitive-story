@@ -72,6 +72,7 @@
 .profile__nav__image {
     height: 50px;
     width: 50px;
+    border: 1px solid var(--lightColor);
     border-radius: 50%;
     background-position: center;
     background-repeat: no-repeat;

@@ -57,7 +57,7 @@ export const signIn = async (alias, pw) => {
         } else {
             return {
                 type: 'SET_MESSAGE',
-                message: 'Wrong user name or password. Please try again.'
+                message: 'Wrong user name or password.'
             };
         }
     } catch (err) {
