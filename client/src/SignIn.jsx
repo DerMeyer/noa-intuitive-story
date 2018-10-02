@@ -77,7 +77,7 @@ class SignIn extends Component {
         });
     };
 
-    forgotPW = () => {
+    getNewPassword = () => {
         if (this.state.alias) {
             this.props.dispatch(deleteMessage());
             const { alias } = this.state;
@@ -133,7 +133,7 @@ class SignIn extends Component {
                 <Link to="/signup">
                     <button>Not a member yet?</button>
                 </Link>
-                <button onClick={this.forgotPW}>Forgot your password?</button>
+                <button onClick={this.getNewPassword}>Forgot your password?</button>
             </div>
         );
     }

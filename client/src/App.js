@@ -6,12 +6,12 @@ import { BrowserRouter, Route, Link, NavLink } from 'react-router-dom';
 import Timeline from './Timeline';
 import About from './About';
 import Groups from './Groups';
-import ProfilePage from './ProfilePage';
-import GroupPage from './GroupPage';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 import Verify from './Verify';
 import Admin from './Admin';
+import ProfilePage from './ProfilePage';
+import GroupPage from './GroupPage';
 
 import { checkSignIn, signOut } from './actions';
 
@@ -98,20 +98,20 @@ class App extends PureComponent {
                     </header>
 
                     <Route exact path="/" component={Timeline} />
-                    <Route
-                        path="/profile/:user"
-                        render={props => <ProfilePage match={props.match} />}
-                    />
                     <Route path="/about" component={About} />
                     <Route path="/groups" component={Groups} />
-                    <Route
-                        path="/group/:id"
-                        render={props => <GroupPage match={props.match} />}
-                    />
                     <Route path="/signin" component={SignIn} />
                     <Route path="/signup" component={SignUp} />
                     <Route path="/verify" component={Verify} />
                     <Route path="/avira" component={Admin} />
+                    <Route
+                        path="/profile/:user"
+                        render={props => <ProfilePage match={props.match} />}
+                    />
+                    <Route
+                        path="/group/:id"
+                        render={props => <GroupPage match={props.match} />}
+                    />
 
                     <footer className="footer flex">
                         <span className="footer__note">&copy; Noa Golan</span>
