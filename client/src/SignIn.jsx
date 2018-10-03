@@ -20,15 +20,6 @@ class SignIn extends Component {
         this.firstInput.current.focus();
     }
 
-    componentDidUpdate(prevProps) {
-        if (this.props.signedIn && this.props.user.verified) {
-            window.location.pathname = '/timeline';
-            // window.location.replace('/timeline');
-        } else if (this.props.signedIn && !this.props.user.verified) {
-            window.location.replace('/verify_account');
-        }
-    }
-
     componentWillUnmount() {
         this.props.message && this.props.dispatch(deleteMessage());
         clearTimeout(this.setTimeoutID);
@@ -139,10 +130,9 @@ class SignIn extends Component {
     }
 }
 
-const mapStateToProps = ({ signedIn, message, user = {} }) => ({
+const mapStateToProps = ({ signedIn, message }) => ({
     signedIn,
-    message,
-    user
+    message
 });
 
 const ConnectedSignIn = connect(mapStateToProps)(SignIn);
