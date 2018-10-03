@@ -25,7 +25,7 @@ const App = () => (
                         src="favicon.png"
                         alt="Logo"
                     />
-                    <NavLink exact to="/" className="header__nav__button">
+                    <NavLink to="/timeline" className="header__nav__button">
                         Timeline
                     </NavLink>
                     <NavLink to="/about" className="header__nav__button">
@@ -39,7 +39,7 @@ const App = () => (
                 <ProfileNavigation />
             </header>
 
-            <Route exact path="/" component={Timeline} />
+            <Route path="/timeline" component={Timeline} />
             <Route path="/about" component={About} />
             <Route path="/groups" component={Groups} />
             <Route path="/signin" component={SignIn} />

@@ -6,6 +6,7 @@ import { checkSignIn, signOut } from './actions';
 
 class ProfileNavigation extends Component {
     componentDidMount() {
+        console.log('ProfileNavigation Component mounts');
         this.props.dispatch(checkSignIn());
     }
 
@@ -15,6 +16,7 @@ class ProfileNavigation extends Component {
     };
 
     render() {
+        console.log(this.props.signedIn);
         if (this.props.signedIn) {
             return (
                 <nav className="profile__nav inline-flex">

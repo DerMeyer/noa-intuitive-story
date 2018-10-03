@@ -22,8 +22,8 @@ class SignIn extends Component {
 
     componentDidUpdate(prevProps) {
         if (this.props.signedIn && this.props.user.verified) {
-            window.location.pathname = '/';
-            // window.location.replace('/');
+            window.location.pathname = '/timeline';
+            // window.location.replace('/timeline');
         } else if (this.props.signedIn && !this.props.user.verified) {
             window.location.replace('/verify_account');
         }
