@@ -29,7 +29,7 @@ class App extends Component {
                                 src="favicon.png"
                                 alt="Logo"
                             />
-                            <NavLink to="/timeline" className="header__nav__button">
+                            <NavLink exact to="/" className="header__nav__button">
                                 Timeline
                             </NavLink>
                             <NavLink to="/about" className="header__nav__button">
@@ -43,20 +43,21 @@ class App extends Component {
                         <ProfileNavigation />
                     </header>
 
-                    <Route
-                        exact path="/"
-                        render={() => <Redirect to="/timeline" />}
-                    />
-                    <Route path="/timeline" component={Timeline} />
+                    <Route exact path="/" component={Timeline} />
                     <Route path="/about" component={About} />
                     <Route path="/groups" component={Groups} />
                     <Route
                         path="/signin"
                         render={() =>
-                            this.props.signedIn ? <Redirect to="/timeline" /> : <SignIn />
+                            this.props.signedIn ? <Redirect to="/" /> : <SignIn />
                         }
                     />
-                    <Route path="/signup" component={SignUp} />
+                    <Route
+                        path="/signup"
+                        render={() =>
+                            this.props.signedIn ? <Redirect to="/" /> : <SignUp />
+                        }
+                    />
                     <Route path="/verify" component={Verify} />
                     <Route path="/avira" component={Admin} />
                     <Route

@@ -69,7 +69,7 @@ export const signIn = async (alias, pw) => {
     }
 };
 
-export const signup = async (first, last, alias, mail, phone, pw) => {
+export const signUp = async (first, last, alias, mail, phone, pw) => {
     try {
         const resp = await axios.post('/api/signup', {
             first,

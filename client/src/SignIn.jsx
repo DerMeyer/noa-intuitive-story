@@ -9,7 +9,7 @@ class SignIn extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            message: 'Please log in to the Intuitive Story.',
+            message: 'Sing in to the Intuitive Story.',
             alias: '',
             pw: ''
         };
@@ -101,7 +101,7 @@ class SignIn extends Component {
 
     render() {
         return (
-            <div className="sign-user-form">
+            <div className="sign-in-form">
                 <h1>{this.props.message || this.state.message}</h1>
                 <input
                     ref={this.firstInput}
@@ -130,8 +130,7 @@ class SignIn extends Component {
     }
 }
 
-const mapStateToProps = ({ signedIn, message }) => ({
-    signedIn,
+const mapStateToProps = ({ message }) => ({
     message
 });
 
