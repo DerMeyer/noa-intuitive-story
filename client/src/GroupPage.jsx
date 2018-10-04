@@ -26,7 +26,7 @@ class GroupPage extends Component {
         if (!this.props.groups) {
             return;
         }
-        const currentGroup = this.props.groups.filter(group => group.id == this.props.match.params.id)[0];
+        const currentGroup = this.props.groups.filter(group => group.id === Number(this.props.match.params.id))[0];
         this.setState({
             group: (
                 <Group { ...currentGroup } />

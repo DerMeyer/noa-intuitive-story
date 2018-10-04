@@ -17,7 +17,7 @@ import GroupPage from './GroupPage';
 
 class App extends Component {
     render() {
-        console.log('App renders');
+        console.log('App renders xox');
         return (
             <BrowserRouter>
                 <main>
@@ -26,7 +26,7 @@ class App extends Component {
                             <img
                                 className="header__nav__image"
                                 title="home"
-                                src="favicon.png"
+                                src="/favicon.png"
                                 alt="Logo"
                             />
                             <NavLink exact to="/" className="header__nav__button">

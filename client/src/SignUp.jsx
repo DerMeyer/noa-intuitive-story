@@ -4,26 +4,28 @@ import { Link } from 'react-router-dom';
 
 import { signUp, deleteMessage } from './actions';
 
-class Register extends Component {
+class SignUp extends Component {
     constructor(props) {
         super(props);
         this.state = {
             message: 'Sign up for the Intuitive Story.',
             first: '',
-            styleFIRST: {},
             last: '',
-            styleLAST: {},
             alias: '',
-            styleALIAS: {},
             mail: '',
-            styleMAIL: {},
             phone: '',
-            stylePHONE: {},
             pw: '',
             repeat: '',
+            inputTextStyle: {
+                first: {},
+                last: {},
+                alias: {},
+                mail: {},
+                phone: {}
+            },
             aliasModal: false
         };
-        this.goToLogin = React.createRef();
+        this.goToSignIn = React.createRef();
         this.firstInput = React.createRef();
     }
 
@@ -50,21 +52,17 @@ class Register extends Component {
         event.preventDefault();
         this.props.message && this.props.dispatch(deleteMessage());
 
-        // this.setState({
-        //     message: 'Sign up for the Intuitive Story.'
-        // });
-
         if (
             this.state.first &&
-            !this.state.styleFirst.color &&
+            !this.state.inputTextStyle.first.color &&
             this.state.last &&
-            !this.state.styleLast.color &&
+            !this.state.inputTextStyle.last.color &&
             this.state.alias &&
-            !this.state.styleAlias.color &&
+            !this.state.inputTextStyle.alias.color &&
             this.state.mail &&
-            !this.state.styleMail.color &&
+            !this.state.inputTextStyle.mail.color &&
             this.state.phone &&
-            !this.state.stylePhone.color &&
+            !this.state.inputTextStyle.phone.color &&
             this.state.pw &&
             this.state.pw === this.state.repeat
         ) {
@@ -78,36 +76,41 @@ class Register extends Component {
                 message: 'Please wait...'
             });
         } else {
-            this.goToLogin.current.focus();
+            this.goToSignIn.current.focus();
 
             this.state.first || this.setErrorMessage('first', 'first name');
             this.state.last || this.setErrorMessage('last', 'last name');
             this.state.alias || this.setErrorMessage('alias', 'user name');
             this.state.mail || this.setErrorMessage('mail', 'mail address');
             this.state.phone || this.setErrorMessage('phone', 'phone number');
-            this.state.pw ||
-                this.setState({ message: 'Please enter your password.' });
+            this.state.pw === this.state.repeat ||
+                this.setState({ message: `The passwords you entered don't match.` });
             this.state.repeat ||
                 this.setState({ message: 'Please repeat your password.' });
-            this.state.pw === this.state.repeat ||
-                this.setState({
-                    message: `The two passwords you entered don't match.`
-                });
+            this.state.pw ||
+                this.setState({ message: 'Please enter your password.' });
         }
     };
 
     setErrorMessage(field, name) {
-        this.setState({
+        this.setState(({ inputTextStyle }) => ({
             [field]: `Please enter your ${name}`,
-            [`style${field.toUpperCase()}`]: { color: 'red' }
-        });
+            inputTextStyle: {
+                ...inputTextStyle,
+                [field]: { color: 'red' }
+            }
+        }));
     }
 
-    emptyField = event => {
-        this.setState({
-            [event.target.name]: '',
-            [`style${event.target.name.toUpperCase()}`]: {}
-        });
+    emptyInputField = event => {
+        const inputName = event.target.name;
+        this.setState(({ inputTextStyle }) => ({
+            [inputName]: '',
+            inputTextStyle: {
+                ...inputTextStyle,
+                [inputName]: {}
+            }
+        }));
     };
 
     toggleAliasModal = () => {
@@ -129,33 +132,33 @@ class Register extends Component {
                 <h3>( All fields are required )</h3>
                 <input
                     ref={this.firstInput}
-                    style={this.state.styleFirst}
+                    style={this.state.inputTextStyle.first}
                     name="first"
                     type="text"
                     value={this.state.first}
                     placeholder="first name"
-                    onFocus={this.emptyField}
+                    onFocus={this.emptyInputField}
                     onChange={this.getUserInput}
                     onKeyDown={this.signUp}
                 />
                 <input
-                    style={this.state.styleLast}
+                    style={this.state.inputTextStyle.last}
                     name="last"
                     type="text"
                     value={this.state.last}
                     placeholder="last name"
-                    onFocus={this.emptyField}
+                    onFocus={this.emptyInputField}
                     onChange={this.getUserInput}
                     onKeyDown={this.signUp}
                 />
                 <div className="signIn_question">
                     <input
-                        style={this.state.styleAlias}
+                        style={this.state.inputTextStyle.alias}
                         name="alias"
                         type="text"
                         value={this.state.alias}
                         placeholder="user name"
-                        onFocus={this.emptyField}
+                        onFocus={this.emptyInputField}
                         onChange={this.getUserInput}
                         onKeyDown={this.signUp}
                     />
@@ -170,22 +173,22 @@ class Register extends Component {
                     )}
                 </div>
                 <input
-                    style={this.state.styleMail}
+                    style={this.state.inputTextStyle.mail}
                     name="mail"
                     type="text"
                     value={this.state.mail}
                     placeholder="mail"
-                    onFocus={this.emptyField}
+                    onFocus={this.emptyInputField}
                     onChange={this.getUserInput}
                     onKeyDown={this.signUp}
                 />
                 <input
-                    style={this.state.stylePhone}
+                    style={this.state.inputTextStyle.phone}
                     name="phone"
                     type="text"
                     value={this.state.phone}
                     placeholder="phone"
-                    onFocus={this.emptyField}
+                    onFocus={this.emptyInputField}
                     onChange={this.getUserInput}
                     onKeyDown={this.signUp}
                 />
@@ -205,7 +208,7 @@ class Register extends Component {
                 />
                 <button onClick={this.signUp}>Sign up</button>
                 <Link to="/signIn">
-                    <button ref={this.goToLogin}>
+                    <button ref={this.goToSignIn}>
                         Already have an account?
                     </button>
                 </Link>
@@ -218,6 +221,6 @@ const mapStateToProps = ({ message }) => ({
     message
 });
 
-const ConnectedRegister = connect(mapStateToProps)(Register);
+const ConnectedSignUp = connect(mapStateToProps)(SignUp);
 
-export default ConnectedRegister;
+export default ConnectedSignUp;
