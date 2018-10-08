@@ -114,15 +114,9 @@ class SignUp extends Component {
     };
 
     toggleAliasModal = () => {
-        if (this.state.aliasModal) {
-            this.setState({
-                aliasModal: false
-            });
-        } else {
-            this.setState({
-                aliasModal: true
-            });
-        }
+        this.setState(({ aliasModal }) => ({
+            aliasModal: !aliasModal
+        }));
     };
 
     render() {

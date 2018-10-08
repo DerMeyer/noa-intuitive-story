@@ -11,6 +11,8 @@ class ProfileNavigation extends Component {
 
     signOut = () => {
         this.props.dispatch(signOut());
+        // find a better way to reload app after sign out
+        window.location.replace('/');
     };
 
     render() {
@@ -30,7 +32,7 @@ class ProfileNavigation extends Component {
                     >
                         <div
                             style={{
-                                backgroundImage: `url(${this.props.user.icon_url || 'favicon.png'})`
+                                backgroundImage: `url(${this.props.user.icon_url || '/favicon.png'})`
                             }}
                             className="profile__nav__image"
                             title="view your profile"

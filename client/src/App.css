@@ -1,7 +1,7 @@
 /* root */
 
 :root {
-    --lightColor: darkgrey;
+    --lightColor: rgb(146, 157, 170);
     --mediumColor: rgb(71, 71, 71);
     --darkColor: rgb(29, 29, 29);
 }
@@ -56,16 +56,18 @@
 }
 
 .header__nav__image {
-    height: 50px;
+    height: 60px;
     margin: 0 30px 0 0;
 }
 
 .header__nav__button {
     text-decoration: none;
-    padding: 8px 15px;
+    text-align: center;
+    width: 100px;
+    padding: 8px 0;
     border: 1px solid var(--darkColor);
     border-radius: 6px;
-    margin: 0 9px;
+    margin: 0 10px;
     color: var(--darkColor);
 }
 
@@ -114,6 +116,13 @@
     width: 66vw;
 }
 
+
+
+.search-bar {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+}
 
 
 /* timeline css */

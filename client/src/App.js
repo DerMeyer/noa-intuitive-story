@@ -26,17 +26,17 @@ class App extends Component {
                             <img
                                 className="header__nav__image"
                                 title="home"
-                                src="/favicon.png"
+                                src="/images/logo_h100px_80.jpg"
                                 alt="Logo"
                             />
                             <NavLink exact to="/" className="header__nav__button">
                                 Timeline
                             </NavLink>
                             <NavLink to="/about" className="header__nav__button">
-                                About the Intuitive Story
+                                About
                             </NavLink>
                             <NavLink to="/groups" className="header__nav__button">
-                                Group Collection
+                                Groups
                             </NavLink>
                         </nav>
 
