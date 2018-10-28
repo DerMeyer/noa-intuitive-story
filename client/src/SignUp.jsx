@@ -8,7 +8,7 @@ class SignUp extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            message: 'Sign up for the Intuitive Story.',
+            message: 'Sign up for The Intuitive Story.',
             first: '',
             last: '',
             alias: '',
@@ -211,9 +211,7 @@ class SignUp extends Component {
     }
 }
 
-const mapStateToProps = ({ message }) => ({
-    message
-});
+const mapStateToProps = ({ message }) => ({ message });
 
 const ConnectedSignUp = connect(mapStateToProps)(SignUp);
 

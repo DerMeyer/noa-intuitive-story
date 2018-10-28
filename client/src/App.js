@@ -23,20 +23,25 @@ class App extends Component {
                 <main>
                     <header className="header flex">
                         <nav className="header__nav inline-flex">
-                            <img
-                                className="header__nav__image"
-                                title="home"
-                                src="/images/logo_h100px_80.jpg"
-                                alt="Logo"
-                            />
-                            <NavLink exact to="/" className="header__nav__button">
-                                Timeline
+                            <NavLink exact to="/">
+                                <img
+                                    className="header__nav__image"
+                                    title="home"
+                                    src="/images/181024_Logo_final_Alpha.png"
+                                    alt="Logo"
+                                />
                             </NavLink>
                             <NavLink to="/about" className="header__nav__button">
                                 About
                             </NavLink>
+                            <NavLink to="/sdfsdf" className="header__nav__button">
+                                Join the Game
+                            </NavLink>
                             <NavLink to="/groups" className="header__nav__button">
-                                Groups
+                                All Games
+                            </NavLink>
+                            <NavLink to="/groups" className="header__nav__button">
+                                Q & A
                             </NavLink>
                         </nav>
 
@@ -86,9 +91,7 @@ class App extends Component {
     }
 }
 
-const mapStateToProps = ({ signedIn }) => ({
-    signedIn
-});
+const mapStateToProps = ({ signedIn }) => ({ signedIn });
 
 const ConnectedApp = connect(mapStateToProps)(App);
 

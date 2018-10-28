@@ -126,7 +126,6 @@ app.get('/api/check_signin', (req, res) => {
 });
 
 app.post('/api/signin', async (req, res) => {
-    console.log(req.body.alias, req.body.pw);
     try {
         const result = await signin(req.body.alias);
         const correctPW = await checkPW(req.body.pw, result.rows[0].pw);

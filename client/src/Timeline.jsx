@@ -39,7 +39,7 @@ class Timeline extends Component {
                 height: '82vh'
             },
             timeline: {
-                height: '82vh',
+                height: '70vh',
                 transform: 'scaleX(1.028)'
             },
             historyCreatorH3: {
@@ -346,7 +346,7 @@ class Timeline extends Component {
                         onMouseUp={this.onUp}
                         onMouseLeave={this.onUp}
                         >
-                        <img style={this.style.timeline} src="/images/timeline.png" alt="Timeline" />
+                        <img style={this.style.timeline} src="/images/180919_Timeline_alpha.png" alt="Timeline" />
                         {this.state.groups}
                         {this.state.history}
                         {this.state.newHistoryEntry && <section style={this.state.addHistoryStyle} onMouseDown={e => e.stopPropagation()} onMouseUp={e => e.stopPropagation()}>

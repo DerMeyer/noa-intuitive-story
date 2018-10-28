@@ -72,7 +72,7 @@ class ProfilePage extends Component {
         }
     }
     componentWillUnmount() {
-        this.props.message.updateProfileText && this.props.dispatch(deleteMessage());
+        this.props.message && this.props.dispatch(deleteMessage());
         clearTimeout(this.setTimeoutID);
     }
     createGroupsForRender = () => {
@@ -112,7 +112,7 @@ class ProfilePage extends Component {
             return;
         }
         event.preventDefault();
-        this.props.message.updateProfileText && this.props.dispatch(deleteMessage());
+        this.props.message && this.props.dispatch(deleteMessage());
         this.setState({
             message: ''
         });
@@ -231,7 +231,7 @@ class ProfilePage extends Component {
     render() {
         return (
             <section className="page_container">
-                <h1>{this.props.message.updateProfileText || this.state.message || `Hello ${this.props.user && this.props.user.alias}!`}</h1>
+                <h1>{this.props.message || this.state.message || `Hello ${this.props.user && this.props.user.alias}!`}</h1>
                 {this.props.user && this.props.user.verified === 2 && <Link to="/avira" style={this.style.adminButton}><button>Manage Page Content</button></Link>}
                 <h2>Edit your profile</h2>
                 <section className="profile_edit_container">

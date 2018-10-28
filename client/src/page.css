@@ -1,15 +1,15 @@
 .page_container {
     position: absolute;
-    top: 11vh;
+    top: 170px;
     left: 15vw;
     display: flex;
     flex-direction: column;
     align-items: center;
     min-height: 80vh;
     width: 70vw;
-    border-radius: 1vh;
+    border-radius: 4px;
     margin-bottom: 9vh;
-    background-color: whitesmoke;
+    background-color: #f8f7f1;
 }
 
 .page_container > section {
