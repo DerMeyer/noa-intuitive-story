@@ -286,7 +286,6 @@ class ProfilePage extends Component {
                 <h2>Your messages</h2>
                 <h2>Your groups</h2>
                 {this.state.groups}
-                <h2>Your history entries</h2>
             </section>
         )
     }

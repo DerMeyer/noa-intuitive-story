@@ -25,7 +25,7 @@ class Timeline extends Component {
             },
             timelineContainer: {
                 position: 'fixed',
-                top: '12vh',
+                top: '20vh',
                 left: '0',
                 height: '82vh',
                 width: '100vw'
@@ -39,7 +39,7 @@ class Timeline extends Component {
                 height: '82vh'
             },
             timeline: {
-                height: '70vh',
+                height: '60vh',
                 transform: 'scaleX(1.028)'
             },
             historyCreatorH3: {
@@ -348,7 +348,7 @@ class Timeline extends Component {
                         >
                         <img style={this.style.timeline} src="/images/180919_Timeline_alpha.png" alt="Timeline" />
                         {this.state.groups}
-                        {this.state.history}
+                        <img className="our-great-gif" src="/images/victim.gif" als="ljkasdfgdlhj" />
                         {this.state.newHistoryEntry && <section style={this.state.addHistoryStyle} onMouseDown={e => e.stopPropagation()} onMouseUp={e => e.stopPropagation()}>
                             <h3 style={this.style.historyCreatorH3}>Add a history event</h3>
                             {!this.props.verified && <p style={this.style.verifyP}>Verify your account to add history entries</p>}

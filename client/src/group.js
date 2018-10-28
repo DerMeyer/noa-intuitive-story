@@ -8,22 +8,24 @@ const group = props => {
             display: 'grid',
             gridTemplate: '1fr 1fr 1fr 1fr 1fr / 1fr 1fr 3.2fr',
             textDecoration: 'none',
-            height: '15vh',
-            width: '15vh'
+            height: '3vh',
+            width: '15vh',
+            backgroundColor: 'white',
+            border: '1px solid var(--lightColor)',
+            borderRadius: '5px'
         },
         headline: {
             position: 'absolute',
-            bottom: '16vh',
+            bottom: '10px',
             left: '0',
             display: 'flex',
             justifyContent: 'center',
             width: '15vh',
             borderRadius: '.4vh',
-            backgroundColor: 'white'
         },
         headlineText: {
             textAlign: 'center',
-            fontSize: '1.3vw',
+            fontSize: '16px',
             lineHeight: '1.2',
             whiteSpace: 'nowrap',
             padding: '.4vh 1vw 0 1vw',
@@ -67,7 +69,7 @@ const group = props => {
         },
         character: {
             whiteSpace: 'nowrap',
-            fontSize: '2vh',
+            fontSize: '16px',
             marginLeft: '.5vh',
             color: 'rgb(100, 100, 100)'
         }
@@ -76,52 +78,6 @@ const group = props => {
         <Link to={`/group/${props.id}`} style={style.container} onClick={event => event.stopPropagation()}>
             <div style={style.headline}>
                 <p style={style.headlineText} >{`${props.name} ${props.time_period}`}</p>
-            </div>
-            <img style={style.tableImage} src="/images/box_s.png" alt="Group Box" />
-            <div style={style.colorContainer}>
-                <img style={style.color} src="/images/color_gul.png" alt="Gul" />
-            </div>
-            <div style={style.colorContainer}>
-                {props.gul_role && <img style={style.color} src={`/images/color_${props.gul_role}.png`} alt={`${props.gul_role}`} />}
-            </div>
-            <div style={style.characterContainer}>
-                <p style={style.character}>{props.gul_character}</p>
-            </div>
-            <div style={style.colorContainer}>
-                <img style={style.color} src="/images/color_grun.png" alt="Grun" />
-            </div>
-            <div style={style.colorContainer}>
-                {props.grun_role && <img style={style.color} src={`/images/color_${props.grun_role}.png`} alt={`${props.grun_role}`} />}
-            </div>
-            <div style={style.characterContainer}>
-                <p style={style.character}>{props.grun_character}</p>
-            </div>
-            <div style={style.colorContainer}>
-                <img style={style.color} src="/images/color_vermel.png" alt="Vermel" />
-            </div>
-            <div style={style.colorContainer}>
-                {props.vermel_role && <img style={style.color} src={`/images/color_${props.vermel_role}.png`} alt={`${props.vermel_role}`} />}
-            </div>
-            <div style={style.characterContainer}>
-                <p style={style.character}>{props.vermel_character}</p>
-            </div>
-            <div style={style.colorContainer}>
-                <img style={style.color} src="/images/color_bezrechu.png" alt="Bezrechu" />
-            </div>
-            <div style={style.colorContainer}>
-                {props.bezrechu_role && <img style={style.color} src={`/images/color_${props.bezrechu_role}.png`} alt={`${props.bezrechu_role}`} />}
-            </div>
-            <div style={style.characterContainer}>
-                <p style={style.character}>{props.bezrechu_character}</p>
-            </div>
-            <div style={style.colorContainer}>
-                <img style={style.color} src="/images/color_sagol.png" alt="Sagol" />
-            </div>
-            <div style={style.colorContainer}>
-                {props.sagol_role && <img style={style.color} src={`/images/color_${props.sagol_role}.png`} alt={`${props.sagol_role}`} />}
-            </div>
-            <div style={style.characterContainer}>
-                <p style={style.character}>{props.sagol_character}</p>
             </div>
         </Link>
     )

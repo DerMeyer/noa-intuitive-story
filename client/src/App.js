@@ -7,7 +7,9 @@ import './App.css';
 import ProfileNavigation from './ProfileNavigation';
 import Timeline from './Timeline';
 import About from './About';
+import Join from './Join';
 import Groups from './Groups';
+import QandA from './QandA';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 import Verify from './Verify';
@@ -34,13 +36,13 @@ class App extends Component {
                             <NavLink to="/about" className="header__nav__button">
                                 About
                             </NavLink>
-                            <NavLink to="/sdfsdf" className="header__nav__button">
+                            <NavLink to="/join" className="header__nav__button">
                                 Join the Game
                             </NavLink>
                             <NavLink to="/groups" className="header__nav__button">
                                 All Games
                             </NavLink>
-                            <NavLink to="/groups" className="header__nav__button">
+                            <NavLink to="/qa" className="header__nav__button">
                                 Q & A
                             </NavLink>
                         </nav>
@@ -50,7 +52,9 @@ class App extends Component {
 
                     <Route exact path="/" component={Timeline} />
                     <Route path="/about" component={About} />
+                    <Route path="/join" component={Join} />
                     <Route path="/groups" component={Groups} />
+                    <Route path="/qa" component={QandA} />
                     <Route
                         path="/signin"
                         render={() =>

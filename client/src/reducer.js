@@ -1,4 +1,4 @@
-const reducer = (state = {}, action) => {
+const reducer = (state = { user: {} }, action) => {
     if (action.type === 'DELETE_MESSAGE') {
         return {
             ...state,
