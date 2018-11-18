@@ -53,8 +53,8 @@ class App extends Component {
         return (
             <BrowserRouter>
                 <main>
-                    
-                    {/* <ConstructionOverlay /> */}
+
+                    <ConstructionOverlay />
 
                     <header className="header flex">
                         <nav className="header__nav inline-flex">
