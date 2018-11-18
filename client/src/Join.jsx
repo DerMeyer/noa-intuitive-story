@@ -5,10 +5,19 @@ import SubMenu from './SubMenu';
 class Join extends Component {
     constructor(props) {
         super(props);
-        this.links = [
-            'Create a group',
-            'Join a group'
-        ];
+        this.subMenuData = {
+            path: 'join',
+            links: [
+                {
+                    link: 'create',
+                    name: 'Create a group'
+                },
+                {
+                    link: 'join_group',
+                    name: 'Join a group'
+                }
+            ]
+        };
     }
 
     componentDidMount() {
@@ -18,7 +27,7 @@ class Join extends Component {
     render() {
         return (
             <section className="page_container">
-                <SubMenu links={this.links} />
+                <SubMenu data={this.subMenuData} />
                 <h3 className="try-this-thing">
                     Join a Game and enjoy!
                 </h3>

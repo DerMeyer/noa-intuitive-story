@@ -41,10 +41,6 @@
     color: var(--lightColor) !important;
 }
 
-.active:first-child {
-    border: 0!important;
-}
-
 /* content */
 
 .header,
