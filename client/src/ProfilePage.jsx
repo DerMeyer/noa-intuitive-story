@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import axios from './axios';
 
-import Group from './group';
+import Group from './Group';
 
 import { deleteMessage, getGroups, updateProfile, updateIconUrl } from './actions';
 

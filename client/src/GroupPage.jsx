@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './page.css';
 
-import Group from './group';
+import Group from './Group';
 
 import { getGroups } from './actions';
 

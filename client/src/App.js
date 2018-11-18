@@ -17,12 +17,45 @@ import Admin from './Admin';
 import ProfilePage from './ProfilePage';
 import GroupPage from './GroupPage';
 
+// dev
+const ConstructionOverlay = () => (
+    <div style={{
+        position: 'fixed',
+        width: '100%',
+        height: '100%',
+        zIndex: '1000000'
+    }}>
+        <h2 style={{
+            position: 'absolute',
+            left: '50%',
+            top: '100px',
+            transform: 'translateX(-50%)',
+            textAlign: 'center',
+            padding: '40px 80px',
+            border: '3px solid black',
+            borderRadius: '20px',
+            backgroundColor: 'whitesmoke',
+            opacity: '.5',
+            whiteSpace: 'nowrap'
+        }}>
+            This site is currently under constuction.
+            <br />
+            It will be ready for you on 29th of November.
+            <br />
+            We appreciate your visit and will be happy to see you again!
+        </h2>
+    </div>
+);
+
 class App extends Component {
     render() {
         console.log('App renders xox');
         return (
             <BrowserRouter>
                 <main>
+                    
+                    {/* <ConstructionOverlay /> */}
+
                     <header className="header flex">
                         <nav className="header__nav inline-flex">
                             <NavLink exact to="/">

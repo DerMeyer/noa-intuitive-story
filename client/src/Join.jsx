@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { Route, Redirect } from 'react-router-dom';
 
 import SubMenu from './SubMenu';
+import { JoinCreate, JoinGame } from './JoinPages';
 
 class Join extends Component {
     constructor(props) {
@@ -10,11 +12,11 @@ class Join extends Component {
             links: [
                 {
                     link: 'create',
-                    name: 'Create a group'
+                    name: 'Create a game'
                 },
                 {
-                    link: 'join_group',
-                    name: 'Join a group'
+                    link: 'game',
+                    name: 'Join a game'
                 }
             ]
         };
@@ -28,9 +30,14 @@ class Join extends Component {
         return (
             <section className="page_container">
                 <SubMenu data={this.subMenuData} />
-                <h3 className="try-this-thing">
-                    Join a Game and enjoy!
-                </h3>
+
+                <Route
+                    path="/join"
+                    render={() => <Redirect to="/join/create" />}
+                />
+
+                <Route path="/join/create" component={JoinCreate} />
+                <Route path="/join/game" component={JoinGame} />
             </section>
         )
     }

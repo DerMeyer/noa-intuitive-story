@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Group from './group';
+import Group from './Group';
 
 import { setMessage, getGroups, getHistory, createHistory } from './actions';
 
