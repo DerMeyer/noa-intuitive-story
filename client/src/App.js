@@ -42,7 +42,9 @@ const ConstructionOverlay = () => (
             <br />
             It will be ready for you on 29th of November.
             <br />
-            We appreciate your visit and will be happy to see you again!
+            Please write a <a href="mailto:theintuitivestory@gmail.com" style={{ textDecoration: 'none' }}>mail</a> or visit us on <a href="https://www.facebook.com/theintuitivestory" target="_blank" style={{ textDecoration: 'none' }}>facebook</a>.
+            <br />
+            We appreciate your visit and will be happy to see you soon!
         </h2>
     </div>
 );
