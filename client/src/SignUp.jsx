@@ -122,10 +122,11 @@ class SignUp extends Component {
     render() {
         return (
             <div className="sign-in-form">
-                <h1>{this.props.message || this.state.message}</h1>
-                <h3>( All fields are required )</h3>
+                <h1 className="sign-in-form__h1">{this.props.message || this.state.message}</h1>
+                <h3 className="sign-in-form__h3">( All fields are required )</h3>
                 <input
                     ref={this.firstInput}
+                    className="sign-in-form__input"
                     style={this.state.inputTextStyle.first}
                     name="first"
                     type="text"
@@ -136,6 +137,7 @@ class SignUp extends Component {
                     onKeyDown={this.signUp}
                 />
                 <input
+                    className="sign-in-form__input"
                     style={this.state.inputTextStyle.last}
                     name="last"
                     type="text"
@@ -145,8 +147,9 @@ class SignUp extends Component {
                     onChange={this.getUserInput}
                     onKeyDown={this.signUp}
                 />
-                <div className="signIn_question">
+                <div className="sign-in-form__question-container">
                     <input
+                        className="sign-in-form__input"
                         style={this.state.inputTextStyle.alias}
                         name="alias"
                         type="text"
@@ -156,17 +159,18 @@ class SignUp extends Component {
                         onChange={this.getUserInput}
                         onKeyDown={this.signUp}
                     />
-                    <p onClick={this.toggleAliasModal}>?</p>
+                    <div className="sign-in-form__question-button" onClick={this.toggleAliasModal}>?</div>
                     {this.state.aliasModal && (
-                        <h2 onClick={this.toggleAliasModal}>
+                        <div className="sign-in-form__info-text" onClick={this.toggleAliasModal}>
                             This can be any name you like.<br />Your user name
                             will be the only data we display to third parties.<br />All
                             your data will be handled securely and only ever
                             accessed by staff of The Intuitive Story.
-                        </h2>
+                        </div>
                     )}
                 </div>
                 <input
+                    className="sign-in-form__input"
                     style={this.state.inputTextStyle.mail}
                     name="mail"
                     type="text"
@@ -177,6 +181,7 @@ class SignUp extends Component {
                     onKeyDown={this.signUp}
                 />
                 <input
+                    className="sign-in-form__input"
                     style={this.state.inputTextStyle.phone}
                     name="phone"
                     type="text"
@@ -187,6 +192,7 @@ class SignUp extends Component {
                     onKeyDown={this.signUp}
                 />
                 <input
+                    className="sign-in-form__input"
                     name="pw"
                     type="password"
                     placeholder="password"
@@ -194,15 +200,16 @@ class SignUp extends Component {
                     onKeyDown={this.signUp}
                 />
                 <input
+                    className="sign-in-form__input"
                     name="repeat"
                     type="password"
                     placeholder="repeat password"
                     onChange={this.getUserInput}
                     onKeyDown={this.signUp}
                 />
-                <button onClick={this.signUp}>Sign up</button>
+                <button className="sign-in-form__button sign-in-form__button--border" onClick={this.signUp}>Sign up</button>
                 <Link to="/signIn">
-                    <button ref={this.goToSignIn}>
+                    <button className="sign-in-form__button" ref={this.goToSignIn}>
                         Already have an account?
                     </button>
                 </Link>

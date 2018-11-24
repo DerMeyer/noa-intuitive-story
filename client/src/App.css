@@ -76,7 +76,7 @@
 }
 
 .header__nav__image {
-    height: 210px;
+    height: 120px;
     margin: 0 30px 0 0;
     transform: translateY(1.8%);
 }
@@ -88,6 +88,7 @@
     border-radius: 6px;
     margin: 0 10px;
     color: var(--darkColor);
+    white-space: nowrap;
 }
 
 .profile__nav__image {
@@ -104,6 +105,7 @@
     text-decoration: none;
     padding: 8px 15px;
     color: var(--darkColor);
+    white-space: nowrap;
 }
 
 .profile__nav__button--border {
@@ -146,20 +148,75 @@
 
 .sign-in-form {
     position: absolute;
-    top: 7vh;
-    left: 17vw;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    height: 75vh;
-    width: 66vw;
 }
 
-.search-bar {
-    position: fixed;
-    top: 20%;
-    left: 50%;
+.sign-in-form__h1 {
+    font-size: 18px;
+    margin: 30px 0;
+    color: var(--darkColor);
+}
+
+.sign-in-form__h3 {
+    font-size: 14px;
+    font-weight: normal;
+    margin: -20px 0 10px 0;
+}
+
+.sign-in-form__input {
+    font-size: 14px;
+    width: 300px;
+    height: 30px;
+    margin: 3px 0;
+    padding: 0 0 0 5px;
+    color: var(--darkColor);
+}
+
+.sign-in-form__button {
+    cursor: pointer;
+    font-size: 14px;
+    width: 170px;
+    margin: 5px 0;
+    border: none;
+    color: var(--darkColor);
+    white-space: nowrap;
+}
+.sign-in-form__button--border {
+    padding: 8px 15px;
+    border: 1px solid var(--lightColor);
+    border-radius: 6px;
+    margin: 20px 0 10px 0;
+}
+
+.sign-in-form__question-container {
+    position: relative;
+}
+
+.sign-in-form__question-button {
+    cursor: pointer;
+    position: absolute;
+    left: -20px;
+    top: 0;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 7px 0;
+}
+
+.sign-in-form__info-text {
+    cursor: pointer;
+    font-size: 14px;
+    position: absolute;
+    right: 305px;
+    top: 0;
+    width: 300px;
+    padding: 10px;
+    border: 1px solid var(--lightColor);
+    border-radius: 6px;
 }
 
 /* group component */

@@ -56,7 +56,7 @@ class About extends Component {
 
                 <Route
                     path="/about"
-                    render={() => <Redirect to="/about/video" />}
+                    render={() => window.location.pathname === '/about' && <Redirect to="/about/video" />}
                 />
 
                 <Route path="/about/video" component={AboutVideo} />

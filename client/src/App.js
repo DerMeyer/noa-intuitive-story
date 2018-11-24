@@ -17,54 +17,19 @@ import Admin from './Admin';
 import ProfilePage from './ProfilePage';
 import GroupPage from './GroupPage';
 
-// dev
-const ConstructionOverlay = () => (
-    <div style={{
-        position: 'fixed',
-        width: '100%',
-        height: '100%',
-        zIndex: '1000000'
-    }}>
-        <h2 style={{
-            position: 'absolute',
-            left: '50%',
-            top: '100px',
-            transform: 'translateX(-50%)',
-            textAlign: 'center',
-            padding: '40px 80px',
-            border: '3px solid black',
-            borderRadius: '20px',
-            backgroundColor: 'whitesmoke',
-            opacity: '.5',
-            whiteSpace: 'nowrap'
-        }}>
-            This site is currently under constuction.
-            <br />
-            It will be ready for you on 29th of November.
-            <br />
-            Please write a <a href="mailto:theintuitivestory@gmail.com" style={{ textDecoration: 'none' }}>mail</a> or visit us on <a href="https://www.facebook.com/theintuitivestory" target="_blank" style={{ textDecoration: 'none' }}>facebook</a>.
-            <br />
-            We appreciate your visit and will be happy to see you soon!
-        </h2>
-    </div>
-);
-
 class App extends Component {
     render() {
         console.log('App renders xox');
         return (
             <BrowserRouter>
                 <main>
-
-                    <ConstructionOverlay />
-
                     <header className="header flex">
                         <nav className="header__nav inline-flex">
                             <NavLink exact to="/">
                                 <img
                                     className="header__nav__image"
                                     title="home"
-                                    src="/images/181024_Logo_Final_Alpha.png"
+                                    src="/images/181031_Logo_new_Font_Final_small.png"
                                     alt="Logo"
                                 />
                             </NavLink>

@@ -102,9 +102,10 @@ class SignIn extends Component {
     render() {
         return (
             <div className="sign-in-form">
-                <h1>{this.props.message || this.state.message}</h1>
+                <h1 className="sign-in-form__h1">{this.props.message || this.state.message}</h1>
                 <input
                     ref={this.firstInput}
+                    className="sign-in-form__input"
                     name="alias"
                     type="text"
                     value={this.state.alias}
@@ -114,17 +115,18 @@ class SignIn extends Component {
                     onKeyDown={this.signIn}
                 />
                 <input
+                    className="sign-in-form__input"
                     name="pw"
                     type="password"
                     placeholder="password"
                     onChange={this.getUserInput}
                     onKeyDown={this.signIn}
                 />
-                <button onClick={this.signIn}>Log in</button>
+                <button className="sign-in-form__button sign-in-form__button--border" onClick={this.signIn}>Log in</button>
                 <Link to="/signup">
-                    <button>Not a member yet?</button>
+                    <button className="sign-in-form__button">Not a member yet?</button>
                 </Link>
-                <button onClick={this.getNewPassword}>Forgot your password?</button>
+                <button className="sign-in-form__button" onClick={this.getNewPassword}>Forgot your password?</button>
             </div>
         );
     }

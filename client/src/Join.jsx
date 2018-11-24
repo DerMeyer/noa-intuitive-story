@@ -33,7 +33,7 @@ class Join extends Component {
 
                 <Route
                     path="/join"
-                    render={() => <Redirect to="/join/create" />}
+                    render={() => window.location.pathname === '/join' && <Redirect to="/join/create" />}
                 />
 
                 <Route path="/join/create" component={JoinCreate} />
