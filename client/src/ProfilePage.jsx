@@ -176,7 +176,6 @@ class ProfilePage extends Component {
         });
     }
     uploadImage = async () => {
-        console.log('hey', this.state.selectedImage.file);
         if (this.state.selectedImage.file) {
             const formData = new FormData();
             formData.append('user_id', this.props.user.id);
@@ -230,11 +229,11 @@ class ProfilePage extends Component {
     }
     render() {
         return (
-            <section className="page_container">
+            <section className="page-container">
                 <h1>{this.props.message || this.state.message || `Hello ${this.props.user && this.props.user.alias}!`}</h1>
                 {this.props.user && this.props.user.verified === 2 && <Link to="/avira" style={this.style.adminButton}><button>Manage Page Content</button></Link>}
                 <h2>Edit your profile</h2>
-                <section className="profile_edit_container">
+                <section className="profile-edit-container">
                     {this.props.user && !this.props.user.verified && <p>Please verify your account.</p>}
                     {this.props.user && this.props.user.verified && <section>
                         <div>

@@ -7,7 +7,7 @@ class About extends Component {
 
     render() {
         return (
-            <section className="page_container">
+            <section className="page-container">
                 <h3 className="try-this-thing">
                     Any Questions? Please let me know.
                 </h3>

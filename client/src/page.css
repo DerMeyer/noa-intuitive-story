@@ -1,4 +1,4 @@
-.page_container {
+.page-container {
     position: absolute;
     top: 170px;
     left: 20vw;
@@ -13,12 +13,12 @@
     background-color: var(--beige);
 }
 
-.page_container > section {
+.page-container > section {
     width: 66vw;
     margin-bottom: 2vw;
 }
 
-.page_container h1 {
+.page-container h1 {
     position: absolute;
     top: -12vh;
     left: 0;
@@ -26,7 +26,7 @@
     color: whitesmoke;
 }
 
-.page_container h2 {
+.page-container h2 {
     width: 66vw;
     margin-top: 2vw;
 }
@@ -36,8 +36,8 @@
     flex-direction: column;
 }
 
-.page_container input,
-.page_container h4 {
+.page-container input,
+.page-container h4 {
     font-family: 'NTR', sans-serif;
     font-size: 2.5vh;
     height: 4.5vh;
@@ -46,7 +46,7 @@
     margin: 0 0 2vh 0;
 }
 
-.page_container h4 {
+.page-container h4 {
     width: 4vw;
     margin: 0 0 3vh 0;
     color: gray;
@@ -57,8 +57,8 @@
     margin-bottom: 1vh;
 }
 
-.page_container button,
-.page_container label {
+.page-container button,
+.page-container label {
     cursor: pointer;
     font-family: 'NTR', sans-serif;
     font-size: 3vh;
@@ -72,13 +72,13 @@
     transition-duration: .15s;
 }
 
-.page_container label {
+.page-container label {
     text-align: center;
     padding-top: .9vh;
 }
 
-.page_container button:hover,
-.page_container label:hover {
+.page-container button:hover,
+.page-container label:hover {
     background-color: lightgray;
 }
 
@@ -172,23 +172,23 @@
     grid-template-columns: 1.5fr 1fr 1fr 2fr 2fr 1fr 1fr 1fr;
 }
 
-.profile_edit_container {
+.profile-edit-container {
     display: flex;
     justify-content: space-around;
 }
 
-.profile_edit_container > section {
+.profile-edit-container > section {
     width: 33vw;
 }
 
-.profile_edit_container p {
+.profile-edit-container p {
     font-size: 2.5vh;
     line-height: 1;
     margin: 1vh 0 4vh 0;
     color: gray;
 }
 
-.profile_edit_container div {
+.profile-edit-container div {
     display: flex;
     justify-content: space-between;
 }

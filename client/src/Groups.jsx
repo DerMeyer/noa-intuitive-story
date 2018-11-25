@@ -62,7 +62,7 @@ class GroupCollection extends Component {
     }
     render() {
         return (
-            <section className="page_container">
+            <section className="page-container">
                 <h1>Groups collection</h1>
                 <h2>Click on a group to see more</h2>
                 {this.state.groups}
