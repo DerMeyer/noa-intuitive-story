@@ -18,9 +18,45 @@ import ProfilePage from './ProfilePage';
 import GroupPage from './GroupPage';
 import Impressum from './Impressum';
 
-class App extends Component {
-    render() {
+import Cookies from './Cookies';
 
+class App extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            showCookiesFooter: {}
+        };
+    }
+
+    componentDidMount() {
+        window.setTimeout(() => {
+            this.placeCookiesOverlay();
+        }, 2000);
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.cookies !== this.props.cookies) {
+            this.placeCookiesOverlay();
+        }
+    }
+
+    placeCookiesOverlay() {
+        if (!this.props.cookies) {
+            this.setState({
+                showCookiesFooter: {
+                    bottom: '50px'
+                }
+            });
+        } else {
+            this.setState({
+                showCookiesFooter: {
+                    bottom: '0'
+                }
+            });
+        }
+    }
+
+    render() {
         console.log('App renders xox', this.props);
         return (
             <BrowserRouter>
@@ -86,7 +122,7 @@ class App extends Component {
                     />
                     <Route path="/impressum" component={Impressum} />
 
-                    <footer className="footer flex">
+                    <footer className="footer flex" style={this.state.showCookiesFooter}>
                         <span className="footer__note">&copy; Noa Golan</span>
                         <nav className="footer__nav inline-flex">
                             <Link to="/impressum" className="footer__nav__button">
@@ -97,13 +133,15 @@ class App extends Component {
                             </Link>
                         </nav>
                     </footer>
+
+                    <Cookies />
                 </main>
             </BrowserRouter>
         )
     }
 }
 
-const mapStateToProps = ({ signedIn, user }) => ({ signedIn, verified: user.verified });
+const mapStateToProps = ({ cookies, signedIn, user }) => ({ cookies, signedIn, verified: user.verified });
 
 const ConnectedApp = connect(mapStateToProps)(App);
 

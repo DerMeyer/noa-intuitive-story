@@ -103,8 +103,16 @@ const sendMail = (alias, mail, verificationCode, pw) => {
 
 const PORT = process.env.PORT || 5000;
 
-app.get('/api/signout', (req, res) => {
-    req.session = null;
+app.get('/api/check_cookies', (req, res) => {
+    console.log(req.session);
+    res.json({
+        success: true,
+        cookies: req.session.cookies
+    });
+});
+
+app.get('/api/accept_cookies', (req, res) => {
+    req.session.cookies = true;
     res.json({
         success: true
     });
@@ -123,6 +131,13 @@ app.get('/api/check_signin', (req, res) => {
             success: false
         });
     }
+});
+
+app.get('/api/signout', (req, res) => {
+    req.session.user = null;
+    res.json({
+        success: true
+    });
 });
 
 app.post('/api/signin', async (req, res) => {

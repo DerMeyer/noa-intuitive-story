@@ -14,6 +14,14 @@ const reducer = (state = { user: {} }, action) => {
         };
     }
 
+    if (action.type === 'ACCEPT_COOKIES') {
+        const { cookies } = action;
+        return {
+            ...state,
+            cookies
+        };
+    }
+
     if (action.type === 'SIGN_OUT') {
         const { message } = action;
         return {
@@ -29,8 +37,9 @@ const reducer = (state = { user: {} }, action) => {
             ...state,
             signedIn: true,
             user: {
-                ...action.data
-            }
+                ...action.user
+            },
+            cookies: action.cookies
         };
     }
 

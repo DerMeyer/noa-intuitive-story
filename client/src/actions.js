@@ -1,16 +1,47 @@
 import axios from './axios';
 
-export const redirect = url => {
-    window.location.replace(`/${url}`);
-    return {};
-};
-
 export const deleteMessage = () => ({ type: 'DELETE_MESSAGE' });
 
 export const setMessage = message => ({
     type: 'SET_MESSAGE',
     message
 });
+
+export const checkCookies = async () => {
+    try {
+        const resp = await axios.get('/api/check_cookies');
+        if (resp.data.success) {
+            return {
+                type: 'ACCEPT_COOKIES',
+                cookies: resp.data.cookies
+            };
+        }
+    } catch (err) {
+        console.log(err);
+        return {
+            type: 'SET_MESSAGE',
+            message: `The server didn't respond.`
+        };
+    }
+};
+
+export const acceptCookies = async () => {
+    try {
+        const resp = await axios.get('/api/accept_cookies');
+        if (resp.data.success) {
+            return {
+                type: 'ACCEPT_COOKIES',
+                cookies: true
+            };
+        }
+    } catch (err) {
+        console.log(err);
+        return {
+            type: 'SET_MESSAGE',
+            message: `The server didn't respond.`
+        };
+    }
+};
 
 export const signOut = async () => {
     try {
@@ -33,9 +64,11 @@ export const checkSignIn = async () => {
     try {
         const resp = await axios.get('/api/check_signin');
         if (resp.data.success) {
+            console.log(resp.data.cookies);
             return {
                 type: 'SIGN_IN',
-                data: { ...resp.data.user }
+                user: { ...resp.data.user },
+                cookies: resp.data.cookies
             };
         } else {
             return {
