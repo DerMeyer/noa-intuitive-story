@@ -67,7 +67,7 @@ class App extends Component {
                                 <img
                                     className="header__nav__image"
                                     title="home"
-                                    src="images/181031_Logo_new_Font_Final_small.png"
+                                    src="/images/181031_Logo_new_Font_Final_small.png"
                                     alt="Logo"
                                 />
                             </NavLink>
