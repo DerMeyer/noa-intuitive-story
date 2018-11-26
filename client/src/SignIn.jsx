@@ -122,7 +122,7 @@ class SignIn extends Component {
                     onChange={this.getUserInput}
                     onKeyDown={this.signIn}
                 />
-                <button className="sign-in-form__button sign-in-form__button--border" onClick={this.signIn}>Log in</button>
+                <button className="sign-in-form__button sign-in-form__button--border" onClick={this.signIn}>Sign in</button>
                 <Link to="/signup">
                     <button className="sign-in-form__button">Not a member yet?</button>
                 </Link>

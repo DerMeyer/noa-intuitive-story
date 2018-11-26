@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 class SubMenu extends Component {
     render() {
@@ -8,9 +8,9 @@ class SubMenu extends Component {
         return (
             <div className="sub-menu">
                 {links.map(item => (
-                    <Link to={`/${path}/${item.link}`} className="sub-menu__nav__button" key={item.name}>
+                    <NavLink to={`/${path}/${item.link}`} className="sub-menu__nav__button" key={item.name}>
                         {item.name}
-                    </Link>
+                    </NavLink>
                 ))}
             </div>
         )

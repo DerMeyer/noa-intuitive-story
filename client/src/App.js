@@ -16,6 +16,7 @@ import Verify from './Verify';
 import Admin from './Admin';
 import ProfilePage from './ProfilePage';
 import GroupPage from './GroupPage';
+import Impressum from './Impressum';
 
 class App extends Component {
     render() {
@@ -83,6 +84,7 @@ class App extends Component {
                         path="/group/:id"
                         render={props => <GroupPage match={props.match} />}
                     />
+                    <Route path="/impressum" component={Impressum} />
 
                     <footer className="footer flex">
                         <span className="footer__note">&copy; Noa Golan</span>
