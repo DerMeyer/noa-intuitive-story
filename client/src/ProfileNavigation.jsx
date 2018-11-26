@@ -19,6 +19,11 @@ class ProfileNavigation extends Component {
         if (this.props.signedIn) {
             return (
                 <nav className="profile__nav inline-flex">
+                    {!this.props.user.verified && (
+                        <Link to="/verify" className="profile__nav__button profile__nav__button--border">
+                            Verify your account
+                        </Link>
+                    )}
                     <Link
                         to="/"
                         className="profile__nav__button"
@@ -32,7 +37,7 @@ class ProfileNavigation extends Component {
                     >
                         <div
                             style={{
-                                backgroundImage: `url(${this.props.user.icon_url || '/favicon.png'})`
+                                backgroundImage: `url(${this.props.user.icon_url || '/default.jpeg'})`
                             }}
                             className="profile__nav__image"
                             title="view your profile"

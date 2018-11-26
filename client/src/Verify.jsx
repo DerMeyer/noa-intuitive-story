@@ -9,78 +9,87 @@ class Verify extends Component {
         super(props);
         this.state = {
             vCode: '',
-            message: 'Please enter the confirmation code we sent to your e mail address.',
-            messageRed: {},
-            inputStyle: {
-                textAlign: 'center',
-                fontSize: '3vh'
-            }
+            message: 'Please enter the confirmation code we sent to your email address.'
         };
         this.firstInput = React.createRef();
     }
+
     componentDidMount() {
         this.firstInput.current.focus();
     }
+
     componentWillUnmount() {
-        this.props.message.registerText && this.props.dispatch(deleteMessage());
+        this.props.message && this.props.dispatch(deleteMessage());
         clearTimeout(this.setTimeoutID);
     }
-    compileData = event => {
+
+    getUserInput = event => {
         this.setState({
             [event.target.name]: event.target.value
         });
     }
+
     verify = event => {
         if (event.type !== 'click' && event.keyCode !== 13) {
             return;
         }
+
         event.preventDefault();
-        this.props.message.verifyText && this.props.dispatch(deleteMessage());
+        this.props.message && this.props.dispatch(deleteMessage());
+
         this.setState({
-            message: 'Please enter the confirmation code we sent to your e mail address.',
-            messageRed: {}
+            message: 'Please enter the confirmation code we sent to your email address.'
         });
         if (this.state.vCode) {
             this.setTimeoutID = setTimeout(() => {
                 this.props.dispatch(verifyAccount(this.props.alias, this.state.vCode));
-                window.location.replace('/');
+                // window.location.replace('/');
             }, 500);
         } else {
             this.setState({
-                messageRed: { color: 'red' }
+                message: `Our mail repeatedly fails to get to you? Please get in touch with our support.`
             });
         }
     }
+
     newCode = () => {
         this.setTimeoutID = setTimeout(() => {
             this.props.dispatch(newVerificationCode(this.props.alias));
         }, 500);
     }
+
     render() {
         return (
-            <section className="login_component_frame">
-                <h1 style={this.props.message.verifyColor || this.state.messageRed}>{this.props.message.verifyText || this.state.message}</h1>
+            <div className="sign-in-form">
+                <h1 className="sign-in-form__h1">{this.props.message || this.state.message}</h1>
+
                 <input
                     ref={this.firstInput}
-                    style={this.state.inputStyle}
+                    className="sign-in-form__input"
                     name="vCode"
                     type="text"
                     value={this.state.vCode}
-                    onChange={this.compileData}
-                    onKeyDown={this.verify} />
-                <button onClick={this.verify}>Submit</button>
-                <Link to="/"><button>Skip this step</button></Link>
-                <button onClick={this.newCode}>Get a new code</button>
-            </section>
+                    onChange={this.getUserInput}
+                    onKeyDown={this.verify}
+                />
+
+                <button className="sign-in-form__button sign-in-form__button--border" onClick={this.verify}>
+                    Submit
+                </button>
+                <button className="sign-in-form__button" onClick={this.newCode}>
+                    Get a new code
+                </button>
+                <Link to="/">
+                    <button className="sign-in-form__button">
+                        Skip this step
+                    </button>
+                </Link>
+            </div>
         )
     }
 }
 
-const mapStateToProps = state => ({
-    message: state.message,
-    ...state.user,
-    loggedIn: state.loggedIn
-});
+const mapStateToProps = ({ message, user = {} }) => ({ message, alias: user.alias });
 
 const ConnectedVerify = connect(mapStateToProps)(Verify);
 

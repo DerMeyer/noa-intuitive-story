@@ -48,8 +48,8 @@ class Admin extends Component {
         this.style = {
             adminButton: {
                 position: 'absolute',
-                top: '-6vh',
-                left: '50vw'
+                top: '20px',
+                transform: 'scale(.8)'
             },
             extraSpace: {
                 marginBottom: '3.5vh'
@@ -489,19 +489,19 @@ class Admin extends Component {
             return (
                 <section className="page_container">
                     <h1>Warning!</h1>
-                    <h2>This page is not for you.</h2>
+                    <h3>This page is not for you.</h3>
                 </section>
             )
         }
         return (
-            <section className="page_container" onClick={() => {
+            <section className="page-container" onClick={() => {
                     this.setSoulSearchMenu('');
                     this.setUserSearchMenu('', '');
                     this.setGroupSearchMenu('', '');
                 }}>
                 <h1>Hello Noa!</h1>
                 <Link to="/profile/Noa" style={this.style.adminButton}><button>Back to your Profile</button></Link>
-                <h2>Groups</h2>
+                <h3>Groups</h3>
                 <section className="manage-groups-container">
                     <article className="create-group-article">
                         <h4>Title</h4>
@@ -584,7 +584,7 @@ class Admin extends Component {
                     </section>
                     <textarea name="story" value={this.state.story} onChange={this.compileData}></textarea>
                 </section>
-                <h2>History</h2>
+                {/* <h3>History</h3>
                 <section>
                     <section className="manage-history-container">
                         <h4>Name</h4>
@@ -605,9 +605,9 @@ class Admin extends Component {
                             <button>User?</button>
                         </section>
                     ))}
-                </section>
-                <h2>Users</h2>
-                <section>
+                </section> */}
+                <h3>Users</h3>
+                <section className="manage-user">
                     <section className="manage-user-container">
                         <h4>Username</h4>
                         <h4>Firstname</h4>

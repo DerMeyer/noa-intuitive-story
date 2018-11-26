@@ -14,7 +14,7 @@ export const AboutGame = () => (
 
 export const AboutVision = () => (
     <div>
-        <h3 className="try-this-thing">
+        <h3>
             Have you ever imagined yourself living in a different time, in a different culture, with different people? Would you make similar choices? Would you still be you?
         </h3>
         <p>

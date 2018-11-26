@@ -14,16 +14,20 @@ class GroupCollection extends Component {
             row: {
                 display: 'flex',
                 height: '23vh',
-                borderBottom: '.5vh solid gray'
+                borderBottom: '.5vh solid gray',
+                transform: 'scale(.8)'
             },
             group:{
                 margin: '4vh 2vw 0 2vw'
             },
             story: {
+                position: 'absolute',
+                right: '20px',
+                bottom: '40px',
                 fontSize: '2vh',
                 whiteSpace: 'pre-line',
                 lineHeight: '1.3',
-                height: '20vh',
+                maxHeight: '20vh',
                 width: '48vw',
                 margin: '0 0 0 2vw',
                 overflow: 'scroll'
@@ -54,7 +58,7 @@ class GroupCollection extends Component {
                                     <section style={this.style.group}>
                                         <Group { ...group } />
                                     </section>
-                                    <p style={this.style.story}>{group.story || 'This group has no description.'}</p>
+                                    <p style={this.style.story}>{group.story || 'More soon...'}</p>
                                 </section>
                             )
                         })
@@ -63,8 +67,7 @@ class GroupCollection extends Component {
     render() {
         return (
             <section className="page-container">
-                <h1>Groups collection</h1>
-                <h2>Click on a group to see more</h2>
+                <h3>All Games</h3>
                 {this.state.groups}
             </section>
         )

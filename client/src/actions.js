@@ -1,5 +1,10 @@
 import axios from './axios';
 
+export const redirect = url => {
+    window.location.replace(`/${url}`);
+    return {};
+};
+
 export const deleteMessage = () => ({ type: 'DELETE_MESSAGE' });
 
 export const setMessage = message => ({
@@ -80,6 +85,7 @@ export const signUp = async (first, last, alias, mail, phone, pw) => {
             pw
         });
         if (resp.data.success) {
+            window.location.replace('/verify');
             return {
                 type: 'SIGN_IN',
                 data: { ...resp.data.user }

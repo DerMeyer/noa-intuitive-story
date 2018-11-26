@@ -1,16 +1,32 @@
+/* refactor to integrate into app.css */
+
 .page-container {
     position: absolute;
+    left: 20%;
     top: 170px;
-    left: 20vw;
     display: flex;
     flex-direction: column;
     align-items: center;
     min-height: 80vh;
-    width: 60vw;
+    width: 60%;
     padding: 5vw;
     border-radius: 4px;
     margin-bottom: 9vh;
     background-color: var(--beige);
+}
+
+@media only screen and (max-width: 1400px) {
+    .page-container {
+        left: 13%;
+        width: 74%;
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+    .page-container {
+        left: 5%;
+        width: 90%;
+    }
 }
 
 .page-container > section {
@@ -30,6 +46,13 @@
     width: 66vw;
     margin-top: 2vw;
 }
+
+.page-container h3 {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* profile page and admin */
 
 .create-group-article {
     display: flex;
@@ -86,6 +109,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    transform: scale(.8);
 }
 
 .manage-groups-container section {
@@ -142,6 +166,10 @@
     background-color: lightgray;
 }
 
+.manage-user {
+    transform: scale(.8);
+}
+
 .manage-user-container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 2fr 1.5fr 1fr .5fr 1fr;
@@ -175,6 +203,7 @@
 .profile-edit-container {
     display: flex;
     justify-content: space-around;
+    transform: scale(.8);
 }
 
 .profile-edit-container > section {

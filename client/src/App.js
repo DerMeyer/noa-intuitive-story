@@ -19,7 +19,8 @@ import GroupPage from './GroupPage';
 
 class App extends Component {
     render() {
-        console.log('App renders xox');
+
+        console.log('App renders xox', this.props);
         return (
             <BrowserRouter>
                 <main>
@@ -67,7 +68,12 @@ class App extends Component {
                             this.props.signedIn ? <Redirect to="/" /> : <SignUp />
                         }
                     />
-                    <Route path="/verify" component={Verify} />
+                    <Route
+                        path="/verify"
+                        render={() =>
+                            this.props.verified ? <Redirect to="/" /> : <Verify />
+                        }
+                    />
                     <Route path="/avira" component={Admin} />
                     <Route
                         path="/profile/:user"
@@ -95,7 +101,7 @@ class App extends Component {
     }
 }
 
-const mapStateToProps = ({ signedIn }) => ({ signedIn });
+const mapStateToProps = ({ signedIn, user }) => ({ signedIn, verified: user.verified });
 
 const ConnectedApp = connect(mapStateToProps)(App);
 
