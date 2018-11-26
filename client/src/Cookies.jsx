@@ -17,6 +17,6 @@ const Cookies = props => (
     </div>
 );
 
-const ConnectedCookies = connect(() => {})(Cookies);
+const ConnectedCookies = connect(() => ({}))(Cookies);
 
 export default ConnectedCookies;

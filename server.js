@@ -104,7 +104,6 @@ const sendMail = (alias, mail, verificationCode, pw) => {
 const PORT = process.env.PORT || 5000;
 
 app.get('/api/check_cookies', (req, res) => {
-    console.log(req.session);
     res.json({
         success: true,
         cookies: req.session.cookies
@@ -508,7 +507,10 @@ app.post('/api/update_group', async (req, res) => {
 
 app.get('/api/get_users', async (req, res) => {
     if (!req.session.user || req.session.user.id !== 1) {
-        res.end();
+        res.json({
+            success: false
+        });
+        return;
     }
     try {
         const result = await getUsers();

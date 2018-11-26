@@ -38,8 +38,7 @@ const reducer = (state = { user: {} }, action) => {
             signedIn: true,
             user: {
                 ...action.user
-            },
-            cookies: action.cookies
+            }
         };
     }
 

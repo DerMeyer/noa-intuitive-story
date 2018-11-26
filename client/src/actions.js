@@ -90,7 +90,7 @@ export const signIn = async (alias, pw) => {
         if (resp.data.success) {
             return {
                 type: 'SIGN_IN',
-                data: { ...resp.data.user }
+                user: { ...resp.data.user }
             };
         } else {
             return {

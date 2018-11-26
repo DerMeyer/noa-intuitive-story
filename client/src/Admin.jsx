@@ -487,8 +487,7 @@ class Admin extends Component {
     render() {
         if (this.props.user.verified !== 2) {
             return (
-                <section className="page_container">
-                    <h1>Warning!</h1>
+                <section className="page-container">
                     <h3>This page is not for you.</h3>
                 </section>
             )
