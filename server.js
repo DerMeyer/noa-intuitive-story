@@ -69,7 +69,7 @@ const bp = require('body-parser');
 app.use(bp.json());
 
 const nodemailer = require('nodemailer');
-const sendMail = (alias, mail, verificationCode, pw) => {
+const sendMail = (alias, mail, verificationCode, pw, subject, text) => {
     const transporter = nodemailer.createTransport({
         host: 'smtp.1und1.de',
         port: 587,
@@ -79,19 +79,23 @@ const sendMail = (alias, mail, verificationCode, pw) => {
             pass: SMTP_PASS
         }
     });
-    const mailOptions = verificationCode
-        ? {
-              from: 'theintuitivestory@gmail.com',
-              to: mail,
-              subject: 'Please confirm your Intuitive Story account.',
-              html: `<h2>Hi ${alias}, your confirmation code is:</h2><h1>${verificationCode}</h1>`
-          }
-        : {
-              from: 'theintuitivestory@gmail.com',
-              to: mail,
-              subject: `New password for ${alias}.`,
-              html: `<h2>Hi ${alias}, your new password is:</h2><h1>${pw}</h1>`
-          };
+    const mailOptions = {};
+    if (verificationCode) {
+        mailOptions.from = 'theintuitivestory@gmail.com';
+        mailOptions.to = mail;
+        mailOptions.subject = 'Please confirm your Intuitive Story account.';
+        mailOptions.html = `<h2>Hi ${alias}, your confirmation code is:</h2><h1>${verificationCode}</h1>`;
+    } else if (pw) {
+        mailOptions.from = 'theintuitivestory@gmail.com';
+        mailOptions.to = mail;
+        mailOptions.subject = `New password for ${alias}.`;
+        mailOptions.html = `<h2>Hi ${alias}, your new password is:</h2><h1>${pw}</h1>`;
+    } else if (subject && text) {
+        mailOptions.from = mail;
+        mailOptions.to = 'theintuitivestory@gmail.com';
+        mailOptions.subject = subject;
+        mailOptions.html = text;
+    }
     transporter.sendMail(mailOptions, (err, info) => {
         if (err) {
             console.log(err);
@@ -102,6 +106,13 @@ const sendMail = (alias, mail, verificationCode, pw) => {
 };
 
 const PORT = process.env.PORT || 5000;
+
+app.post('/api/send_contact_form', (req, res) => {
+    sendMail(null, req.body.mail, null, null, req.body.subject, req.body.text);
+    res.json({
+        success: true
+    });
+});
 
 app.get('/api/check_cookies', (req, res) => {
     res.json({

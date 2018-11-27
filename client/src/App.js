@@ -17,7 +17,7 @@ import Admin from './Admin';
 import ProfilePage from './ProfilePage';
 import GroupPage from './GroupPage';
 import Impressum from './Impressum';
-
+import Contact from './Contact';
 import Cookies from './Cookies';
 
 class App extends Component {
@@ -121,6 +121,7 @@ class App extends Component {
                         render={props => <GroupPage match={props.match} />}
                     />
                     <Route path="/impressum" component={Impressum} />
+                    <Route path="/contact" component={Contact} />
 
                     <footer className="footer flex" style={this.state.showCookiesFooter}>
                         <span className="footer__note">&copy; Noa Golan</span>

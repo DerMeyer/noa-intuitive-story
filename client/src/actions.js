@@ -7,6 +7,27 @@ export const setMessage = message => ({
     message
 });
 
+export const sendContactForm = async (mail, subject, text) => {
+    try {
+        const resp = await axios.post('/api/send_contact_form', {
+            mail,
+            subject,
+            text
+        });
+        if (resp.data.success) {
+            return {
+                type: 'YIELD'
+            }
+        }
+    } catch (err) {
+        console.log(err);
+        return {
+            type: 'SET_MESSAGE',
+            message: `The server didn't respond.`
+        };
+    }
+};
+
 export const checkCookies = async () => {
     try {
         const resp = await axios.get('/api/check_cookies');
