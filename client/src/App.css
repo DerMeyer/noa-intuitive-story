@@ -205,6 +205,14 @@
     color: var(--darkColor);
 }
 
+.sign-in-form__textarea {
+    font-size: 14px;
+    width: 600px;
+    height: 240px;
+    padding: 5px;
+    margin: 5px 0;
+}
+
 .sign-in-form__button {
     cursor: pointer;
     font-size: 14px;
@@ -212,6 +220,7 @@
     margin: 5px 0;
     border: none;
     color: var(--darkColor);
+    background-color: white;
     white-space: nowrap;
 }
 .sign-in-form__button--border {

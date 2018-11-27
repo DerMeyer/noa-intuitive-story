@@ -7,6 +7,8 @@ class Contact extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            message: 'We are happy to hear from you',
+            messageSent: false,
             mail: '',
             subject: '',
             text: ''
@@ -16,6 +18,12 @@ class Contact extends Component {
 
     componentDidMount() {
         this.firstInput.current.focus();
+    }
+
+    componentWillUnmount() {
+        if (this.timeoutID) {
+            window.clearTimeout(this.timeoutID);
+        }
     }
 
     getUserInput = event => {
@@ -35,22 +43,33 @@ class Contact extends Component {
             return;
         }
 
-        console.log(this.state);
-
         const { mail, subject, text } = this.state;
         if (mail && subject && text) {
             this.props.dispatch(sendContactForm(mail, subject, text));
+            this.setState({
+                messageSent: true
+            });
+            this.timeoutID = window.setTimeout(() => {
+                window.location.replace('/');
+            }, 5000);
         } else {
-            console.log('I NEED MORE TEXT');
+            this.setState({
+                message: 'Please fill out every field.'
+            });
         }
     }
 
     render() {
-        return (
-            <div className="page-container">
-                <h3>Contact Form</h3>
+        return this.state.messageSent ? (
+            <div className="sign-in-form">
+                <h3>Your message is on the way. We'll get back to you soon.</h3>
+            </div>
+        ) : (
+            <div className="sign-in-form">
+                <h4>{this.state.message}</h4>
                 <input
                     ref={this.firstInput}
+                    className="sign-in-form__input"
                     name="mail"
                     type="text"
                     value={this.state.mail}
@@ -60,6 +79,7 @@ class Contact extends Component {
                     onKeyDown={this.sendContactForm}
                 />
                 <input
+                    className="sign-in-form__input"
                     name="subject"
                     type="text"
                     value={this.state.subject}
@@ -69,13 +89,13 @@ class Contact extends Component {
                     onKeyDown={this.sendContactForm}
                 />
                 <textarea
+                    className="sign-in-form__textarea"
                     name="text"
                     value={this.state.text}
-                    placeholder="enter your message"
-                    onFocus={this.emptyInputField}
+                    placeholder="your message"
                     onChange={this.getUserInput}
                 />
-                <button onClick={this.sendContactForm}>
+                <button className="sign-in-form__button sign-in-form__button--border" onClick={this.sendContactForm}>
                     Send
                 </button>
             </div>
