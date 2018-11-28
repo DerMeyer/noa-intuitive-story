@@ -175,11 +175,11 @@
 }
 
 .about-video-container {
-    width: 57vw;
+    width: 57vw !important;
     height: 32vw;
     overflow: hidden;
     margin-top: -20px;
-    border-radius: 5px;
+    border-radius: 5px !important;
 }
 
 .about-video {
