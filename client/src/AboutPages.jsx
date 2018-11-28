@@ -2,15 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 export const AboutVideo = () => (
-    <div className="about-video-container page-container">
-        <iframe
-            title="About Video"
-            className="about-video"
-            src="https://www.youtube.com/embed/A3CLS6u7s1k?&autoplay=1"
-            frameBorder="0"
-            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-        />
+    <div className="page-container">
+        <div className="about-video-container">
+            <iframe
+                title="About Video"
+                className="about-video"
+                src="https://www.youtube.com/embed/A3CLS6u7s1k?&autoplay=1"
+                frameBorder="0"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+            />
+        </div>
     </div>
 );
 

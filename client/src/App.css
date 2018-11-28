@@ -175,16 +175,15 @@
 }
 
 .about-video-container {
-    width: 57vw !important;
-    height: 32vw;
+    width: 60vw;
+    height: 33.5vw;
     overflow: hidden;
-    margin-top: -20px;
-    border-radius: 5px !important;
+    margin-top: -25px;
 }
 
 .about-video {
-    width: 57vw;
-    height: 32.1vw;
+    width: 60vw;
+    height: 33.8vw;
 }
 
 /* sing in / sign up */
