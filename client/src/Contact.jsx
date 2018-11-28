@@ -51,7 +51,7 @@ class Contact extends Component {
             });
             this.timeoutID = window.setTimeout(() => {
                 window.location.replace('/');
-            }, 5000);
+            }, 4000);
         } else {
             this.setState({
                 message: 'Please fill out every field.'

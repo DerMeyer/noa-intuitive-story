@@ -8,21 +8,19 @@ const Group = props => {
             color: 'var(--mediumColor)'
         },
         container: {
-            transform: 'translateY(60px)',
-            padding: '0 20px',
-            backgroundColor: 'white',
-            border: '1px solid var(--lightColor)',
-            borderRadius: '5px'
+            backgroundColor: 'white'
         },
         name: {
-            whiteSpace: 'nowrap'
+            fontWeight: 'bold',
+            whiteSpace: 'nowrap',
+            margin: '0'
         }
     };
 
     return (
         <Link to={`/group/${props.id}`} style={style.link} onClick={event => event.stopPropagation()}>
             <div style={style.container}>
-                <p style={style.name} >{`${props.name} ${props.time_period}`}</p>
+                <p style={style.name} >{`${props.name.toUpperCase()}, ${props.time_period}`}</p>
             </div>
         </Link>
     )

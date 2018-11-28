@@ -51,7 +51,7 @@ const uploader = multer({
 const cookieSession = require('cookie-session');
 const cookieSessionMiddleware = cookieSession({
     secret: MY_SECRET,
-    maxAge: 1000 * 60 * 60 * 24 * 1
+    maxAge: 1000 * 60 * 60 * 24 * 14
 });
 app.use(cookieSessionMiddleware);
 
@@ -94,7 +94,7 @@ const sendMail = (alias, mail, verificationCode, pw, subject, text) => {
         mailOptions.from = mail;
         mailOptions.to = 'theintuitivestory@gmail.com';
         mailOptions.subject = subject;
-        mailOptions.html = text;
+        mailOptions.html = `<p style="white-space: pre-line;">${text}</p>`;
     }
     transporter.sendMail(mailOptions, (err, info) => {
         if (err) {
