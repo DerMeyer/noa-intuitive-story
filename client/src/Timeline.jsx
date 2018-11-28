@@ -143,7 +143,9 @@ class Timeline extends Component {
 
     componentDidMount() {
         this.scrollFactor = ((window.innerHeight * this.timelineImageQuotient) - window.innerWidth) / (2 * window.innerHeight);
-        window.scroll(0, (1.5 * window.innerHeight) * (7420 / 9300));
+        const initialCenteredYear = 0;
+        const initialScrollY = Math.min(((this.mapTimelineToPosition(initialCenteredYear) - window.innerWidth / 2) / this.scrollFactor), (2 * window.innerHeight));
+        window.scroll(0, initialScrollY);
         this.setTimelineLeft();
         this.props.dispatch(getGroups());
         // this.props.dispatch(getHistory());
@@ -245,8 +247,8 @@ class Timeline extends Component {
                     backgroundColor: 'var(--darkColor)'
                 }
                 return (
-                    <div>
-                        <section key={group.id} style={groupStyle} className="group_on_timeline">
+                    <div key={group.id}>
+                        <section style={groupStyle} className="group_on_timeline">
                             <Group { ...group } />
                         </section>
                         <section style={arrowStyle}></section>
