@@ -51,7 +51,7 @@ class About extends Component {
 
     render() {
         return (
-            <section className="page-container">
+            <section>
                 <SubMenu data={this.subMenuData} />
 
                 <Route

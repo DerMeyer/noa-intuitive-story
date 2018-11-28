@@ -133,6 +133,12 @@ const Impressum = () => {
                 Based on our legitimate interests (ie interest in the analysis, optimization and economic operation of our online offer within the meaning of Art. 6 (1) lit. DSGVO), we make use of content or services offered by third-party providers in order to provide their content and services Services, such as Include videos or fonts (collectively referred to as "content").<br /><br />
                 This always presupposes that the third-party providers of this content perceive the IP address of the users, since they could not send the content to their browser without the IP address. The IP address is therefore required for the presentation of this content. We endeavor to use only content whose respective providers use the IP address solely for the delivery of the content. Third parties may also use so-called pixel tags (invisible graphics, also referred to as "web beacons") for statistical or marketing purposes. The "pixel tags" can be used to evaluate information such as visitor traffic on the pages of this website. The pseudonymous information may also be stored in cookies on the user's device and may include, but is not limited to, technical information about the browser and operating system, referring web pages, visit time, and other information regarding the use of our online offer.
             </p>
+            <h3>
+                Youtube
+            </h3>
+            <p>
+                We embed the videos on the YouTube platform of Google LLC, 1600 Amphitheater Parkway, Mountain View, CA 94043, USA. Privacy Policy: https://www.google.com/policies/privacy/, opt-out: https://adssettings.google.com/authenticated.
+            </p>
         </div>
     )
 };

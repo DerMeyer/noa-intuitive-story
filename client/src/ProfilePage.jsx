@@ -285,7 +285,7 @@ class ProfilePage extends Component {
                         {this.state.selectedImage.url && <button style={this.style.updateProfileButton} onClick={this.uploadImage}>Submit</button>}
                     </section>
                 </section>
-                <h3>Your messages</h3>
+                {/* <h3>Your messages</h3> */}
                 <h3>Your groups</h3>
                 {this.state.groups}
             </section>

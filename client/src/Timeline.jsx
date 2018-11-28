@@ -39,6 +39,7 @@ class Timeline extends Component {
                 height: '82vh'
             },
             timeline: {
+                cursor: 'grab',
                 height: '60vh'
             },
             historyCreatorH3: {
