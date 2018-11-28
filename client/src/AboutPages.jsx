@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export const AboutVideo = () => (
     <div className="page-container">
-        <div className="about-video-container">
+        <div className="about-video-container inline-flex">
             <iframe
                 title="About Video"
                 className="about-video"
