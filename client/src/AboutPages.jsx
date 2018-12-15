@@ -81,6 +81,31 @@ export const AboutMe = () => (
 
 export const AboutInspirations = () => (
     <div className="page-container">
-        <h3>You will soon find Inspirations here.</h3>
+        <h3>
+            Inspirations
+        </h3>
+        <p style={{ marginTop: '-15px' }}>
+            (ordered by the time they appeared in my life)
+        </p>
+        <p>
+            <a style={{ textDecoration: 'none' }} href="https://en.wikipedia.org/wiki/The_Holocaust" target="_blank" rel="noopener noreferrer">The Holocaust</a> / A BIG event<br /><br />
+            <a style={{ textDecoration: 'none' }} href="https://en.wikipedia.org/wiki/Once_Upon_a_Time..._Man" target="_blank" rel="noopener noreferrer">Once Upon a Time... Man</a> (French: Il était une fois... l'homme) / An animated TV series by Albert Barillé<br /><br />
+            Working at "<a style={{ textDecoration: 'none' }} href="https://www.youtube.com/watch?v=rqqoquIz5Sc" target="_blank" rel="noopener noreferrer">Pronto</a>" restaurant Tel Aviv 2005 - 2011<br /><br />
+            <a style={{ textDecoration: 'none' }} href="https://www.youtube.com/watch?v=O4wxkoUPi04" target="_blank" rel="noopener noreferrer">Animals</a> / A music album by Pink Floyd<br /><br />
+            <a style={{ textDecoration: 'none' }} href="https://en.wikipedia.org/wiki/Lost_(TV_series)" target="_blank" rel="noopener noreferrer">Lost</a> / A TV series by Jeffrey Lieber, J. J. Abrams & Damon Lindelof<br /><br />
+            <a style={{ textDecoration: 'none' }} href="https://www.minshar.org.il/english/" target="_blank" rel="noopener noreferrer">Minshar</a> / A film school<br /><br />
+            <a style={{ textDecoration: 'none' }} href="https://en.wikipedia.org/wiki/Ludwig_Wittgenstein" target="_blank" rel="noopener noreferrer">Ludwig Wittgenstein</a> / A philosopher<br /><br />
+            <a style={{ textDecoration: 'none' }} href="https://en.wikipedia.org/wiki/ThetaHealing" target="_blank" rel="noopener noreferrer">Theta Healing</a> / A meditation technique by Vianna Stibal<br /><br />
+            <a style={{ textDecoration: 'none' }} href="https://en.wikipedia.org/wiki/Ivana_Chubbuck" target="_blank" rel="noopener noreferrer">Ivana Chubbuck</a> / An acting class (mainly inspired by the Four Top-Motivations of characters)<br /><br />
+            <a style={{ textDecoration: 'none' }} href="https://en.wikipedia.org/wiki/Sapiens:_A_Brief_History_of_Humankind" target="_blank" rel="noopener noreferrer">Sapiens: A Brief History of Humankind</a> / A book by <a style={{ textDecoration: 'none' }} href="https://en.wikipedia.org/wiki/Yuval_Noah_Harari" target="_blank" rel="noopener noreferrer">Yuval Noah Harari</a><br /><br />
+            <a style={{ textDecoration: 'none' }} href="https://de.wikipedia.org/" target="_blank" rel="noopener noreferrer">Wikipedia</a> / Collective knowledge<br /><br />
+            <a style={{ textDecoration: 'none' }} href="https://www.youtube.com/watch?v=vbu72k7SbbE" target="_blank" rel="noopener noreferrer">Cosmos: A Spacetime Odyssey</a> / A TV Serires presented by <a style={{ textDecoration: 'none' }} href="https://en.wikipedia.org/wiki/Neil_deGrasse_Tyson" target="_blank" rel="noopener noreferrer">Neil deGrasse Tyson</a> – follow-up to the 1980 TV series Cosmos: A Personal Voyage, which was presented by Carl Sagan<br /><br />
+            <a style={{ textDecoration: 'none' }} href="https://www.ted.com/talks/jill_bolte_taylor_s_powerful_stroke_of_insight?referrer=playlist-the_most_popular_talks_of_all" target="_blank" rel="noopener noreferrer">My Stroke of Insight</a> / A Ted talk by Jill Bolte Taylor<br /><br />
+            <a style={{ textDecoration: 'none' }} href="www.crystalinks.com/milkywaygalaxy" target="_blank" rel="noopener noreferrer">The Milky Way</a>, <a style={{ textDecoration: 'none' }} href="https://en.wikipedia.org/wiki/Black_hole" target="_blank" rel="noopener noreferrer">Black Holes</a> and <a style={{ textDecoration: 'none' }} href="https://en.wikipedia.org/wiki/Aether_(classical_element)" target="_blank" rel="noopener noreferrer">Aether</a> / Space & Physics things<br /><br />
+            <a style={{ textDecoration: 'none' }} href="https://www.youtube.com/user/TheSpiritualCatalyst" target="_blank" rel="noopener noreferrer">Teal Swan</a> / Spiritual & Mental things <br /><br />
+            <a style={{ textDecoration: 'none' }} href="https://il.linkedin.com/in/ruth-bar-shalev-46860962" target="_blank" rel="noopener noreferrer">Ruth Bar Shalev</a> / A wise woman and teacher<br /><br />
+            <a style={{ textDecoration: 'none' }} href="https://en.wikipedia.org/wiki/Guns,_Germs,_and_Steel" target="_blank" rel="noopener noreferrer">Guns, Germs, and Steel: The Fates of Human Societies</a> / A book by <a style={{ textDecoration: 'none' }} href="https://en.wikipedia.org/wiki/Jared_Diamond" target="_blank" rel="noopener noreferrer">Jared Mason Diamond</a><br /><br />
+            <a style={{ textDecoration: 'none' }} href="https://www.goodreads.com/book/show/619040.Initiation" target="_blank" rel="noopener noreferrer">Initiation</a> / A book by <a style={{ textDecoration: 'none' }} href="https://en.wikipedia.org/wiki/Elisabeth_Haich" target="_blank" rel="noopener noreferrer">Elisbeth Haich</a><br /><br />
+        </p>
     </div>
 );
