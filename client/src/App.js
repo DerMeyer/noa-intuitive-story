@@ -20,6 +20,8 @@ import Impressum from './Impressum';
 import Contact from './Contact';
 import Cookies from './Cookies';
 
+import TextEditor from './TextEditor';
+
 class App extends Component {
     constructor(props) {
         super(props);
@@ -122,6 +124,8 @@ class App extends Component {
                     />
                     <Route path="/impressum" component={Impressum} />
                     <Route path="/contact" component={Contact} />
+
+                    <Route path="/editor" component={TextEditor} />
 
                     <footer className="footer flex" style={this.state.showCookiesFooter}>
                         <span className="footer__note">&copy; Noa Golan</span>
