@@ -174,16 +174,24 @@
     background-color: var(--beige);
 }
 
-.about-video-container {
+.page-video-container {
     width: 60vw;
     height: 33.6vw;
     overflow: hidden;
     margin-top: -25px;
 }
 
-.about-video {
+.page-video {
     width: 60vw;
     height: 33.8vw;
+}
+
+.page-creator {
+    position: absolute;
+    right: -260px;
+    width: 250px;
+    height: 500px;
+    background-color: var(--beige);
 }
 
 /* sing in / sign up */

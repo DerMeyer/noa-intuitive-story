@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 
 export const AboutVideo = () => (
     <div className="page-container">
-        <div className="about-video-container inline-flex">
+        <div className="page-video-container inline-flex">
             <iframe
-                title="About Video"
-                className="about-video"
+                title="Page Video"
+                className="page-video"
                 src="https://www.youtube.com/embed/A3CLS6u7s1k?&autoplay=1"
                 frameBorder="0"
                 allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
