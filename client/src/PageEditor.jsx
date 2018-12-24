@@ -8,18 +8,11 @@ class PageEditor extends Component {
         super(props);
         this.state = {
             focus: 0,
-            pageContent: [
-                {
-                    key: window.btoa(Math.random()),
-                    text: 'Hi, I am the first Element.',
-                    html: 'h3',
-                    className: '',
-                    style: {
-                        color: 'blue'
-                    },
-                    url: ''
-                }
-            ]
+            path: [
+                'About',
+                'Editor'
+            ],
+            pageContent: []
         };
     }
 
@@ -31,7 +24,10 @@ class PageEditor extends Component {
                 {
                     key: window.btoa(Math.random()),
                     text: 'New Page Element.',
-                    html: 'h3'
+                    html: 'h3',
+                    className: '',
+                    style: {},
+                    url: ''
                 }
             ]
         }));
@@ -54,14 +50,17 @@ class PageEditor extends Component {
     };
 
     render() {
-        const { focus, pageContent } = this.state;
+        const { focus, path, pageContent } = this.state;
 
         return (
             <div className="page-container">
-                <PageCreator
-                    content={pageContent[focus]}
-                    setPageContent={() => this.setPageContent(focus)}
-                />
+                {pageContent.length > 0 && (
+                    <PageCreator
+                        path={path}
+                        content={pageContent[focus]}
+                        setPageContent={content => this.setPageContent(content, focus)}
+                    />
+                )}
                 {this.state.pageContent.map((element, index) => (
                     <PageInterpreter
                         key={element.key}

@@ -200,6 +200,13 @@
     background-color: white;
 }
 
+.page-creator__path {
+    position: absolute;
+    left: 20px;
+    top: -50px;
+    height: 30px;
+}
+
 /* sing in / sign up */
 
 .sign-in-form {
