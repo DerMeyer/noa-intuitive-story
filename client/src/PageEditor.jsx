@@ -10,6 +10,7 @@ class PageEditor extends Component {
             focus: 0,
             pageContent: [
                 {
+                    key: window.btoa(Math.random()),
                     text: 'Hi, I am the first Element.',
                     html: 'h3',
                     className: '',
@@ -28,6 +29,7 @@ class PageEditor extends Component {
             pageContent: [
                 ...pageContent,
                 {
+                    key: window.btoa(Math.random()),
                     text: 'New Page Element.',
                     html: 'h3'
                 }
@@ -62,6 +64,7 @@ class PageEditor extends Component {
                 />
                 {this.state.pageContent.map((element, index) => (
                     <PageInterpreter
+                        key={element.key}
                         focus={focus === index}
                         setFocus={() => this.setFocus(index)}
                         element={element}

@@ -46,7 +46,17 @@ const PageInterpreter = props => {
                 </span>
             </Link>
         );
-    } else if (html === 'video') {
+    } else if (html === 'image') {
+        return (
+            <div className="page-image-container inline-flex" onClick={setFocus}>
+                <img
+                    className="page-image"
+                    src={url}
+                    alt="Page"
+                />
+            </div>
+        );
+    }else if (html === 'video') {
         return (
             <div className="page-video-container inline-flex" onClick={setFocus}>
                 <iframe
