@@ -232,3 +232,8 @@ exports.getUsers = () =>
     db.query(
         'SELECT id, verified, first, last, alias, mail, phone, created_at FROM users'
     );
+
+exports.getPages = () =>
+    db.query(
+        'SELECT id, page_path::json, page_content::json FROM pages'
+    );

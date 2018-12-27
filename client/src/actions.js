@@ -362,3 +362,26 @@ export const createHistory = async (
         };
     }
 };
+
+export const getPages = async () => {
+    try {
+        const resp = await axios.get('/api/get_pages');
+        if (resp.data.success) {
+            return {
+                type: 'GET_PAGES',
+                data: resp.data.pages
+            };
+        } else {
+            return {
+                type: 'SET_MESSAGE',
+                message: `The server didn't send any pages data.`
+            };
+        }
+    } catch (err) {
+        console.log(err);
+        return {
+            type: 'SET_MESSAGE',
+            message: `The server didn't respond.`
+        };
+    }
+};

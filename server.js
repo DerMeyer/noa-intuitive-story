@@ -24,7 +24,8 @@ const {
     createHistory,
     createGroup,
     updateGroup,
-    getUsers
+    getUsers,
+    getPages
 } = require('./db');
 
 const multer = require('multer');
@@ -528,6 +529,27 @@ app.get('/api/get_users', async (req, res) => {
         res.json({
             success: true,
             users: result.rows
+        });
+    } catch (err) {
+        console.log(err);
+        res.json({
+            success: false
+        });
+    }
+});
+
+app.get('/api/get_pages', async (req, res) => {
+    // if (!req.session.user || req.session.user.id !== 1) {
+    //     res.json({
+    //         success: false
+    //     });
+    //     return;
+    // }
+    try {
+        const result = await getPages();
+        res.json({
+            success: true,
+            pages: result.rows
         });
     } catch (err) {
         console.log(err);

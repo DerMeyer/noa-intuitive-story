@@ -21,6 +21,7 @@ import Contact from './Contact';
 import Cookies from './Cookies';
 
 import PageEditor from './PageEditor';
+import { getPages } from './actions';
 
 class App extends Component {
     constructor(props) {
@@ -31,6 +32,8 @@ class App extends Component {
     }
 
     componentDidMount() {
+        this.props.dispatch(getPages());
+
         window.setTimeout(() => {
             this.placeCookiesOverlay();
         }, 2000);
@@ -125,7 +128,9 @@ class App extends Component {
                     <Route path="/impressum" component={Impressum} />
                     <Route path="/contact" component={Contact} />
 
-                    <Route path="/editor" component={PageEditor} />
+                    {this.props.pages && <Route path="/editor" render={
+                        () => <PageEditor page={this.props.pages[0]} />
+                    } />}
 
                     <footer className="footer flex" style={this.state.showCookiesFooter}>
                         <span className="footer__note">&copy; Noa Golan</span>
@@ -146,7 +151,7 @@ class App extends Component {
     }
 }
 
-const mapStateToProps = ({ cookies, signedIn, user }) => ({ cookies, signedIn, verified: user.verified });
+const mapStateToProps = ({ cookies, signedIn, user, pages }) => ({ cookies, signedIn, verified: user.verified, pages });
 
 const ConnectedApp = connect(mapStateToProps)(App);
 
