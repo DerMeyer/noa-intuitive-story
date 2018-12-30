@@ -21,52 +21,15 @@ import Page from './Page';
 import PageEditor from './PageEditor';
 import SubRoutes from './SubRoutes';
 
-// ready routes to load components from cmsMenu
+// add to readyRoutes
 import Groups from './Groups';
 
 // generally get state before rendering App
-import { getPages } from './actions';
+import { getPages, getMenu } from './actions';
 
 // put in db
 const menuProxy = {
-    About: {
-        subMenu: {
-            Video: {
-                page: true
-            },
-            'How the Game works': {
-                page: true
-            },
-            'Purpose and Vision': {
-                page: true
-            },
-            'The five Souls': {
-                page: true
-            },
-            'About me': {
-                page: true
-            },
-            Inspirations: {
-                page: true
-            }
-        }
-    },
-    'Join the Game': {
-        subMenu: {
-            'Create a Game': {
-                page: true
-            },
-            'Join a Game': {
-                page: true
-            }
-        }
-    },
-    'All Games': {
-        component: true
-    },
-    'Q & A': {
-        page: true
-    }
+
 };
 
 class App extends Component {
@@ -82,6 +45,7 @@ class App extends Component {
 
     componentDidMount() {
         this.props.dispatch(getPages());
+        this.props.dispatch(getMenu());
 
         window.setTimeout(() => {
             this.positionCookiesOverlay();
@@ -114,14 +78,15 @@ class App extends Component {
         console.log('App renders xox', this.props);
 
         const admin = this.props.verified === 2;
-        const stateLoaded = !!this.props.pages;
+        const { pages, menu } = this.props;
+        const stateLoaded = !!pages && !!menu;
 
         const cmsMenu = [];
         const cmsRoutes = [];
 
         if (stateLoaded) {
-            Object.keys(menuProxy).forEach(pathName => {
-                const pathValue = menuProxy[pathName];
+            Object.keys(menu).forEach(pathName => {
+                const pathValue = menu[pathName];
                 const path = '/' + pathName
                     .split(' ')
                     .map(word => word.toLowerCase())
@@ -134,7 +99,7 @@ class App extends Component {
                 );
 
                 if (pathValue.page) {
-                    const page = this.props.pages.filter(page => page.page_path[0] === pathName)[0] || {};
+                    const page = pages.filter(page => page.page_path[0] === pathName)[0] || {};
                     cmsRoutes.push(
                         admin ? (
                             <Route
@@ -155,7 +120,6 @@ class App extends Component {
                         this.readyRoutes[pathName]
                     );
                 } else if (pathValue.subMenu) {
-                    const pages = this.props.pages.filter(page => page.page_path[0] === pathName) || [];
                     cmsRoutes.push(
                         <Route
                             key={path + '_sub_route'}
@@ -164,7 +128,7 @@ class App extends Component {
                                 admin={admin}
                                 rootPath={path}
                                 cmsSubMenu={pathValue.subMenu}
-                                pages={pages}
+                                pages={pages.filter(page => page.page_path[0] === pathName) || []}
                                 readyRoutes={this.readyRoutes}
                             />}
                         />
@@ -263,12 +227,14 @@ const mapStateToProps = ({
     user,
     cookies,
     signedIn,
-    pages
+    pages,
+    menu
 }) => ({
     verified: user.verified,
     cookies,
     signedIn,
-    pages
+    pages,
+    menu
 });
 
 const ConnectedApp = connect(mapStateToProps)(App);

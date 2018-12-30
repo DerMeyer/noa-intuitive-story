@@ -110,6 +110,13 @@ const reducer = (state = { user: {} }, action) => {
         }
     }
 
+    if (action.type === 'GET_MENU') {
+        return {
+            ...state,
+            menu: {...action.data}
+        }
+    }
+
     return state;
 };
 

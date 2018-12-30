@@ -385,3 +385,26 @@ export const getPages = async () => {
         };
     }
 };
+
+export const getMenu = async () => {
+    try {
+        const resp = await axios.get('/api/get_menu');
+        if (resp.data.success) {
+            return {
+                type: 'GET_MENU',
+                data: resp.data.menu
+            };
+        } else {
+            return {
+                type: 'SET_MESSAGE',
+                message: `The server didn't send any pages data.`
+            };
+        }
+    } catch (err) {
+        console.log(err);
+        return {
+            type: 'SET_MESSAGE',
+            message: `The server didn't respond.`
+        };
+    }
+};

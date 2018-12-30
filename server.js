@@ -25,7 +25,8 @@ const {
     createGroup,
     updateGroup,
     getUsers,
-    getPages
+    getPages,
+    getMenu
 } = require('./db');
 
 const multer = require('multer');
@@ -550,6 +551,27 @@ app.get('/api/get_pages', async (req, res) => {
         res.json({
             success: true,
             pages: result.rows
+        });
+    } catch (err) {
+        console.log(err);
+        res.json({
+            success: false
+        });
+    }
+});
+
+app.get('/api/get_menu', async (req, res) => {
+    // if (!req.session.user || req.session.user.id !== 1) {
+    //     res.json({
+    //         success: false
+    //     });
+    //     return;
+    // }
+    try {
+        const result = await getMenu();
+        res.json({
+            success: true,
+            menu: result.rows[0].menu
         });
     } catch (err) {
         console.log(err);

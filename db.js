@@ -237,3 +237,8 @@ exports.getPages = () =>
     db.query(
         'SELECT id, page_path::json, page_content::json FROM pages'
     );
+
+exports.getMenu = () =>
+    db.query(
+        'SELECT menu::json FROM menu'
+    );
