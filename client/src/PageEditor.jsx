@@ -8,8 +8,12 @@ class PageEditor extends Component {
         super(props);
         this.state = {
             focus: 0,
-            path: [ ...this.props.page.page_path ],
-            pageContent: [ ...this.props.page.page_content ]
+            path: Array.isArray(this.props.page.page_path)
+                ? [ ...this.props.page.page_path ]
+                : [],
+            pageContent: Array.isArray(this.props.page.page_content)
+                ? [ ...this.props.page.page_content ]
+                : []
         };
     }
 

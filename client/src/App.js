@@ -32,6 +32,9 @@ const menuProxy = {
 
 };
 
+// TO DO
+// delete unneccessary components like About, Join etc
+
 class App extends Component {
     constructor(props) {
         super(props);
@@ -193,16 +196,6 @@ class App extends Component {
                     />
                     <Route path="/impressum" component={Impressum} />
                     <Route path="/contact" component={Contact} />
-
-                    <Route
-                        path="/page"
-                        render={() => <Page page={this.props.pages[0] || []} />}
-                    />
-
-                    <Route
-                        path="/editor"
-                        render={() => <PageEditor page={this.props.pages[0] || []} />}
-                    />
 
                     <footer className="footer flex" style={this.state.showCookiesFooter}>
                         <span className="footer__note">&copy; Noa Golan</span>
