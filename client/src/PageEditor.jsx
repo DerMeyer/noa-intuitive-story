@@ -58,7 +58,7 @@ class PageEditor extends Component {
                         setPageContent={content => this.setPageContent(content, focus)}
                     />
                 )}
-                {this.state.pageContent.map((element, index) => (
+                {pageContent.map((element, index) => (
                     <PageInterpreter
                         key={element.key}
                         focus={focus === index}

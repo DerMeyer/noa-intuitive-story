@@ -106,7 +106,7 @@ const reducer = (state = { user: {} }, action) => {
     if (action.type === 'GET_PAGES') {
         return {
             ...state,
-            pages: {...action.data}
+            pages: [...action.data]
         }
     }
 
