@@ -25,13 +25,13 @@ class PageCreator extends Component {
             window.clearTimeout(this.clearTimeoutID);
         }
         this.timeoutID = window.setTimeout(() => {
-            this.props.setPageContent(this.state);
+            this.props.setPageElement(this.state);
         }, 500);
     }
 
     render() {
         const { path } = this.props;
-        const { key, text, html, className, style, url } = this.state;
+        const { key, text, html, className, style, url, autoplay } = this.state;
 
         return (
             <div className="page-creator flex">

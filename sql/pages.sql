@@ -13,32 +13,17 @@ INSERT INTO pages (
 ) VALUES (
     '[
         "About",
-        "Editor"
+        "Video"
     ]'::json,
     '[
         {
-            "key": "RandomkeyOne",
-            "text": "Brilliant Test Page Element.",
-            "html": "h3",
+            "key": "MC4wNjk0NzE0ODU4NzM2MDc0MQ==",
+            "text": "",
+            "html": "video",
             "className": "",
             "style": {},
-            "url": ""
-        },
-        {
-            "key": "RandomkeyTwo",
-            "text": "Little Paragraph.",
-            "html": "p",
-            "className": "",
-            "style": {},
-            "url": ""
-        },
-        {
-            "key": "RandomkeyThree",
-            "text": "And a span.",
-            "html": "span",
-            "className": "",
-            "style": {},
-            "url": ""
+            "url": "https://www.youtube.com/watch?time_continue=16&v=A3CLS6u7s1k",
+            "autoplay": "true"
         }
     ]'::json
 );

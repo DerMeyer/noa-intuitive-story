@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import PageInterpreter from './PageInterpreter';
+import Page from './Page';
 import PageCreator from './PageCreator';
 
 class PageEditor extends Component {
@@ -28,13 +28,14 @@ class PageEditor extends Component {
                     html: 'h3',
                     className: '',
                     style: {},
-                    url: ''
+                    url: '',
+                    autoplay: ''
                 }
             ]
         }));
     };
 
-    setPageContent = (content, contentIndex) => {
+    setPageElement = (content, contentIndex) => {
         this.setState(({ pageContent }) => ({
             pageContent: pageContent.map((element, index) =>
                  index === contentIndex
@@ -52,6 +53,11 @@ class PageEditor extends Component {
 
     render() {
         const { focus, path, pageContent } = this.state;
+        const pageEditorContent = pageContent.map((element, index) => ({
+            ...element,
+            focus: focus === index,
+            setFocus: () => this.setFocus(index)
+        }));
 
         return (
             <div className="page-container">
@@ -59,17 +65,10 @@ class PageEditor extends Component {
                     <PageCreator
                         path={path}
                         content={pageContent[focus]}
-                        setPageContent={content => this.setPageContent(content, focus)}
+                        setPageContent={content => this.setPageElement(content, focus)}
                     />
                 )}
-                {pageContent.map((element, index) => (
-                    <PageInterpreter
-                        key={element.key}
-                        focus={focus === index}
-                        setFocus={() => this.setFocus(index)}
-                        element={element}
-                    />
-                ))}
+                <Page pageContent={pageEditorContent} />
                 <button onClick={this.addPageElement}>
                     +
                 </button>

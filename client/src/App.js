@@ -27,19 +27,14 @@ import Groups from './Groups';
 // generally get state before rendering App
 import { getPages, getMenu } from './actions';
 
-// put in db
-const menuProxy = {
-
-};
-
 // TO DO
-// delete unneccessary components like About, Join etc
+// delete unneccessary components like About, Join, pageInterpreter etc
 
 class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            showCookiesFooter: {}
+            positionCookiesFooter: {}
         };
         this.readyRoutes = {
             'All Games': <Route key="groups-ready-route" path="/all_games" component={Groups} />
@@ -64,13 +59,13 @@ class App extends Component {
     positionCookiesOverlay() {
         if (!this.props.cookies) {
             this.setState({
-                showCookiesFooter: {
+                positionCookiesFooter: {
                     bottom: '50px'
                 }
             });
         } else {
             this.setState({
-                showCookiesFooter: {
+                positionCookiesFooter: {
                     bottom: '0'
                 }
             });
@@ -114,14 +109,12 @@ class App extends Component {
                             <Route
                                 key={path}
                                 path={path}
-                                render={() => <Page page={page} />}
+                                render={() => <Page pageContent={Array.isArray(page.page_content) ? page.page_content : []} />}
                             />
                         )
                     );
                 } else if (pathValue.component) {
-                    cmsRoutes.push(
-                        this.readyRoutes[pathName]
-                    );
+                    cmsRoutes.push(this.readyRoutes[pathName]);
                 } else if (pathValue.subMenu) {
                     cmsRoutes.push(
                         <Route
@@ -197,7 +190,7 @@ class App extends Component {
                     <Route path="/impressum" component={Impressum} />
                     <Route path="/contact" component={Contact} />
 
-                    <footer className="footer flex" style={this.state.showCookiesFooter}>
+                    <footer className="footer flex" style={this.state.positionCookiesFooter}>
                         <span className="footer__note">&copy; Noa Golan</span>
                         <nav className="footer__nav inline-flex">
                             <Link to="/impressum" className="footer__nav__button">

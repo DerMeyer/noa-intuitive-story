@@ -85,7 +85,6 @@ export const checkSignIn = async () => {
     try {
         const resp = await axios.get('/api/check_signin');
         if (resp.data.success) {
-            console.log(resp.data.cookies);
             return {
                 type: 'SIGN_IN',
                 user: { ...resp.data.user },

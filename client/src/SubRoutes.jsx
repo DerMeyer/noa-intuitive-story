@@ -42,7 +42,7 @@ class SubRoutes extends Component {
                         <Route
                             key={fullPath}
                             path={fullPath}
-                            render={() => <Page page={page} />}
+                            render={() => <Page pageContent={Array.isArray(page.page_content) ? page.page_content : []} />}
                         />
                     )
                 );
