@@ -17,23 +17,37 @@ class PageEditor extends Component {
         };
     }
 
+    createPageElement = () => {
+        return {
+            key: window.btoa(Math.random()),
+            text: 'New Page Element.',
+            html: 'h3',
+            className: '',
+            style: {},
+            url: '',
+            autoplay: false
+        };
+    };
+
     addPageElement = () => {
         this.setState(({ pageContent }) => ({
             focus: pageContent.length,
             pageContent: [
                 ...pageContent,
-                {
-                    key: window.btoa(Math.random()),
-                    text: 'New Page Element.',
-                    html: 'h3',
-                    newLine: false,
-                    className: '',
-                    style: {},
-                    url: '',
-                    autoplay: false
-                }
+                this.createPageElement()
             ]
         }));
+    };
+
+    addPageElementBefore = contentIndex => {
+        this.setState(state => {
+            console.log(state.pageContent);
+            const pageContent = [ ...state.pageContent ];
+            pageContent.splice(contentIndex, 0, this.createPageElement());
+            return {
+                pageContent
+            };
+        });
     };
 
     setPageElement = (content, contentIndex) => {
@@ -72,6 +86,7 @@ class PageEditor extends Component {
                     <PageElementCreator
                         path={path}
                         content={pageContent[focus]}
+                        addPageElementBefore={content => this.addPageElementBefore(focus)}
                         setPageElement={content => this.setPageElement(content, focus)}
                         deletePageElement={content => this.deletePageElement(focus)}
                     />

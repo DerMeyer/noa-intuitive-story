@@ -33,7 +33,7 @@ class PageElementCreator extends Component {
     }
 
     render() {
-        const { path, deletePageElement } = this.props;
+        const { path, addPageElementBefore, deletePageElement } = this.props;
         const { key, text, html, className, style, url, autoplay } = this.state;
 
         return (
@@ -48,6 +48,12 @@ class PageElementCreator extends Component {
                     value={text}
                     onChange={event => this.getUserInput(event.target.name, event.target.value)}
                 />
+                <button
+                    className="page-creator__add-before"
+                    onClick={addPageElementBefore}
+                >
+                    Add Before
+                </button>
                 <button
                     className="page-creator__delete"
                     onClick={deletePageElement}

@@ -11,7 +11,7 @@ class SubRoutes extends Component {
     }
 
     render() {
-        const { admin, rootPath, cmsSubMenu, pages, readyRoutes } = this.props;
+        const { editMode, rootPath, cmsSubMenu, pages, readyRoutes } = this.props;
 
         const links = [];
         const subRoutes = [];
@@ -32,9 +32,9 @@ class SubRoutes extends Component {
             if (pathValue.page) {
                 const page = pages.filter(page => page.page_path[1] === pathName)[0] || {};
                 subRoutes.push(
-                    admin ? (
+                    editMode ? (
                         <Route
-                            key={fullPath + '_admin'}
+                            key={fullPath + '_editMode'}
                             path={fullPath}
                             render={() => <PageEditor page={page} />}
                         />

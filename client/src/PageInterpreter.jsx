@@ -14,7 +14,7 @@ class PageInterpreter {
     }
 
     elementToJSX(element) {
-        const { key, text, html, newLine, className, url, autoplay, focus, setFocus = () => {} } = element;
+        const { key, text, html, className, url, autoplay, focus, setFocus = () => {} } = element;
         const style = focus ? { ...element.style, backgroundColor: 'rgb(255, 253, 50)' }
                             : element.style
 

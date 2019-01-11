@@ -34,6 +34,7 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            editMode: false,
             positionCookiesFooter: {}
         };
         this.readyRoutes = {
@@ -56,6 +57,10 @@ class App extends Component {
         }
     }
 
+    toggleEditMode = () => {
+        this.setState(({ editMode }) => ({ editMode: !editMode }));
+    };
+
     positionCookiesOverlay() {
         if (!this.props.cookies) {
             this.setState({
@@ -76,6 +81,7 @@ class App extends Component {
         console.log('App renders xox', this.props);
 
         const admin = this.props.verified === 2;
+        const { editMode } = this.state;
         const { pages, menu } = this.props;
         const stateLoaded = !!pages && !!menu;
 
@@ -99,9 +105,9 @@ class App extends Component {
                 if (pathValue.page) {
                     const page = pages.filter(page => page.page_path[0] === pathName)[0] || {};
                     cmsRoutes.push(
-                        admin ? (
+                        editMode ? (
                             <Route
-                                key={path + '_admin'}
+                                key={path + '_editMode'}
                                 path={path}
                                 render={() => <PageEditor page={page} />}
                             />
@@ -121,7 +127,7 @@ class App extends Component {
                             key={path + '_sub_route'}
                             path={path}
                             render={() => <SubRoutes
-                                admin={admin}
+                                editMode={editMode}
                                 rootPath={path}
                                 cmsSubMenu={pathValue.subMenu}
                                 pages={pages.filter(page => page.page_path[0] === pathName) || []}
@@ -140,6 +146,16 @@ class App extends Component {
         return (
             <BrowserRouter>
                 <main>
+                    {admin && (
+                        <div
+                            className="admin-edit-mode"
+                            style={editMode ? { color: 'whitesmoke', backgroundColor: 'red' } : {}}
+                            onClick={this.toggleEditMode}
+                        >
+                            Edit Mode
+                        </div>
+                    )}
+
                     <header className="header flex">
                         <nav className="header__nav inline-flex">
                             <NavLink exact to="/">

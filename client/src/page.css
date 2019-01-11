@@ -1,12 +1,9 @@
-/* refactor to integrate into app.css */
+/* TODO refactor to integrate into app.css */
 
 .page-container {
     position: absolute;
     left: 20%;
     top: 170px;
-    /* display: flex;
-    flex-direction: column;
-    align-items: center; */
     min-height: 80vh;
     width: 60%;
     line-height: 1.6;

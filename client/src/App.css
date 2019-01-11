@@ -76,6 +76,17 @@
 
 /* content */
 
+.admin-edit-mode {
+    cursor: pointer;
+    position: fixed;
+    top: 130px;
+    right: 6%;
+    padding: 5px;
+    border: 1px solid var(--mediumColor);
+    border-radius: 5px;
+    z-index: 100;
+}
+
 .header,
 .footer {
     position: fixed;
@@ -194,14 +205,15 @@
 .page-creator {
     position: fixed;
     left: 0;
-    bottom: -50px;
-    width: 100%;
-    height: 250px;
-    z-index: 100;
-    border-top: 1px solid var(--lightColor);
+    top: 0;
+    width: 20%;
+    height: 100vh;
+    padding: 5px;
+    border-right: 1px solid var(--lightColor);
     border-radius: 6px;
     color: var(--mediumColor);
     background-color: white;
+    z-index: 100;
 }
 
 .page-creator__path {
