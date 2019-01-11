@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
-import Page from './Page';
-import PageCreator from './PageCreator';
+import PageInterpreter from './PageInterpreter';
+import PageElementCreator from './PageElementCreator';
 
 class PageEditor extends Component {
     constructor(props) {
@@ -26,10 +26,11 @@ class PageEditor extends Component {
                     key: window.btoa(Math.random()),
                     text: 'New Page Element.',
                     html: 'h3',
+                    newLine: false,
                     className: '',
                     style: {},
                     url: '',
-                    autoplay: ''
+                    autoplay: false
                 }
             ]
         }));
@@ -42,6 +43,12 @@ class PageEditor extends Component {
                     ? content
                     : element
             )
+        }));
+    };
+
+    deletePageElement = contentIndex => {
+        this.setState(({ pageContent }) => ({
+            pageContent: pageContent.filter((element, index) => index !== contentIndex)
         }));
     };
 
@@ -62,13 +69,14 @@ class PageEditor extends Component {
         return (
             <div className="page-container">
                 {pageContent.length > 0 && (
-                    <PageCreator
+                    <PageElementCreator
                         path={path}
                         content={pageContent[focus]}
-                        setPageContent={content => this.setPageElement(content, focus)}
+                        setPageElement={content => this.setPageElement(content, focus)}
+                        deletePageElement={content => this.deletePageElement(focus)}
                     />
                 )}
-                <Page pageContent={pageEditorContent} />
+                {PageInterpreter.getJSX(pageEditorContent)}
                 <button onClick={this.addPageElement}>
                     +
                 </button>

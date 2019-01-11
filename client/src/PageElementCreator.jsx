@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class PageCreator extends Component {
+class PageElementCreator extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -9,6 +9,9 @@ class PageCreator extends Component {
     }
 
     componentDidUpdate(prevProps) {
+        if (!prevProps.content || ! this.props.content) {
+            return;
+        }
         if (prevProps.content.key !== this.props.content.key) {
             this.setState({
                 ...this.props.content
@@ -30,23 +33,30 @@ class PageCreator extends Component {
     }
 
     render() {
-        const { path } = this.props;
+        const { path, deletePageElement } = this.props;
         const { key, text, html, className, style, url, autoplay } = this.state;
 
         return (
-            <div className="page-creator flex">
-                <h3 className="page-creator__path">
+            <div className="page-creator">
+                <div className="page-creator__path">
                     {path.join(' / ')}
-                </h3>
+                </div>
                 <input
+                    className="page-creator__text"
                     name="text"
                     placeholder="text"
                     value={text}
                     onChange={event => this.getUserInput(event.target.name, event.target.value)}
                 />
+                <button
+                    className="page-creator__delete"
+                    onClick={deletePageElement}
+                >
+                    Delete
+                </button>
             </div>
         );
     }
 }
 
-export default PageCreator;
+export default PageElementCreator;

@@ -109,7 +109,7 @@ class App extends Component {
                             <Route
                                 key={path}
                                 path={path}
-                                render={() => <Page pageContent={Array.isArray(page.page_content) ? page.page_content : []} />}
+                                render={() => <Page page={page} />}
                             />
                         )
                     );

@@ -66,6 +66,10 @@
     align-items: center;
 }
 
+.inline {
+    display: inline;
+}
+
 .active {
     color: var(--lightColor) !important;
 }
@@ -179,6 +183,7 @@
     height: 33.6vw;
     overflow: hidden;
     margin-top: -25px;
+    margin-left: -5vw;
 }
 
 .page-video {
@@ -187,7 +192,6 @@
 }
 
 .page-creator {
-    flex-direction: column;
     position: fixed;
     left: 0;
     bottom: -50px;
@@ -203,7 +207,7 @@
 .page-creator__path {
     position: absolute;
     left: 20px;
-    top: -50px;
+    top: -40px;
     height: 30px;
 }
 

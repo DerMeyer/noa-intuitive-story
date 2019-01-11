@@ -4,9 +4,9 @@
     position: absolute;
     left: 20%;
     top: 170px;
-    display: flex;
+    /* display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: center; */
     min-height: 80vh;
     width: 60%;
     line-height: 1.6;
@@ -49,8 +49,14 @@
 }
 
 .page-container h3 {
+    width: 100%;
+    text-align: center;
     font-weight: bold;
     font-size: 18px;
+}
+
+.page-container p {
+    margin: 27px 0;
 }
 
 .page-container span {
