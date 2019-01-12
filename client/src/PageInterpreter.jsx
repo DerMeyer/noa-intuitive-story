@@ -24,33 +24,34 @@ class PageInterpreter {
                     {text}
                 </div>
             );
-        } else if (html === 'h3') {
+        } else if (html === 'headline') {
             return (
                 <h3 key={key} className={className} style={style} onClick={setFocus}>
                     {text}
                 </h3>
             );
-        } else if (html === 'p') {
+        } else if (html === 'text') {
             return (
                 <p key={key} className={className} style={style} onClick={setFocus}>
                     {text}
                 </p>
             );
-        } else if (html === 'a') {
+        } else if (html === 'link outside') {
             return (
-                <a key={key} className={className} style={style} href={url} target="_blank" rel="noopener noreferrer" onClick={setFocus}>
+                <a key={key} className={className} style={{ ...style, textDecoration: 'none' }} href={url} target="_blank" rel="noopener noreferrer" onClick={setFocus}>
                     {text}
                 </a>
             );
-        } else if (html === 'span') {
+        } else if (html === 'highlight') {
             return (
                 <span key={key} className={className} style={style} onClick={setFocus}>
                     {text}
                 </span>
             );
-        } else if (html === 'link') {
+        } else if (html === 'link inside') {
+            const routerUrl = '/' + url.split(', ').map(route => route.split(' ').map(word => word.toLowerCase()).join('_')).join('/');
             return (
-                <Link key={key} className={className} style={style} to={url} onClick={setFocus}>
+                <Link key={key} className={className} style={{ ...style, textDecoration: 'none' }} to={routerUrl} onClick={setFocus}>
                     <span>
                         {text}
                     </span>
@@ -58,7 +59,7 @@ class PageInterpreter {
             );
         } else if (html === 'image') {
             return (
-                <div key={key} className="page-image-container inline-flex" onClick={setFocus}>
+                <div key={key} className="page-image-container inline-flex" style={style} onClick={setFocus}>
                     <img
                         className="page-image"
                         src={url}
@@ -67,11 +68,13 @@ class PageInterpreter {
                 </div>
             );
         } else if (html === 'video') {
+            console.log(element.url);
             const regex = /(.*)(v=)(.*)/;
-            const videoID = regex.exec(url)[3];
+            const parsedUrl = regex.exec(url) || [];
+            const videoID = parsedUrl[3];
             const embedUrl = `https://www.youtube.com/embed/${videoID}${autoplay && '?&autoplay=1'}`;
             return (
-                <div key={key} className="page-video-container inline-flex" onClick={setFocus}>
+                <div key={key} className="page-video-container inline-flex" style={style} onClick={setFocus}>
                     <iframe
                         title="Page Video"
                         className="page-video"

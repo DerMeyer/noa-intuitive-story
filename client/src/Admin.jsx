@@ -48,8 +48,9 @@ class Admin extends Component {
         this.style = {
             adminButton: {
                 position: 'absolute',
-                top: '20px',
-                transform: 'scale(.8)'
+                left: '50%',
+                top: '30px',
+                transform: 'translateX(-50%) scale(.8)'
             },
             extraSpace: {
                 marginBottom: '3.5vh'

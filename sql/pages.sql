@@ -40,7 +40,7 @@ INSERT INTO pages (
         {
             "key": "MC4wNjk0NzE0ODU4NzM2MDc0MQ==",
             "text": "The Five Souls",
-            "html": "h3",
+            "html": "headline",
             "className": "",
             "style": {},
             "url": ""
@@ -48,7 +48,7 @@ INSERT INTO pages (
         {
             "key": "MC4wMjE1MzE2MTYwNzk5MDg2MQ==",
             "text": "At this stage I don’t want to say much about the souls because it might influence your Intuitive Journey. As you may have read before, everything in the game is intuitive so in a way, the less we KNOW the better we go. But yeah, like everything in the game, also the website is learning itself step by step so here is some basic information. Let’s see what happens.",
-            "html": "p",
+            "html": "text",
             "className": "",
             "style": {},
             "url": ""
@@ -56,7 +56,7 @@ INSERT INTO pages (
         {
             "key": "MC4wMDcxMjYxMTE1NTA4MjAxMDI=",
             "text": "All souls are motivated by the thing they’re LACKing - that’s why it motivates them.",
-            "html": "p",
+            "html": "text",
             "className": "",
             "style": {},
             "url": ""
@@ -64,7 +64,7 @@ INSERT INTO pages (
         {
             "key": "MC42NzEwNjUyNjg2NTg5ODQ2",
             "text": "Gul",
-            "html": "span",
+            "html": "highlight",
             "className": "",
             "style": {
                 "color": "orange"
@@ -74,7 +74,7 @@ INSERT INTO pages (
         {
             "key": "MC43NjA0OTgzNTUwMDI2ODg1",
             "text": " - The Victim spirit",
-            "html": "span",
+            "html": "highlight",
             "className": "",
             "style": {},
             "url": ""
@@ -82,7 +82,7 @@ INSERT INTO pages (
         {
             "key": "MC42MjAyMDI0NDE2OTgyNDI2",
             "text": " is driven by Control, He’s natural gender is male but can of course be born as a woman too. The victim’s role in the group is to unite them through some kind of weakness. His color is Yellow and his Element is Fire.",
-            "html": "p",
+            "html": "text",
             "className": "inline",
             "style": {},
             "url": ""

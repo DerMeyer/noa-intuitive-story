@@ -7,7 +7,7 @@
     min-height: 80vh;
     width: 60%;
     line-height: 1.6;
-    padding: 5vw;
+    padding: 30px 5vw;
     border-radius: 4px;
     margin-bottom: 9vh;
     background-color: var(--beige);
@@ -69,12 +69,12 @@
 
 .page-container input,
 .page-container h4 {
-    font-family: 'NTR', sans-serif;
-    font-size: 2.5vh;
-    height: 4.5vh;
-    width: 20vw;
-    padding-left: .5vw;
-    margin: 0 0 2vh 0;
+    font-size: 14px;
+    width: 250px;
+    height: 30px;
+    margin: 3px 0;
+    padding: 0 0 0 5px;
+    color: var(--darkColor);
 }
 
 .page-container h4 {
@@ -91,16 +91,14 @@
 .page-container button,
 .page-container label {
     cursor: pointer;
-    font-family: 'NTR', sans-serif;
-    font-size: 3vh;
-    line-height: 1;
-    height: 4.5vh;
-    width: 20vw;
-    border-radius: 1vh;
-    margin: 0 0 2vh 0;
-    color: whitesmoke;
-    background-color: darkgray;
-    transition-duration: .15s;
+    outline: none;
+    text-decoration: none;
+    text-align: center;
+    padding: 8px 20px;
+    border-radius: 6px;
+    margin: 0 10px;
+    color: var(--darkColor);
+    white-space: nowrap;
 }
 
 .page-container label {
@@ -108,16 +106,12 @@
     padding-top: .9vh;
 }
 
-.page-container button:hover,
-.page-container label:hover {
-    background-color: lightgray;
-}
-
 .manage-groups-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     transform: scale(.8);
+    margin-left: -8vw;
 }
 
 .manage-groups-container section {
@@ -176,6 +170,7 @@
 
 .manage-user {
     transform: scale(.8);
+    margin-left: -8vw;
 }
 
 .manage-user-container {
@@ -212,6 +207,7 @@
     display: flex;
     justify-content: space-around;
     transform: scale(.8);
+    margin-left: -8vw;
 }
 
 .profile-edit-container > section {

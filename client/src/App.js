@@ -146,16 +146,6 @@ class App extends Component {
         return (
             <BrowserRouter>
                 <main>
-                    {admin && (
-                        <div
-                            className="admin-edit-mode"
-                            style={editMode ? { color: 'whitesmoke', backgroundColor: 'red' } : {}}
-                            onClick={this.toggleEditMode}
-                        >
-                            Edit Mode
-                        </div>
-                    )}
-
                     <header className="header flex">
                         <nav className="header__nav inline-flex">
                             <NavLink exact to="/">
@@ -169,6 +159,15 @@ class App extends Component {
 
                             {cmsMenu}
                         </nav>
+                        {admin && (
+                            <div
+                                className="admin-edit-mode"
+                                style={editMode ? { color: 'whitesmoke', backgroundColor: 'red' } : {}}
+                                onClick={this.toggleEditMode}
+                            >
+                                Edit Mode
+                            </div>
+                        )}
 
                         <ProfileNavigation />
                     </header>

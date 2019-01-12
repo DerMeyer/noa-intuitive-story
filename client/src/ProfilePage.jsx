@@ -27,8 +27,9 @@ class ProfilePage extends Component {
         this.style = {
             adminButton: {
                 position: 'absolute',
-                top: '20px',
-                transform: 'scale(.8)'
+                left: '50%',
+                top: '30px',
+                transform: 'translateX(-50%) scale(.8)'
             },
             updateProfileButton: {
                 width: '16vw'
@@ -37,7 +38,8 @@ class ProfilePage extends Component {
                 display: 'flex',
                 height: '23vh',
                 borderBottom: '.5vh solid gray',
-                transform: 'scale(.8)'
+                transform: 'scale(.8)',
+                marginLeft: '-8vw'
             },
             group: {
                 margin: '4vh 2vw 0 2vw'

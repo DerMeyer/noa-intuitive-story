@@ -15,10 +15,11 @@ class GroupCollection extends Component {
                 display: 'flex',
                 height: '23vh',
                 borderBottom: '.5vh solid gray',
-                transform: 'scale(.8)'
+                transform: 'scale(.8)',
+                marginLeft: '-8vw'
             },
             group:{
-                margin: '4vh 2vw 0 2vw'
+                margin: '30px 0'
             },
             story: {
                 position: 'absolute',

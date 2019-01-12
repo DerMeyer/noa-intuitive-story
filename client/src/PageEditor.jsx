@@ -21,7 +21,7 @@ class PageEditor extends Component {
         return {
             key: window.btoa(Math.random()),
             text: 'New Page Element.',
-            html: 'h3',
+            html: 'headline',
             className: '',
             style: {},
             url: '',
@@ -41,7 +41,6 @@ class PageEditor extends Component {
 
     addPageElementBefore = contentIndex => {
         this.setState(state => {
-            console.log(state.pageContent);
             const pageContent = [ ...state.pageContent ];
             pageContent.splice(contentIndex, 0, this.createPageElement());
             return {
@@ -62,8 +61,30 @@ class PageEditor extends Component {
 
     deletePageElement = contentIndex => {
         this.setState(({ pageContent }) => ({
-            pageContent: pageContent.filter((element, index) => index !== contentIndex)
+            pageContent: pageContent.filter((element, index) => {
+                if (index === contentIndex) {
+                    this.latestDelete = {
+                        index,
+                        element
+                    };
+                }
+                return index !== contentIndex;
+            })
         }));
+    };
+
+    unDeletePageElement = () => {
+        if (!this.latestDelete) {
+            return;
+        }
+        this.setState(state => {
+            const pageContent = [ ...state.pageContent ];
+            pageContent.splice(this.latestDelete.index, 0, this.latestDelete.element);
+            this.latestDelete = null;
+            return {
+                pageContent
+            };
+        });
     };
 
     setFocus = focus => {
@@ -89,6 +110,7 @@ class PageEditor extends Component {
                         addPageElementBefore={content => this.addPageElementBefore(focus)}
                         setPageElement={content => this.setPageElement(content, focus)}
                         deletePageElement={content => this.deletePageElement(focus)}
+                        unDeletePageElement={this.unDeletePageElement}
                     />
                 )}
                 {PageInterpreter.getJSX(pageEditorContent)}
