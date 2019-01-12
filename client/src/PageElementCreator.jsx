@@ -84,7 +84,7 @@ class PageElementCreator extends Component {
     }
 
     render() {
-        const { path, addPageElementBefore, deletePageElement, unDeletePageElement } = this.props;
+        const { path, addPageElementBefore, deletePageElement, unDeletePageElement, savePage } = this.props;
         const { key, text, html, className, style, url, autoplay } = this.state.content;
 
         return (
@@ -144,72 +144,70 @@ class PageElementCreator extends Component {
                     )}
                 </div>
 
-                <div className="page-creator__element">
-                    {html !== 'headline' && html !== 'image' && html !== 'video' && (
+                {html !== 'headline' && html !== 'image' && html !== 'video' && (
+                    <div className="page-creator__element">
                         <div className="page-creator__headline">
                             Behavior
                         </div>
-                    )}
-                    {html !== 'headline' && html !== 'image' && html !== 'video' && Array.isArray(this.state.class) && this.state.class.map((name, index) => (
-                        <button
-                            key={`class${index}`}
-                            className="page-creator__button"
-                            style={(!className && name === 'default') || (name === className) ? { color: 'whitesmoke', backgroundColor: 'var(--darkColor)' } : {}}
-                            onClick={() => this.setClass(name)}
-                        >
-                            {name}
-                        </button>
-                    ))}
-                </div>
+                        {Array.isArray(this.state.class) && this.state.class.map((name, index) => (
+                            <button
+                                key={`class${index}`}
+                                className="page-creator__button"
+                                style={(!className && name === 'default') || (name === className) ? { color: 'whitesmoke', backgroundColor: 'var(--darkColor)' } : {}}
+                                onClick={() => this.setClass(name)}
+                            >
+                                {name}
+                            </button>
+                        ))}
+                    </div>
+                )}
 
-                <div className="page-creator__element">
-                    {html !== 'image' && html !== 'video' && (
+                {html !== 'image' && html !== 'video' && (
+                    <div className="page-creator__element">
                         <div className="page-creator__headline">
                             Color
                         </div>
-                    )}
-                    {html !== 'image' && html !== 'video' && Array.isArray(this.state.color) && this.state.color.map((name, index) => (
-                        <button
-                            key={`color${index}`}
-                            className="page-creator__button"
-                            style={(!style.color && name === 'default') || (name === style.color) ? { color: 'whitesmoke', backgroundColor: 'var(--darkColor)' } : {}}
-                            onClick={() => this.setColor(name)}
-                        >
-                            {name}
-                        </button>
-                    ))}
-                </div>
-
-                <div className="page-creator__element">
-                    <div className="page-creator__headline">
-                        Tools
+                        {Array.isArray(this.state.color) && this.state.color.map((name, index) => (
+                            <button
+                                key={`color${index}`}
+                                className="page-creator__button"
+                                style={(!style.color && name === 'default') || (name === style.color) ? { color: 'whitesmoke', backgroundColor: 'var(--darkColor)' } : {}}
+                                onClick={() => this.setColor(name)}
+                            >
+                                {name}
+                            </button>
+                        ))}
                     </div>
-                    <button
-                        className="page-creator__button"
-                        onClick={addPageElementBefore}
-                    >
-                        Add Before
-                    </button>
-                    <button
-                        className="page-creator__button"
-                        onClick={deletePageElement}
-                    >
-                        Delete
-                    </button>
-                    <button
-                        className="page-creator__button"
-                        onClick={unDeletePageElement}
-                    >
-                        Un-Delete
-                    </button>
-                    <button
-                        style={{ color: 'whitesmoke', backgroundColor: 'red' }}
-                        className="page-creator__button"
-                        onClick={unDeletePageElement}
-                    >
-                        Save Changes
-                    </button>
+                )}
+
+                <div className="page-creator__headline">
+                    Tools
                 </div>
+                <button
+                    className="page-creator__button"
+                    onClick={addPageElementBefore}
+                >
+                    Add Before
+                </button>
+                <button
+                    className="page-creator__button"
+                    onClick={deletePageElement}
+                >
+                    Delete
+                </button>
+                <button
+                    className="page-creator__button"
+                    onClick={unDeletePageElement}
+                >
+                    Un-Delete
+                </button>
+                <button
+                    style={{ color: 'whitesmoke', backgroundColor: 'red' }}
+                    className="page-creator__button"
+                    onClick={savePage}
+                >
+                    Save Changes
+                </button>
             </div>
         );
     }

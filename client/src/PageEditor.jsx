@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux';
 
 import PageInterpreter from './PageInterpreter';
 import PageElementCreator from './PageElementCreator';
+
+import { savePage } from './actions';
 
 class PageEditor extends Component {
     constructor(props) {
@@ -16,6 +19,16 @@ class PageEditor extends Component {
                 : []
         };
     }
+
+    savePage = () => {
+        const { pageContent } = this.state;
+        const path = [ 'About', 'Purpose and Vision' ]
+        const page = {
+            path,
+            pageContent
+        };
+        this.props.dispatch(savePage(page));
+    };
 
     createPageElement = () => {
         return {
@@ -103,6 +116,9 @@ class PageEditor extends Component {
 
         return (
             <div className="page-container">
+                <div className="page-container__message">
+                    {this.props.message}
+                </div>
                 {pageContent.length > 0 && (
                     <PageElementCreator
                         path={path}
@@ -111,6 +127,7 @@ class PageEditor extends Component {
                         setPageElement={content => this.setPageElement(content, focus)}
                         deletePageElement={content => this.deletePageElement(focus)}
                         unDeletePageElement={this.unDeletePageElement}
+                        savePage={this.savePage}
                     />
                 )}
                 {PageInterpreter.getJSX(pageEditorContent)}
@@ -122,4 +139,7 @@ class PageEditor extends Component {
     }
 }
 
-export default PageEditor;
+const mapStateToProps = ({ message }) => ({ message });
+const ConnectedPageEditor = connect(mapStateToProps)(PageEditor);
+
+export default ConnectedPageEditor;

@@ -26,7 +26,8 @@ const {
     updateGroup,
     getUsers,
     getPages,
-    getMenu
+    getMenu,
+    savePage
 } = require('./db');
 
 const multer = require('multer');
@@ -572,6 +573,21 @@ app.get('/api/get_menu', async (req, res) => {
         res.json({
             success: true,
             menu: result.rows[0].menu
+        });
+    } catch (err) {
+        console.log(err);
+        res.json({
+            success: false
+        });
+    }
+});
+
+app.post('/api/save_page', async (req, res) => {
+    const { path, pageContent } = req.body;
+    try {
+        const result = await savePage(path, pageContent);
+        res.json({
+            success: true
         });
     } catch (err) {
         console.log(err);

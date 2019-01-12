@@ -407,3 +407,26 @@ export const getMenu = async () => {
         };
     }
 };
+
+export const savePage = async page => {
+    try {
+        const resp = await axios.post('/api/save_page', page);
+        if (resp.data.success) {
+            return {
+                type: 'SAVE_PAGE',
+                message: 'Page saved.'
+            };
+        } else {
+            return {
+                type: 'SET_MESSAGE',
+                message: `There was an error saving the page.`
+            };
+        }
+    } catch (err) {
+        console.log(err);
+        return {
+            type: 'SET_MESSAGE',
+            message: `The server didn't respond.`
+        };
+    }
+};

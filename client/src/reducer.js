@@ -117,6 +117,13 @@ const reducer = (state = { user: {} }, action) => {
         }
     }
 
+    if (action.type === 'SAVE_PAGE') {
+        return {
+            ...state,
+            message: action.message
+        }
+    }
+
     return state;
 };
 

@@ -27,6 +27,14 @@
     }
 }
 
+.page-container__message {
+    position: absolute;
+    left: 50%;
+    top: 5px;
+    transform: translateX(-50%);
+    font-size: 16px;
+}
+
 .page-container > section {
     width: 66vw;
     margin-bottom: 2vw;
