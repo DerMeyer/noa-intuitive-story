@@ -89,6 +89,43 @@ class App extends Component {
         const cmsRoutes = [];
 
         if (stateLoaded) {
+            const samePaths = (path1, path2) => {
+                if (path1.length !== path2.length) {
+                    return false;
+                }
+                let sameRoutesCount = 0;
+                path1.forEach((route1, index) => {
+                    if (route1 === path2[index]) {
+                        sameRoutesCount++;
+                    }
+                });
+                return path1.length === sameRoutesCount;
+            };
+
+            Object.keys(menu).forEach(mainRoute => {
+                let newPage;
+                const subMenu = menu[mainRoute].subMenu;
+                if (subMenu) {
+                    Object.keys(subMenu).forEach(subRoute => {
+                        if (subMenu[subRoute].page) {
+                            newPage = {
+                                page_path: [ mainRoute, subRoute ]
+                            }
+                            if (!pages.some(page => samePaths(page.page_path, newPage.page_path))) {
+                                pages.push(newPage);
+                            }
+                        }
+                    });
+                } else {
+                    newPage = {
+                        page_path: [ mainRoute ]
+                    }
+                    if (!pages.some(page => samePaths(page.page_path, newPage.page_path))) {
+                        pages.push(newPage);
+                    }
+                }
+            });
+
             Object.keys(menu).forEach(pathName => {
                 const pathValue = menu[pathName];
                 const path = '/' + pathName

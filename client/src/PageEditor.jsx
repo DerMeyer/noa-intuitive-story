@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PageInterpreter from './PageInterpreter';
 import PageElementCreator from './PageElementCreator';
 
-import { savePage } from './actions';
+import { deleteMessage, savePage, getPages } from './actions';
 
 class PageEditor extends Component {
     constructor(props) {
@@ -20,9 +20,24 @@ class PageEditor extends Component {
         };
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.message !== this.props.message && this.props.message === 'Page saved.') {
+            this.props.dispatch(getPages());
+            this.timeoutID = window.setTimeout(() => {
+                this.props.dispatch(deleteMessage());
+            }, 4000);
+        }
+    }
+
+    componentWillUnmount() {
+        if (this.timeoutID) {
+            window.clearTimeout(this.timeoutID);
+        }
+        this.props.dispatch(deleteMessage());
+    }
+
     savePage = () => {
-        const { pageContent } = this.state;
-        const path = [ 'About', 'Purpose and Vision' ]
+        const { path, pageContent } = this.state;
         const page = {
             path,
             pageContent
@@ -37,8 +52,7 @@ class PageEditor extends Component {
             html: 'headline',
             className: '',
             style: {},
-            url: '',
-            autoplay: false
+            url: ''
         };
     };
 

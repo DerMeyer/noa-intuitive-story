@@ -243,8 +243,16 @@ exports.getMenu = () =>
         'SELECT menu::json FROM menu'
     );
 
-exports.savePage = (path, pageContent) => {
-    console.log(path, pageContent);
+exports.savePage = async (path, pageContent) => {
+    const pageExists =  await db.query(
+        'SELECT id FROM pages WHERE page_path = $1', [ JSON.stringify(path) ]
+    );
+    if (pageExists.rows[0]) {
+        return db.query(
+            'UPDATE pages SET page_content = $1 WHERE id = $2',
+            [ JSON.stringify(pageContent), pageExists.rows[0].id ]
+        );
+    }
     return db.query(
         'INSERT INTO pages (page_path, page_content) VALUES ($1, $2)',
         [ JSON.stringify(path), JSON.stringify(pageContent) ]

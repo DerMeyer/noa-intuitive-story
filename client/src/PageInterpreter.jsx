@@ -14,7 +14,7 @@ class PageInterpreter {
     }
 
     elementToJSX(element) {
-        const { key, text, html, className, url, autoplay, focus, setFocus = () => {} } = element;
+        const { key, text, html, className, url, focus, setFocus = () => {} } = element;
         const style = focus ? { ...element.style, backgroundColor: 'rgb(255, 253, 50)' }
                             : element.style
 
@@ -68,11 +68,10 @@ class PageInterpreter {
                 </div>
             );
         } else if (html === 'video') {
-            console.log(element.url);
             const regex = /(.*)(v=)(.*)/;
             const parsedUrl = regex.exec(url) || [];
             const videoID = parsedUrl[3];
-            const embedUrl = `https://www.youtube.com/embed/${videoID}${autoplay && '?&autoplay=1'}`;
+            const embedUrl = `https://www.youtube.com/embed/${videoID}`;
             return (
                 <div key={key} className="page-video-container inline-flex" style={style} onClick={setFocus}>
                     <iframe

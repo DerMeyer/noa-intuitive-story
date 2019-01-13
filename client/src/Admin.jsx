@@ -49,7 +49,7 @@ class Admin extends Component {
             adminButton: {
                 position: 'absolute',
                 left: '50%',
-                top: '30px',
+                top: '0',
                 transform: 'translateX(-50%) scale(.8)'
             },
             extraSpace: {

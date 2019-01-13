@@ -229,10 +229,9 @@
 }
 
 .page-creator__path {
-    position: absolute;
-    left: 20px;
-    top: -40px;
-    height: 30px;
+    width: 100%;
+    text-align: center;
+    color: var(--lightColor);
 }
 
 .page-creator__element {

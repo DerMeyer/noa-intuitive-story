@@ -85,7 +85,7 @@ class PageElementCreator extends Component {
 
     render() {
         const { path, addPageElementBefore, deletePageElement, unDeletePageElement, savePage } = this.props;
-        const { key, text, html, className, style, url, autoplay } = this.state.content;
+        const { text, html, className, style, url } = this.state.content;
 
         return (
             <div className="page-creator">
