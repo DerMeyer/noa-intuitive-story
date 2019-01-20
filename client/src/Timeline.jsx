@@ -150,6 +150,7 @@ class Timeline extends Component {
         this.setTimelineLeft();
         this.props.dispatch(getGroups());
         // this.props.dispatch(getHistory());
+        this.props.toggleSouls(true);
     }
 
     componentDidUpdate() {
@@ -160,6 +161,7 @@ class Timeline extends Component {
 
     componentWillUnmount() {
         clearTimeout(this.setTimeoutID);
+        this.props.toggleSouls(false);
     }
 
     setTimelineLeft = () => {

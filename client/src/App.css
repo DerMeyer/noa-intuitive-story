@@ -195,6 +195,20 @@
     background-color: var(--beige);
 }
 
+.the-five-souls {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    transition: top .5s ease-in-out;
+}
+
+.soul-gif {
+    display: inline-block;
+    width: 50px;
+    transform: scale(3);
+}
+
 .page-video-container {
     width: 60vw;
     height: 33.6vw;

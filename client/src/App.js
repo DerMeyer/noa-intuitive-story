@@ -34,6 +34,9 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            soulsTop: window.location.pathname === '/'
+                ? { top: '150px' }
+                : { top: '-150px' },
             editMode: false,
             positionCookiesFooter: {}
         };
@@ -57,6 +60,14 @@ class App extends Component {
         }
     }
 
+    toggleSouls = visible => {
+        this.setState({
+            soulsTop: visible
+                ? { top: '150px' }
+                : { top: '-150px' }
+        });
+    };
+
     toggleEditMode = () => {
         this.setState(({ editMode }) => ({ editMode: !editMode }));
     };
@@ -78,16 +89,15 @@ class App extends Component {
     }
 
     render() {
-        console.log('App renders xox', this.props);
-
         const admin = this.props.verified === 2;
-        const { editMode } = this.state;
+        const { soulsTop, editMode } = this.state;
         const { pages, menu } = this.props;
         const stateLoaded = !!pages && !!menu;
 
         const cmsMenu = [];
         const cmsRoutes = [];
 
+        // if state from db loaded this creates the menu and pages, else returns loading page
         if (stateLoaded) {
             const samePaths = (path1, path2) => {
                 if (path1.length !== path2.length) {
@@ -209,10 +219,42 @@ class App extends Component {
                         <ProfileNavigation />
                     </header>
 
+                    <div style={soulsTop} className="the-five-souls">
+                        <img
+                            className="soul-gif"
+                            src="/images/victim.gif"
+                            alt=""
+                        />
+                        <img
+                            className="soul-gif"
+                            src="/images/leader.gif"
+                            alt=""
+                        />
+                        <img
+                            className="soul-gif"
+                            src="/images/romantic.gif"
+                            alt=""
+                        />
+                        <img
+                            className="soul-gif"
+                            src="/images/realist.gif"
+                            alt=""
+                        />
+                        <img
+                            className="soul-gif"
+                            src="/images/messiah.gif"
+                            alt=""
+                        />
+                    </div>
+
                     {cmsRoutes}
 
-                    <Route exact path="/" component={Timeline} />
+                    {/* <Route exact path="/" component={Timeline} /> */}
                     <Route path="/avira" component={Admin} />
+                    <Route
+                        exact path="/"
+                        render={() => <Timeline toggleSouls={this.toggleSouls} />}
+                    />
                     <Route
                         path="/signin"
                         render={() =>
