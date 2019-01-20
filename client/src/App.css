@@ -243,6 +243,7 @@
 }
 
 .page-creator__path {
+    font-size: 12px;
     width: 100%;
     text-align: center;
     color: var(--lightColor);
@@ -250,6 +251,12 @@
 
 .page-creator__element {
     border-bottom: 1px solid var(--lightColor);
+}
+
+.page-creator__tools {
+    border-radius: 3px;
+    margin: 5px 0;
+    background-color: var(--lightColor);
 }
 
 .page-creator__button {

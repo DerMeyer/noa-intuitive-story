@@ -180,34 +180,33 @@ class PageElementCreator extends Component {
                     </div>
                 )}
 
-                <div className="page-creator__headline">
-                    Tools
+                <div className="page-creator__tools">
+                    <button
+                        className="page-creator__button"
+                        onClick={addPageElementBefore}
+                    >
+                        Add Before
+                    </button>
+                    <button
+                        className="page-creator__button"
+                        onClick={deletePageElement}
+                    >
+                        Delete
+                    </button>
+                    <button
+                        className="page-creator__button"
+                        onClick={unDeletePageElement}
+                    >
+                        Un-Delete
+                    </button>
+                    <button
+                        style={{ color: 'whitesmoke', backgroundColor: 'red' }}
+                        className="page-creator__button"
+                        onClick={savePage}
+                    >
+                        Save Changes
+                    </button>
                 </div>
-                <button
-                    className="page-creator__button"
-                    onClick={addPageElementBefore}
-                >
-                    Add Before
-                </button>
-                <button
-                    className="page-creator__button"
-                    onClick={deletePageElement}
-                >
-                    Delete
-                </button>
-                <button
-                    className="page-creator__button"
-                    onClick={unDeletePageElement}
-                >
-                    Un-Delete
-                </button>
-                <button
-                    style={{ color: 'whitesmoke', backgroundColor: 'red' }}
-                    className="page-creator__button"
-                    onClick={savePage}
-                >
-                    Save Changes
-                </button>
             </div>
         );
     }

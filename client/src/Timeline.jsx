@@ -40,7 +40,8 @@ class Timeline extends Component {
             },
             timeline: {
                 cursor: 'grab',
-                height: '60vh'
+                height: '60vh',
+                transform: 'scale(1.0108, 1) translateX(-.09%)'
             },
             historyCreatorH3: {
                 fontSize: '3vh',
