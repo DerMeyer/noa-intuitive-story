@@ -365,6 +365,8 @@ export const createHistory = async (
 export const getPages = async () => {
     try {
         const resp = await axios.get('/api/get_pages');
+        // Quick fix to filter out About/Video page that was initiated in the sql file and probably doesn't match path json on upsert
+        resp.data.pages.shift();
         if (resp.data.success) {
             return {
                 type: 'GET_PAGES',

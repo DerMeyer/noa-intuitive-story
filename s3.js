@@ -1,7 +1,7 @@
 const fs = require('fs');
 const knox = require('knox');
 
-const { AWS_KEY, AWS_SECRET } = (process.env.NODE_ENV === 'production' && process.env) || require('./confidential');;
+const { AWS_KEY, AWS_SECRET } = (process.env.NODE_ENV === 'production' && process.env) || require('./confidential');
 
 const client = knox.createClient({
     key: AWS_KEY,
