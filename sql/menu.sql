@@ -44,6 +44,25 @@ INSERT INTO menu (
         "All Games": {
             "component": true
         },
+        "All Characters": {
+            "subMenu": {
+                "Rebel": {
+                    "page": true
+                },
+                "Leader": {
+                    "page": true
+                },
+                "Romantic": {
+                    "page": true
+                },
+                "Realist": {
+                    "page": true
+                },
+                "Messiah": {
+                    "page": true
+                }
+            }
+        },
         "Q & A": {
             "page": true
         }

@@ -203,10 +203,12 @@
     transition: top .5s ease-in-out;
 }
 
-.soul-gif {
+.soul-link {
     display: inline-block;
+}
+
+.soul-gif {
     width: 50px;
-    transform: scale(3);
 }
 
 .page-video-container {

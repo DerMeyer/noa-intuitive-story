@@ -220,31 +220,41 @@ class App extends Component {
                     </header>
 
                     <div style={soulsTop} className="the-five-souls">
-                        <img
-                            className="soul-gif"
-                            src="/images/victim.gif"
-                            alt=""
-                        />
-                        <img
-                            className="soul-gif"
-                            src="/images/leader.gif"
-                            alt=""
-                        />
-                        <img
-                            className="soul-gif"
-                            src="/images/romantic.gif"
-                            alt=""
-                        />
-                        <img
-                            className="soul-gif"
-                            src="/images/realist.gif"
-                            alt=""
-                        />
-                        <img
-                            className="soul-gif"
-                            src="/images/messiah.gif"
-                            alt=""
-                        />
+                        <Link to="all_characters/rebel" className="soul-link">
+                            <img
+                                className="soul-gif"
+                                src="/images/victim.gif"
+                                alt=""
+                            />
+                        </Link>
+                        <Link to="all_characters/leader" className="soul-link">
+                            <img
+                                className="soul-gif"
+                                src="/images/leader.gif"
+                                alt=""
+                            />
+                        </Link>
+                        <Link to="all_characters/romantic" className="soul-link">
+                            <img
+                                className="soul-gif"
+                                src="/images/romantic.gif"
+                                alt=""
+                            />
+                        </Link>
+                        <Link to="all_characters/realist" className="soul-link">
+                            <img
+                                className="soul-gif"
+                                src="/images/realist.gif"
+                                alt=""
+                            />
+                        </Link>
+                        <Link to="all_characters/messiah" className="soul-link">
+                            <img
+                                className="soul-gif"
+                                src="/images/messiah.gif"
+                                alt=""
+                            />
+                        </Link>
                     </div>
 
                     {cmsRoutes}
