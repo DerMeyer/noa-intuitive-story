@@ -176,7 +176,7 @@ class Timeline extends Component {
                 this.setTimelineLeft();
             }, 30);
         }
-    }
+    };
 
     onDown = event => {
         event.preventDefault();
@@ -226,7 +226,7 @@ class Timeline extends Component {
             this.mouseDownX = event.pageX;
             return true;
         }
-    }
+    };
 
     createGroupsForRender() {
         if (!this.props.groups || this.state.groups) {
@@ -241,7 +241,7 @@ class Timeline extends Component {
                     top: `${randomTop}vh`,
                     transform: 'translatex(-50%)',
                     zIndex: '50'
-                }
+                };
                 const arrowStyle = {
                     position: 'absolute',
                     top: '11.9vh',
@@ -249,7 +249,7 @@ class Timeline extends Component {
                     height: '48.4vh',
                     width: '1px',
                     backgroundColor: 'var(--darkColor)'
-                }
+                };
                 return (
                     <div key={group.id}>
                         <section style={groupStyle} className="group_on_timeline">
@@ -378,7 +378,7 @@ class Timeline extends Component {
         });
         const exactYear = Math.floor(timelineSection[0][1] + ((timelineSection[1][1] - timelineSection[0][1]) * ((timelineSection[0][0] - timelineX) / (timelineSection[0][0] - timelineSection[1][0]))));
         return exactYear;
-    }
+    };
 
     mapTimelineToPosition = year => {
         const currentTimelineScale = (window.innerHeight * this.timelineImageQuotient) / 9300;
@@ -392,7 +392,7 @@ class Timeline extends Component {
         });
         const exactPosition = (timelineSection[0][0] + ((timelineSection[1][0] - timelineSection[0][0]) * ((year - timelineSection[0][1]) / (timelineSection[1][1] - timelineSection[0][1])))) * currentTimelineScale;
         return exactPosition;
-    }
+    };
 
     // getUserInput = event => {
     //     this.setState({

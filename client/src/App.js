@@ -28,7 +28,7 @@ import Groups from './Groups';
 import { getPages, getMenu } from './actions';
 
 // TO DO
-// delete unneccessary components like About, Join, pageInterpreter etc
+// delete unnecessary components like About, Join, pageInterpreter etc
 
 class App extends Component {
     constructor(props) {
@@ -120,7 +120,7 @@ class App extends Component {
                         if (subMenu[subRoute].page) {
                             newPage = {
                                 page_path: [ mainRoute, subRoute ]
-                            }
+                            };
                             if (!pages.some(page => samePaths(page.page_path, newPage.page_path))) {
                                 pages.push(newPage);
                             }
@@ -129,7 +129,7 @@ class App extends Component {
                 } else {
                     newPage = {
                         page_path: [ mainRoute ]
-                    }
+                    };
                     if (!pages.some(page => samePaths(page.page_path, newPage.page_path))) {
                         pages.push(newPage);
                     }
