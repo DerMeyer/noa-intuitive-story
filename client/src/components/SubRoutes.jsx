@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 
 import SubMenu from './SubMenu';
-import Page from './Page';
-import PageEditor from './PageEditor';
+import Page from './pages/DynamicPage/Page';
+import PageEditor from './pages/DynamicPage/PageEditor';
 
 class SubRoutes extends Component {
     componentDidMount() {

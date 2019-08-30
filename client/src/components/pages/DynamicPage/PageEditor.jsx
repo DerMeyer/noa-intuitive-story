@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PageInterpreter from './PageInterpreter';
 import PageElementCreator from './PageElementCreator';
 
-import { deleteMessage, savePage, getPages } from './actions';
+import { deleteMessage, savePage, getPages } from '../../../js/actions';
 
 class PageEditor extends Component {
     constructor(props) {

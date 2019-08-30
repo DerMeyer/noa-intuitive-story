@@ -7,9 +7,9 @@ class PageElementCreator extends Component {
             content: {
                 ...this.props.content
             },
-            html: [ 'headline', 'text', 'highlight', 'link outside', 'link inside', 'image', 'video' ],
-            class: [ 'default', 'block', 'inline', 'inline-block' ],
-            color: [ 'default', 'orange', 'green', 'red', 'blue', 'purple' ]
+            html: ['headline', 'text', 'highlight', 'link outside', 'link inside', 'image', 'video'],
+            class: ['default', 'block', 'inline', 'inline-block'],
+            color: ['default', 'orange', 'green', 'red', 'blue', 'purple']
         };
     }
 
@@ -50,7 +50,7 @@ class PageElementCreator extends Component {
     setClass = name => {
         const className = name !== 'default'
             ? name
-            : ''
+            : '';
         this.setState(({ content }) => ({
             content: {
                 ...content,
@@ -63,7 +63,7 @@ class PageElementCreator extends Component {
     setColor = name => {
         const style = name !== 'default'
             ? { color: name }
-            : {}
+            : {};
         this.setState(({ content }) => ({
             content: {
                 ...content,
@@ -81,7 +81,7 @@ class PageElementCreator extends Component {
             }
         }));
         this.setElement();
-    }
+    };
 
     render() {
         const { path, addPageElementBefore, deletePageElement, unDeletePageElement, savePage } = this.props;
@@ -153,7 +153,10 @@ class PageElementCreator extends Component {
                             <button
                                 key={`class${index}`}
                                 className="page-creator__button"
-                                style={(!className && name === 'default') || (name === className) ? { color: 'whitesmoke', backgroundColor: 'var(--darkColor)' } : {}}
+                                style={(!className && name === 'default') || (name === className) ? {
+                                    color: 'whitesmoke',
+                                    backgroundColor: 'var(--darkColor)'
+                                } : {}}
                                 onClick={() => this.setClass(name)}
                             >
                                 {name}
@@ -171,7 +174,10 @@ class PageElementCreator extends Component {
                             <button
                                 key={`color${index}`}
                                 className="page-creator__button"
-                                style={(!style.color && name === 'default') || (name === style.color) ? { color: 'whitesmoke', backgroundColor: 'var(--darkColor)' } : {}}
+                                style={(!style.color && name === 'default') || (name === style.color) ? {
+                                    color: 'whitesmoke',
+                                    backgroundColor: 'var(--darkColor)'
+                                } : {}}
                                 onClick={() => this.setColor(name)}
                             >
                                 {name}

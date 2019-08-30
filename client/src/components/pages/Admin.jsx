@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import './page.css';
+import '../../css/page.css';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import axios from './axios';
+import axios from '../../js/axios';
 
-import { setMessage, getGroups, getHistory } from './actions';
+import { setMessage, getGroups, getHistory } from '../../js/actions';
 
 class Admin extends Component {
     constructor(props) {

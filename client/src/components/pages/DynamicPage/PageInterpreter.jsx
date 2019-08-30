@@ -14,9 +14,12 @@ class PageInterpreter {
     }
 
     elementToJSX(element) {
-        const { key, text, html, className, url, focus, setFocus = () => {} } = element;
+        const {
+            key, text, html, className, url, focus, setFocus = () => {
+            }
+        } = element;
         const style = focus ? { ...element.style, backgroundColor: '#ffff02' }
-                            : element.style
+            : element.style;
 
         if (html === 'div') {
             return (
@@ -106,7 +109,7 @@ class PageInterpreter {
                 </div>
             );
         }
-        return <div />;
+        return <div/>;
     }
 }
 

@@ -7,7 +7,7 @@ class Page extends Component {
         super(props);
         this.state = {
             pageContent: Array.isArray(this.props.page.page_content)
-                ? [ ...this.props.page.page_content ]
+                ? [...this.props.page.page_content]
                 : []
         };
     }

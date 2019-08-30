@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import './page.css';
+import '../../../css/page.css';
 import { connect } from 'react-redux';
 
-import Group from './Group';
+import Group from '../../partials/Group';
 
-import { getGroups } from './actions';
+import { getGroups } from '../../../js/actions';
 
 class GroupCollection extends Component {
     constructor(props) {

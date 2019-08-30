@@ -1,27 +1,30 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import './page.css';
+import '../../css/page.css';
 
-import Group from './Group';
+import Group from '../partials/Group';
 
-import { getGroups } from './actions';
+import { getGroups } from '../../js/actions';
 
 class GroupPage extends Component {
     constructor(props) {
         super(props);
         this.state = {};
     }
+
     componentDidMount() {
         if (!this.props.groups) {
             this.props.dispatch(getGroups());
         }
         this.createGroupForRender();
     }
+
     componentDidUpdate() {
         if (!this.state.group) {
             this.createGroupForRender();
         }
     }
+
     createGroupForRender = () => {
         if (!this.props.groups) {
             return;
@@ -29,10 +32,11 @@ class GroupPage extends Component {
         const currentGroup = this.props.groups.filter(group => group.id === Number(this.props.match.params.id))[0];
         this.setState({
             group: (
-                <Group { ...currentGroup } />
+                <Group {...currentGroup} />
             )
         });
-    }
+    };
+
     render() {
         return (
             <section className="page_container">

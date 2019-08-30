@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { acceptCookies } from './actions';
+import { acceptCookies } from '../../js/actions';
 
 const Cookies = props => (
     <div className="cookies-container inline-flex">

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import './page.css';
+import '../../css/page.css';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import axios from './axios';
+import axios from '../../js/axios';
 
-import Group from './Group';
+import Group from '../partials/Group';
 
-import { deleteMessage, getGroups, updateProfile, updateIconUrl } from './actions';
+import { deleteMessage, getGroups, updateProfile, updateIconUrl } from '../../js/actions';
 
 class ProfilePage extends Component {
     constructor(props) {
@@ -59,6 +59,7 @@ class ProfilePage extends Component {
         };
         this.soul_list = ['gul', 'grun', 'vermel', 'bezrechu', 'sagol'];
     }
+
     componentDidMount() {
         window.scroll(0, 0);
         if (!this.props.groups) {
@@ -67,6 +68,7 @@ class ProfilePage extends Component {
             this.createGroupsForRender();
         }
     }
+
     componentDidUpdate() {
         this.createGroupsForRender();
         if (!this.state.user) {
@@ -77,42 +79,44 @@ class ProfilePage extends Component {
             });
         }
     }
+
     componentWillUnmount() {
         this.props.message && this.props.dispatch(deleteMessage());
         clearTimeout(this.setTimeoutID);
     }
+
     createGroupsForRender = () => {
         if (!this.props.groups || this.state.groups) {
             return this.state.groups;
         }
         this.setState({
             groups: this.props.groups
-                        .sort((a, b) => a.group_start - b.group_start)
-                        .filter(group => {
-                              for (let i = 0; i < 5; i++) {
-                                  if (group[`${this.soul_list[i]}_user_id`] === this.props.user.id) {
-                                      return true;
-                                  }
-                              }
-                              return false;
-                          })
-                        .map(group => {
-                            return (
-                                <section key={group.id} style={this.style.row}>
-                                    <section style={this.style.group}>
-                                        <Group { ...group } />
-                                    </section>
-                                    <p style={this.style.story}>{group.story || 'More soon...'}</p>
-                                </section>
-                            )
-                        })
+                .sort((a, b) => a.group_start - b.group_start)
+                .filter(group => {
+                    for (let i = 0; i < 5; i++) {
+                        if (group[`${this.soul_list[i]}_user_id`] === this.props.user.id) {
+                            return true;
+                        }
+                    }
+                    return false;
+                })
+                .map(group => {
+                    return (
+                        <section key={group.id} style={this.style.row}>
+                            <section style={this.style.group}>
+                                <Group {...group} />
+                            </section>
+                            <p style={this.style.story}>{group.story || 'More soon...'}</p>
+                        </section>
+                    );
+                })
         });
-    }
+    };
     compileData = event => {
         this.setState({
             [event.target.name]: event.target.value
         });
-    }
+    };
     updateProfile = event => {
         if (event.type !== 'click' && event.keyCode !== 13) {
             return;
@@ -141,25 +145,25 @@ class ProfilePage extends Component {
                 });
             }, 4000);
         }
-    }
+    };
     cancelUpdate = () => {
         this.props.user && this.setState({
             ...this.props.user
         });
-    }
+    };
     emptyField = event => {
         this.setState({
             [event.target.name]: '',
             [`${event.target.name}Red`]: {}
         });
-    }
+    };
     fillField = event => {
         if (!this.state[event.target.name]) {
             this.setState({
                 [event.target.name]: this.props.user[event.target.name]
             });
         }
-    }
+    };
     selectImage = event => {
         if (!event.target.files[0]) {
             return;
@@ -175,12 +179,12 @@ class ProfilePage extends Component {
                 }
             });
         });
-    }
+    };
     cancelUpload = () => {
         this.setState({
             selectedImage: {}
         });
-    }
+    };
     uploadImage = async () => {
         if (this.state.selectedImage.file) {
             const formData = new FormData();
@@ -232,42 +236,59 @@ class ProfilePage extends Component {
                 });
             }, 3000);
         }
-    }
+    };
+
     render() {
         return this.props.user.verified ? (
             <section className="page-container">
                 <h1>{this.props.message || this.state.message || `Hello ${this.props.user && this.props.user.alias}!`}</h1>
-                {this.props.user && this.props.user.verified === 2 && <Link to="/avira" style={this.style.adminButton}><button>Manage Page Content</button></Link>}
+                {this.props.user && this.props.user.verified === 2 && <Link to="/avira" style={this.style.adminButton}>
+                    <button>Manage Page Content</button>
+                </Link>}
                 <h3>Edit your profile</h3>
                 <section className="profile-edit-container">
                     <section>
                         <div>
                             <p>First Name</p>
-                            <input name="first" type="text" value={this.state.first} placeholder="first name" onFocus={this.emptyField} onBlur={this.fillField} onChange={this.compileData} onKeyDown={this.updateProfile} />
+                            <input name="first" type="text" value={this.state.first} placeholder="first name"
+                                   onFocus={this.emptyField} onBlur={this.fillField} onChange={this.compileData}
+                                   onKeyDown={this.updateProfile}/>
                         </div>
                         <div>
                             <p>Last Name</p>
-                            <input name="last" type="text" value={this.state.last} placeholder="last name" onFocus={this.emptyField} onBlur={this.fillField} onChange={this.compileData} onKeyDown={this.updateProfile} />
+                            <input name="last" type="text" value={this.state.last} placeholder="last name"
+                                   onFocus={this.emptyField} onBlur={this.fillField} onChange={this.compileData}
+                                   onKeyDown={this.updateProfile}/>
                         </div>
                         <div>
                             <p>User Name</p>
-                            <input name="alias" type="text" value={this.state.alias} placeholder="user name" onFocus={this.emptyField} onBlur={this.fillField} onChange={this.compileData} onKeyDown={this.updateProfile} />
+                            <input name="alias" type="text" value={this.state.alias} placeholder="user name"
+                                   onFocus={this.emptyField} onBlur={this.fillField} onChange={this.compileData}
+                                   onKeyDown={this.updateProfile}/>
                         </div>
                         <div>
                             <p>Mail</p>
-                            <input name="mail" type="text" value={this.state.mail} placeholder="mail" onFocus={this.emptyField} onBlur={this.fillField} onChange={this.compileData} onKeyDown={this.updateProfile} />
+                            <input name="mail" type="text" value={this.state.mail} placeholder="mail"
+                                   onFocus={this.emptyField} onBlur={this.fillField} onChange={this.compileData}
+                                   onKeyDown={this.updateProfile}/>
                         </div>
                         <div>
                             <p>Phone</p>
-                            <input name="phone" type="text" value={this.state.phone} placeholder="phone" onFocus={this.emptyField} onBlur={this.fillField} onChange={this.compileData} onKeyDown={this.updateProfile} />
+                            <input name="phone" type="text" value={this.state.phone} placeholder="phone"
+                                   onFocus={this.emptyField} onBlur={this.fillField} onChange={this.compileData}
+                                   onKeyDown={this.updateProfile}/>
                         </div>
                         <div>
                             <p>New Password</p>
-                            <input name="newPW" type="password" value={this.state.newPW} placeholder="new password" onFocus={this.emptyField} onChange={this.compileData} onKeyDown={this.updateProfile} />
+                            <input name="newPW" type="password" value={this.state.newPW} placeholder="new password"
+                                   onFocus={this.emptyField} onChange={this.compileData}
+                                   onKeyDown={this.updateProfile}/>
                         </div>
                         <div>
                             <p>Confirm Password</p>
-                            <input name="confirmPW" type="password" value={this.state.confirmPW} placeholder="confirm password" onFocus={this.emptyField} onChange={this.compileData} onKeyDown={this.updateProfile} />
+                            <input name="confirmPW" type="password" value={this.state.confirmPW}
+                                   placeholder="confirm password" onFocus={this.emptyField} onChange={this.compileData}
+                                   onKeyDown={this.updateProfile}/>
                         </div>
                         <div>
                             <button style={this.style.updateProfileButton} onClick={this.cancelUpdate}>Cancel</button>
@@ -276,15 +297,18 @@ class ProfilePage extends Component {
                     </section>
                     <section className="profile-image-container">
                         <img src={this.state.selectedImage.url || this.state.icon_url} alt="My Profile Pic"></img>
-                            <input
-                                id="fileInput"
-                                type="file"
-                                name="imageforupload"
-                                onChange={this.selectImage}
-                            ></input>
-                        {!this.state.selectedImage.url && <label htmlFor="fileInput" style={this.style.updateProfileButton}>New Image</label>}
-                        {this.state.selectedImage.url && <button style={this.style.updateProfileButton} onClick={this.cancelUpload}>Cancel</button>}
-                        {this.state.selectedImage.url && <button style={this.style.updateProfileButton} onClick={this.uploadImage}>Submit</button>}
+                        <input
+                            id="fileInput"
+                            type="file"
+                            name="imageforupload"
+                            onChange={this.selectImage}
+                        ></input>
+                        {!this.state.selectedImage.url &&
+                        <label htmlFor="fileInput" style={this.style.updateProfileButton}>New Image</label>}
+                        {this.state.selectedImage.url &&
+                        <button style={this.style.updateProfileButton} onClick={this.cancelUpload}>Cancel</button>}
+                        {this.state.selectedImage.url &&
+                        <button style={this.style.updateProfileButton} onClick={this.uploadImage}>Submit</button>}
                     </section>
                 </section>
                 {/* <h3>Your messages</h3> */}
@@ -299,7 +323,7 @@ class ProfilePage extends Component {
                     </h3>
                 </Link>
             </div>
-        )
+        );
     }
 }
 

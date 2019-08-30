@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { checkCookies, checkSignIn, signOut } from './actions';
+import { checkCookies, checkSignIn, signOut } from '../../js/actions';
 
 class ProfileNavigation extends Component {
     componentDidMount() {

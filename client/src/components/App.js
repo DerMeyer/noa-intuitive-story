@@ -2,33 +2,29 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter, Route, Redirect, Link, NavLink } from 'react-router-dom';
 
-import './App.css';
+import '../css/App.css';
 
-import Loading from './Loading';
-import ProfileNavigation from './ProfileNavigation';
-import Timeline from './Timeline';
-import SignIn from './SignIn';
-import SignUp from './SignUp';
-import Verify from './Verify';
-import Admin from './Admin';
-import ProfilePage from './ProfilePage';
-import GroupPage from './GroupPage';
-import Impressum from './Impressum';
-import Contact from './Contact';
-import Cookies from './Cookies';
-
-import Page from './Page';
-import PageEditor from './PageEditor';
+import Loading from './partials/Loading';
+import ProfileNavigation from './pages/ProfileNavigation';
+import Timeline from './pages/Timeline';
+import SignIn from './pages/SignIn';
+import SignUp from './pages/SignUp';
+import Verify from './pages/Verify';
+import Admin from './pages/Admin';
+import ProfilePage from './pages/ProfilePage';
+import GroupPage from './pages/GroupPage';
+import Impressum from './pages/Impressum';
+import Contact from './pages/Contact';
+import Cookies from './partials/Cookies';
+import Page from './pages/DynamicPage/Page';
+import PageEditor from './pages/DynamicPage/PageEditor';
 import SubRoutes from './SubRoutes';
 
-// add to readyRoutes
-import Groups from './Groups';
+// import readyRoutes
+import Groups from './pages/ReadyRoutePages/Groups';
 
-// generally get state before rendering App
-import { getPages, getMenu } from './actions';
-
-// TO DO
-// delete unnecessary components like About, Join, pageInterpreter etc
+// get state before rendering the App
+import { getPages, getMenu } from '../js/actions';
 
 class App extends Component {
     constructor(props) {
@@ -40,6 +36,7 @@ class App extends Component {
             editMode: false,
             positionCookiesFooter: {}
         };
+        // list readyRoutes
         this.readyRoutes = {
             'All Games': <Route key="groups-ready-route" path="/all_games" component={Groups} />
         };

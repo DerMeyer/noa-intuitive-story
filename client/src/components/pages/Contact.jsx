@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { sendContactForm } from './actions';
+import { sendContactForm } from '../../js/actions';
 
 class Contact extends Component {
     constructor(props) {
