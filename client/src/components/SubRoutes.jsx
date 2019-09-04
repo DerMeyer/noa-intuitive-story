@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import {Route, Redirect, NavLink} from 'react-router-dom';
+import {menuItemTypes} from "./App";
 
-import SubMenu from './SubMenu';
 import Page from './pages/DynamicPage/Page';
 import PageEditor from './pages/DynamicPage/PageEditor';
 
@@ -29,7 +29,7 @@ class SubRoutes extends Component {
                 name: pathName
             });
 
-            if (pathValue.page) {
+            if (pathValue.type === menuItemTypes.PAGE) {
                 const page = pages.filter(page => page.page_path[1] === pathName)[0] || {};
                 subRoutes.push(
                     editMode ? (
@@ -46,21 +46,22 @@ class SubRoutes extends Component {
                         />
                     )
                 );
-            } else if (pathValue.component) {
+            } else if (pathValue.type === menuItemTypes.COMPONENT) {
                 subRoutes.push(
                     readyRoutes[pathName]
                 );
             }
         });
 
-        const subMenu = {
-            path: rootPath,
-            links
-        };
-
         return (
             <section>
-                <SubMenu data={subMenu} />
+                <div className="sub-menu">
+                    {links.map(item => (
+                        <NavLink to={`${rootPath}${item.link}`} className="sub-menu__nav__button" key={item.name}>
+                            {item.name}
+                        </NavLink>
+                    ))}
+                </div>
 
                 <Route
                     path={rootPath}

@@ -26,6 +26,12 @@ import Groups from './pages/ReadyRoutePages/Groups';
 // get state before rendering the App
 import { getPages, getMenu } from '../js/actions';
 
+export const menuItemTypes = {
+    COMPONENT: 'component',
+    MENU: 'menu',
+    PAGE: 'page'
+};
+
 class App extends Component {
     constructor(props) {
         super(props);
@@ -88,11 +94,12 @@ class App extends Component {
     render() {
         const admin = this.props.verified === 2;
         const { soulsTop, editMode } = this.state;
-        const { pages, menu } = this.props;
-        const stateLoaded = !!pages && !!menu;
 
-        const cmsMenu = [];
-        const cmsRoutes = [];
+        const { pages, menu: menuMap } = this.props;
+        const stateLoaded = !!pages && !!menuMap;
+
+        const menu = [];
+        const routes = [];
 
         // if state from db loaded this creates the menu and pages, else returns loading page
         if (stateLoaded) {
@@ -109,38 +116,97 @@ class App extends Component {
                 return path1.length === sameRoutesCount;
             };
 
-            Object.keys(menu).forEach(mainRoute => {
-                let newPage;
-                const subMenu = menu[mainRoute].subMenu;
+            const createNavigationFromMap = (menuMap, currentPath = []) => {
+                Object.keys(menuMap).forEach(menuItemKey => {
+                    const menuItem = menuMap[menuItemKey];
+                    const routePath = '/' + menuItemKey
+                        .split(' ')
+                        .map(word => word.toLowerCase())
+                        .join('_');
+                    if (currentPath.length === 0) {
+                        menu.push(
+                            <NavLink key={menuItemKey} to={routePath} className="header__nav__button">
+                                {menuItemKey}
+                            </NavLink>
+                        );
+                    }
+                    switch (menuItem.type) {
+                        case menuItemTypes.COMPONENT:
+                            routes.push(this.readyRoutes[menuItemKey]);
+                            break;
+                        case menuItemTypes.MENU:
+                            routes.push(
+                                <Route
+                                    key={routePath + '_sub_route'}
+                                    path={routePath}
+                                    render={() => <SubRoutes
+                                        editMode={editMode}
+                                        rootPath={routePath}
+                                        cmsSubMenu={menuItem.menu}
+                                        pages={pages.filter(page => page.page_path[0] === menuItemKey) || []}
+                                        readyRoutes={this.readyRoutes}
+                                    />}
+                                />
+                            );
+                            createNavigationFromMap(menuItem.menu, [...currentPath, menuItemKey]);
+                            break;
+                        case menuItemTypes.PAGE:
+                            const page = pages.filter(page => page.page_path[0] === menuItemKey)[0] || {};
+                            routes.push(
+                                editMode ? (
+                                    <Route
+                                        key={routePath + '_editMode'}
+                                        path={routePath}
+                                        render={() => <PageEditor page={page} />}
+                                    />
+                                ) : (
+                                    <Route
+                                        key={routePath}
+                                        path={routePath}
+                                        render={() => <Page page={page} />}
+                                    />
+                                )
+                            );
+                            const page_path = [...currentPath, menuItemKey];
+                            if (!pages.some(page => samePaths(page.page_path, page_path))) {
+                                pages.push({ page_path });
+                            }
+                            break;
+                        default:
+                    }
+                });
+            };
+
+            createNavigationFromMap(menuMap);
+
+            /*Object.keys(menuMap).forEach(menuItem => {
+                const newPage = {};
+                const subMenu = menuMap[menuItem].subMenu;
                 if (subMenu) {
                     Object.keys(subMenu).forEach(subRoute => {
                         if (subMenu[subRoute].page) {
-                            newPage = {
-                                page_path: [ mainRoute, subRoute ]
-                            };
+                            newPage.page_path = [ menuItem, subRoute ];
                             if (!pages.some(page => samePaths(page.page_path, newPage.page_path))) {
                                 pages.push(newPage);
                             }
                         }
                     });
                 } else {
-                    newPage = {
-                        page_path: [ mainRoute ]
-                    };
+                    newPage.page_path = [ menuItem ];
                     if (!pages.some(page => samePaths(page.page_path, newPage.page_path))) {
                         pages.push(newPage);
                     }
                 }
             });
 
-            Object.keys(menu).forEach(pathName => {
-                const pathValue = menu[pathName];
+            Object.keys(menuMap).forEach(pathName => {
+                const pathValue = menuMap[pathName];
                 const path = '/' + pathName
                     .split(' ')
                     .map(word => word.toLowerCase())
                     .join('_');
 
-                cmsMenu.push(
+                menu.push(
                     <NavLink key={pathName} to={path} className="header__nav__button">
                         {pathName}
                     </NavLink>
@@ -148,7 +214,7 @@ class App extends Component {
 
                 if (pathValue.page) {
                     const page = pages.filter(page => page.page_path[0] === pathName)[0] || {};
-                    cmsRoutes.push(
+                    routes.push(
                         editMode ? (
                             <Route
                                 key={path + '_editMode'}
@@ -164,9 +230,9 @@ class App extends Component {
                         )
                     );
                 } else if (pathValue.component) {
-                    cmsRoutes.push(this.readyRoutes[pathName]);
+                    routes.push(this.readyRoutes[pathName]);
                 } else if (pathValue.subMenu) {
-                    cmsRoutes.push(
+                    routes.push(
                         <Route
                             key={path + '_sub_route'}
                             path={path}
@@ -180,9 +246,9 @@ class App extends Component {
                         />
                     );
                 }
-            });
+            });*/
         } else {
-            cmsRoutes.push(
+            routes.push(
                 <Loading key="loading" />
             );
         }
@@ -201,7 +267,7 @@ class App extends Component {
                                 />
                             </NavLink>
 
-                            {cmsMenu}
+                            {menu}
                         </nav>
                         {admin && (
                             <div
@@ -254,7 +320,7 @@ class App extends Component {
                         </Link>
                     </div>
 
-                    {cmsRoutes}
+                    {routes}
 
                     {/* <Route exact path="/" component={Timeline} /> */}
                     <Route path="/avira" component={Admin} />
