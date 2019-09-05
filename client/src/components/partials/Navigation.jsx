@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Redirect, Link, NavLink } from 'react-router-dom';
+import { Route, NavLink } from 'react-router-dom';
 
-import Page from './pages/DynamicPage/Page';
-import PageEditor from './pages/DynamicPage/PageEditor';
+import Page from '../pages/dynamic/Page';
+import PageEditor from '../pages/dynamic/PageEditor';
 import SubRoutes from './SubRoutes';
 
 // import readyRoutes
-import Groups from './pages/ReadyRoutePages/Groups';
+import Groups from '../pages/user/Groups';
 
-const menuItemTypes = {
+export const menuItemTypes = {
     COMPONENT: 'component',
     MENU: 'menu',
     PAGE: 'page'
@@ -17,23 +17,10 @@ const menuItemTypes = {
 class Navigation extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            menu: [],
-            routes: []
-        };
         // list readyRoutes
         this.readyRoutes = {
             'All Games': <Route key="groups-ready-route" path="/all_games" component={Groups} />
         };
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        // compare objects
-        const { menu, routes } = this.createNavigationFromMap(this.props.menuMap, this.props.pagesMap);
-        this.setState({
-            menu,
-            routes
-        });
     }
 
     static compareArrays(arr1, arr2) {
@@ -46,8 +33,8 @@ class Navigation extends Component {
         return arr1.length === numIdenticalItems && arr2.length === numIdenticalItems;
     }
 
-    createNavigationFromMap(menuMap, pagesMap, currentPath = []) {
-        const updatedPagesMap = {...pagesMap};
+    createNavigationFromMap(menuMap, pages, currentPath = []) {
+        const updatedPages = [...pages];
         const menu = [];
         const routes = [];
         const links = [];
@@ -77,15 +64,24 @@ class Navigation extends Component {
                                 editMode={this.props.editMode}
                                 rootPath={routePath}
                                 cmsSubMenu={menuItem.menu}
-                                pages={pages.filter(page => page.page_path[0] === menuItemKey) || []}
+                                pages={updatedPages.filter(page => page.page_path[0] === menuItemKey) || []}
                                 readyRoutes={this.readyRoutes}
                             />}
                         />
                     );
-                    this.createNavigationFromMap(menuItem.menu, [...currentPath, menuItemKey]);
+                    const {
+                        updatedPages: lowerLevelPages,
+                        menu: lowerLevelMenu,
+                        routes: lowerLevelRoutes,
+                        links: lowerLevelLinks
+                    } = this.createNavigationFromMap(menuItem.menu, updatedPages, [...currentPath, menuItemKey]);
+                    updatedPages.push(...lowerLevelPages);
+                    menu.push(...lowerLevelMenu);
+                    routes.push(...lowerLevelRoutes);
+                    links.push(...lowerLevelLinks);
                     break;
                 case menuItemTypes.PAGE:
-                    const page = pages.filter(page => page.page_path[0] === menuItemKey)[0] || {};
+                    const page = updatedPages.filter(page => page.page_path[0] === menuItemKey)[0] || {};
                     routes.push(
                         this.props.editMode ? (
                             <Route
@@ -102,17 +98,27 @@ class Navigation extends Component {
                         )
                     );
                     const page_path = [...currentPath, menuItemKey];
-                    if (!pages.some(page => Navigation.compareArrays(page.page_path, page_path))) {
-                        pages.push({ page_path });
+                    if (!updatedPages.some(page => Navigation.compareArrays(page.page_path, page_path))) {
+                        updatedPages.push({ page_path });
                     }
                     break;
                 default:
             }
         });
+        return {
+            updatedPages,
+            menu,
+            routes,
+            links
+        };
     };
 
     render() {
-        const { menu, routes } = this.state;
+        const { menuMap, pages } = this.props;
+        if (!menuMap || !pages) {
+            return null;
+        }
+        const { menu, routes } = this.createNavigationFromMap(menuMap, pages);
         return (
             <div>
                 {menu}

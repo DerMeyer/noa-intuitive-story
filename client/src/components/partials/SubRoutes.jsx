@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import {Route, Redirect, NavLink} from 'react-router-dom';
-import {menuItemTypes} from "./App";
+import {menuItemTypes} from "./Navigation";
 
-import Page from './pages/DynamicPage/Page';
-import PageEditor from './pages/DynamicPage/PageEditor';
+import Page from '../pages/dynamic/Page';
+import PageEditor from '../pages/dynamic/PageEditor';
 
 class SubRoutes extends Component {
     componentDidMount() {
