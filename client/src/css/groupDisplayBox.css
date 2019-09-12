@@ -1,0 +1,38 @@
+.group-display-box {
+    position: absolute;
+    width: 350px;
+    height: 350px;
+    border: 1px solid var(--mediumColor);
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: white;
+}
+
+.soul-display {
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    border-right: 1px solid var(--mediumColor);
+    border-bottom: 1px solid var(--mediumColor);
+}
+
+.soul-gif {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.character-display {
+    position: absolute;
+    width: 210px;
+    height: 70px;
+    border-bottom: 1px solid var(--mediumColor);
+}
+
+.character-name {
+    position: absolute;
+    left: 25px;
+    top: 50%;
+    transform: translateY(-50%);
+}

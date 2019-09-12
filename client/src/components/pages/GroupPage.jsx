@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from '../../js/axios';
-import { SoulNames } from '../../js/enums';
+import { SoulNamesTranslation } from '../../js/enums';
 import '../../css/page.css';
 
 import Group from '../partials/Group';
@@ -50,21 +50,23 @@ class GroupPage extends Component {
             time_period,
             story
         };
-        Object.keys(SoulNames).forEach(soulKey => {
-            const soulName = SoulNames[soulKey];
+        Object.keys(SoulNamesTranslation).forEach(soulKey => {
+            const soulName = SoulNamesTranslation[soulKey];
             groupMap[soulName] = {
                 role: groupData[`${soulName}_role`],
                 character: groupData[`${soulName}_character`]
             };
         });
-        console.log('GROUP MAP:', groupMap);
         this.setState({ groupMap });
     }
 
     render() {
+        const displayBoxStyle = {
+            top: '120px'
+        };
         return (
             <section className="page-container">
-                <GroupDisplayBox { ...this.state.groupMap } />
+                <GroupDisplayBox style={displayBoxStyle} { ...this.state.groupMap } />
             </section>
         );
     }
