@@ -228,6 +228,11 @@ exports.updateGroup = (
         ]
     );
 
+exports.getUser = userId =>
+    db.query(
+        'SELECT id, verified, first, last, alias, mail, phone, created_at FROM users WHERE id = $1', [ userId ]
+    );
+
 exports.getUsers = () =>
     db.query(
         'SELECT id, verified, first, last, alias, mail, phone, created_at FROM users'

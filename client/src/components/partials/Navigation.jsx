@@ -6,7 +6,7 @@ import PageEditor from '../pages/dynamic/PageEditor';
 import SubRoutes from './SubRoutes';
 
 // import readyRoutes
-import Groups from '../pages/user/Groups';
+import AllGames from '../pages/user/AllGames';
 
 export const menuItemTypes = {
     COMPONENT: 'component',
@@ -19,7 +19,7 @@ class Navigation extends Component {
         super(props);
         // list readyRoutes
         this.readyRoutes = {
-            'All Games': <Route key="groups-ready-route" path="/all_games" component={Groups} />
+            'All Games': <Route key="groups-ready-route" path="/all_games" component={AllGames} />
         };
     }
 
