@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Redirect, Link, NavLink } from 'react-router-dom'
 
 import '../css/App.css';
 
-import Loading from './partials/Loading';
+import Navigation from './partials/Navigation';
 import ProfileNavigation from './pages/ProfileNavigation';
 import Timeline from './pages/Timeline';
 import SignIn from './pages/SignIn';
@@ -16,12 +16,7 @@ import GroupPage from './pages/GroupPage';
 import Impressum from './pages/Impressum';
 import Contact from './pages/Contact';
 import Cookies from './partials/Cookies';
-import Page from './pages/DynamicPage/Page';
-import PageEditor from './pages/DynamicPage/PageEditor';
-import SubRoutes from './SubRoutes';
 
-// import readyRoutes
-import Groups from './pages/ReadyRoutePages/Groups';
 
 // get state before rendering the App
 import { getPages, getMenu } from '../js/actions';
@@ -35,10 +30,6 @@ class App extends Component {
                 : { top: '-150px' },
             editMode: false,
             positionCookiesFooter: {}
-        };
-        // list readyRoutes
-        this.readyRoutes = {
-            'All Games': <Route key="groups-ready-route" path="/all_games" component={Groups} />
         };
     }
 
@@ -88,104 +79,7 @@ class App extends Component {
     render() {
         const admin = this.props.verified === 2;
         const { soulsTop, editMode } = this.state;
-        const { pages, menu } = this.props;
-        const stateLoaded = !!pages && !!menu;
-
-        const cmsMenu = [];
-        const cmsRoutes = [];
-
-        // if state from db loaded this creates the menu and pages, else returns loading page
-        if (stateLoaded) {
-            const samePaths = (path1, path2) => {
-                if (path1.length !== path2.length) {
-                    return false;
-                }
-                let sameRoutesCount = 0;
-                path1.forEach((route1, index) => {
-                    if (route1 === path2[index]) {
-                        sameRoutesCount++;
-                    }
-                });
-                return path1.length === sameRoutesCount;
-            };
-
-            Object.keys(menu).forEach(mainRoute => {
-                let newPage;
-                const subMenu = menu[mainRoute].subMenu;
-                if (subMenu) {
-                    Object.keys(subMenu).forEach(subRoute => {
-                        if (subMenu[subRoute].page) {
-                            newPage = {
-                                page_path: [ mainRoute, subRoute ]
-                            };
-                            if (!pages.some(page => samePaths(page.page_path, newPage.page_path))) {
-                                pages.push(newPage);
-                            }
-                        }
-                    });
-                } else {
-                    newPage = {
-                        page_path: [ mainRoute ]
-                    };
-                    if (!pages.some(page => samePaths(page.page_path, newPage.page_path))) {
-                        pages.push(newPage);
-                    }
-                }
-            });
-
-            Object.keys(menu).forEach(pathName => {
-                const pathValue = menu[pathName];
-                const path = '/' + pathName
-                    .split(' ')
-                    .map(word => word.toLowerCase())
-                    .join('_');
-
-                cmsMenu.push(
-                    <NavLink key={pathName} to={path} className="header__nav__button">
-                        {pathName}
-                    </NavLink>
-                );
-
-                if (pathValue.page) {
-                    const page = pages.filter(page => page.page_path[0] === pathName)[0] || {};
-                    cmsRoutes.push(
-                        editMode ? (
-                            <Route
-                                key={path + '_editMode'}
-                                path={path}
-                                render={() => <PageEditor page={page} />}
-                            />
-                        ) : (
-                            <Route
-                                key={path}
-                                path={path}
-                                render={() => <Page page={page} />}
-                            />
-                        )
-                    );
-                } else if (pathValue.component) {
-                    cmsRoutes.push(this.readyRoutes[pathName]);
-                } else if (pathValue.subMenu) {
-                    cmsRoutes.push(
-                        <Route
-                            key={path + '_sub_route'}
-                            path={path}
-                            render={() => <SubRoutes
-                                editMode={editMode}
-                                rootPath={path}
-                                cmsSubMenu={pathValue.subMenu}
-                                pages={pages.filter(page => page.page_path[0] === pathName) || []}
-                                readyRoutes={this.readyRoutes}
-                            />}
-                        />
-                    );
-                }
-            });
-        } else {
-            cmsRoutes.push(
-                <Loading key="loading" />
-            );
-        }
+        const { pages, menu: menuMap } = this.props;
 
         return (
             <BrowserRouter>
@@ -200,8 +94,11 @@ class App extends Component {
                                     alt="Logo"
                                 />
                             </NavLink>
-
-                            {cmsMenu}
+                            <Navigation
+                                editMode={editMode}
+                                menuMap={menuMap}
+                                pages={pages}
+                            />
                         </nav>
                         {admin && (
                             <div
@@ -212,10 +109,8 @@ class App extends Component {
                                 Edit Mode
                             </div>
                         )}
-
                         <ProfileNavigation />
                     </header>
-
                     <div style={soulsTop} className="the-five-souls">
                         <Link to="all_characters/rebel" className="soul-link">
                             <img
@@ -253,9 +148,6 @@ class App extends Component {
                             />
                         </Link>
                     </div>
-
-                    {cmsRoutes}
-
                     {/* <Route exact path="/" component={Timeline} /> */}
                     <Route path="/avira" component={Admin} />
                     <Route
@@ -290,7 +182,6 @@ class App extends Component {
                     />
                     <Route path="/impressum" component={Impressum} />
                     <Route path="/contact" component={Contact} />
-
                     <footer className="footer flex" style={this.state.positionCookiesFooter}>
                         <span className="footer__note">&copy; Noa Golan</span>
                         <nav className="footer__nav inline-flex">
@@ -302,7 +193,6 @@ class App extends Component {
                             </Link>
                         </nav>
                     </footer>
-
                     <Cookies />
                 </main>
             </BrowserRouter>
