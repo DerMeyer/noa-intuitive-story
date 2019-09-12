@@ -21,13 +21,13 @@ INSERT INTO menu (
                 "Purpose and Vision": {
                     "type": "page"
                 },
-                "The five Souls": {
-                    "type": "page"
-                },
                 "About me": {
                     "type": "page"
                 },
                 "Inspirations": {
+                    "type": "page"
+                },
+                "Reviews": {
                     "type": "page"
                 }
             }
@@ -49,19 +49,19 @@ INSERT INTO menu (
         "All Characters": {
             "type": "menu",
             "menu": {
-                "Rebel": {
+                "Rebels": {
                     "type": "page"
                 },
-                "Leader": {
+                "Leaders": {
                     "type": "page"
                 },
-                "Romantic": {
+                "Romantics": {
                     "type": "page"
                 },
-                "Realist": {
+                "Realists": {
                     "type": "page"
                 },
-                "Messiah": {
+                "Messiahs": {
                     "type": "page"
                 }
             }
@@ -71,67 +71,3 @@ INSERT INTO menu (
         }
     }'::json
 );
-
-/*INSERT INTO menu (
-    menu
-) VALUES (
-    '{
-        "About": {
-            "subMenu": {
-                "Video": {
-                    "page": true
-                },
-                "How the Game works": {
-                    "page": true
-                },
-                "Purpose and Vision": {
-                    "page": true
-                },
-                "The five Souls": {
-                    "page": true
-                },
-                "About me": {
-                    "page": true
-                },
-                "Inspirations": {
-                    "page": true
-                }
-            }
-        },
-        "Join the Game": {
-            "subMenu": {
-                "Create a Game": {
-                    "page": true
-                },
-                "Join a Game": {
-                    "page": true
-                }
-            }
-        },
-        "All Games": {
-            "component": true
-        },
-        "All Characters": {
-            "subMenu": {
-                "Rebel": {
-                    "page": true
-                },
-                "Leader": {
-                    "page": true
-                },
-                "Romantic": {
-                    "page": true
-                },
-                "Realist": {
-                    "page": true
-                },
-                "Messiah": {
-                    "page": true
-                }
-            }
-        },
-        "Q & A": {
-            "page": true
-        }
-    }'::json
-);*/
