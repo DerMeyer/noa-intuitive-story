@@ -3,11 +3,26 @@ import { connect } from 'react-redux';
 import axios from '../../js/axios';
 import { SoulNamesTranslation } from '../../js/enums';
 import '../../css/page.css';
-
-import Group from '../partials/Group';
-
+import '../../css/groupPage.css';
 import { getGroups } from '../../js/actions';
 import GroupDisplayBox from '../partials/GroupDisplayBox';
+import TextBlock from '../partials/TextBlock';
+
+const textBlockTitle = 'SYNOPSIS:';
+
+const displayBoxStyle = {
+    left: '50%',
+    top: '150px',
+    transform: 'translateX(-104%)',
+    width: '330px',
+    height: '330px'
+};
+
+const textBlockStyle = {
+    left: '50%',
+    transform: 'translateX(4%)'
+};
+
 
 class GroupPage extends Component {
     constructor(props) {
@@ -15,15 +30,19 @@ class GroupPage extends Component {
         this.state = {
             groupMap: null
         };
+        this.groupData = null;
     }
 
     componentDidMount() {
+        window.scroll(0, 0);
         this.getGroupData();
     }
 
     componentDidUpdate() {
-        if (!this.state.groupMap) {
+        if (!this.groupData) {
             this.getGroupData();
+        } else if (!this.state.groupMap) {
+            this.mapGroupData(this.groupData);
         }
     }
 
@@ -40,7 +59,8 @@ class GroupPage extends Component {
                 }
             }
         }
-        this.mapGroupData(groupData);
+        this.groupData = groupData;
+        this.mapGroupData(this.groupData);
     };
 
     mapGroupData(groupData) {
@@ -61,12 +81,47 @@ class GroupPage extends Component {
     }
 
     render() {
-        const displayBoxStyle = {
-            top: '120px'
-        };
+        const groupMap = this.state.groupMap || {};
+        const { name, time_period, story } = groupMap;
+        let time, mathSign;
+        if (typeof time_period === 'number') {
+            time = String(Math.abs(time_period));
+            mathSign = Math.sign(time_period) || 1;
+        }
+        let roundedTimeBefore, roundedTimeAfter;
+        if (time) {
+            const firstDigitBefore = Number(time.slice(-(time.length - 1)))
+                ? Number(time.slice(0, 1))
+                : Number(time.slice(0, 1)) - 1;
+            const firstDigitAfter = Number(time.slice(0, 1)) + 1;
+            roundedTimeBefore = firstDigitBefore
+                ? mathSign * firstDigitBefore + '0'.repeat(time.length - 1)
+                : mathSign * firstDigitBefore;
+            roundedTimeAfter = firstDigitAfter
+                ? mathSign * firstDigitAfter + '0'.repeat(time.length - 1)
+                : mathSign * firstDigitAfter;
+            if (mathSign < 0) {
+                [roundedTimeBefore, roundedTimeAfter] = [roundedTimeAfter, roundedTimeBefore];
+            }
+        }
         return (
             <section className="page-container">
-                <GroupDisplayBox style={displayBoxStyle} { ...this.state.groupMap } />
+                <div className="group-page-header">
+                    <div className="group-page-name">
+                        {name}
+                    </div>
+                    <div className="group-page-time-period" style={{ left: '10%' }}>
+                        {roundedTimeBefore}
+                    </div>
+                    <div className="group-page-time-period">
+                        {time_period}
+                    </div>
+                    <div className="group-page-time-period" style={{ left: '90%' }}>
+                        {roundedTimeAfter}
+                    </div>
+                </div>
+                <GroupDisplayBox style={displayBoxStyle} { ...groupMap } />
+                <TextBlock style={textBlockStyle} headline={textBlockTitle} text={story} />
             </section>
         );
     }

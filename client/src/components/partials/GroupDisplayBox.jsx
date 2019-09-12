@@ -10,12 +10,14 @@ const createSoulDisplay = (soulNameTranslation, key, style) => {
         return acc;
     }, '');
     const soulName = SoulNames[soulKey];
+    if (!soulName) {
+        return <div className="soul-display" key={key} style={style} />;
+    }
     return (
         <div className="soul-display" key={key} style={style}>
             <img
-                className="soul-gif"
+                className="group-display-box-soul-gif"
                 src={`/images/${soulName}.gif`}
-                alt="soul gif"
             />
         </div>
     );
@@ -48,23 +50,23 @@ class GroupDisplayBox extends Component {
                 {souls.map((soul, index) => {
                     const key = `group-display-box-soul-${index}`;
                     const style = {
-                        top: `${index * 70}px`
+                        top: `${index * 20.1}%`
                     };
                     return createSoulDisplay(soul, key, style);
                 })}
                 {roles.map((role, index) => {
                     const key = `group-display-box-role-${index}`;
                     const style = {
-                        left: '70px',
-                        top: `${index * 70}px`
+                        left: '20%',
+                        top: `${index * 20.1}%`
                     };
                     return createSoulDisplay(role, key, style);
                 })}
                 {characters.map((character, index) => {
                     const key = `group-display-box-character-${index}`;
                     const style = {
-                        left: '140px',
-                        top: `${index * 70}px`
+                        left: '40%',
+                        top: `${index * 20.1}%`
                     };
                     return createCharacterDisplay(character, key, style);
                 })}

@@ -1,0 +1,12 @@
+.text-block {
+    position: relative;
+    width: 350px;
+    padding-left: 20px;
+}
+
+.text-block-headline {
+    font-size: 24px;
+    color: var(--lightColor);
+}
+
+.text-block-content {}

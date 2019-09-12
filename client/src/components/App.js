@@ -77,9 +77,10 @@ class App extends Component {
     }
 
     render() {
-        const admin = this.props.verified === 2;
         const { soulsTop, editMode } = this.state;
         const { pages, menu: menuMap } = this.props;
+
+        const admin = this.props.verified === 2;
 
         return (
             <BrowserRouter>
