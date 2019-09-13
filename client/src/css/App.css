@@ -164,6 +164,13 @@
     border-radius: 6px;
 }
 
+.profile__nav__icon {
+    width: 30px;
+    height: 30px;
+    margin-right: 20px;
+    filter: saturate(50%);
+}
+
 .footer__note {
     color: var(--mediumColor);
 }

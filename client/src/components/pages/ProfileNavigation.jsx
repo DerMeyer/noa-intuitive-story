@@ -13,13 +13,27 @@ class ProfileNavigation extends Component {
     signOut = () => {
         this.props.dispatch(signOut());
         // find a better way to reload app after sign out
-        window.location.replace('/');
+        setTimeout(() => {
+            window.location.replace('/');
+        }, 1000);
     };
 
     render() {
+        const facebookLink = <a
+            href="https://www.facebook.com/theintuitivestory/"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            <img
+                className="profile__nav__icon"
+                src="/images/fb-icon.png"
+                alt=""
+            />
+        </a>
         if (this.props.signedIn) {
             return (
                 <nav className="profile__nav inline-flex">
+                    {facebookLink}
                     {!this.props.user.verified && (
                         <Link to="/verify" className="profile__nav__button profile__nav__button--border">
                             Verify your account
@@ -49,6 +63,7 @@ class ProfileNavigation extends Component {
         }
         return (
             <nav className="profile__nav inline-flex">
+                {facebookLink}
                 <Link to="/signin" className="profile__nav__button">
                     Sign in
                 </Link>
