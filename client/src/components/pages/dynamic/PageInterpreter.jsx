@@ -10,7 +10,16 @@ class PageInterpreter {
     getJSX(pageContent) {
         return pageContent.length > 0
             ? pageContent.map(element => this.elementToJSX(element))
-            : <h3>This page is under construction and will soon be ready for you.</h3>;
+            : (
+                <Link
+                    style={{ color: 'var(--lightColor)', textDecoration: 'none' }}
+                    to={'/'}
+                >
+                    <h3>
+                        The Intuitive Story
+                    </h3>
+                </Link>
+            );
     }
 
     elementToJSX(element) {

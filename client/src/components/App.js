@@ -149,8 +149,10 @@ class App extends Component {
                             />
                         </Link>
                     </div>
-                    {/* <Route exact path="/" component={Timeline} /> */}
-                    <Route path="/avira" component={Admin} />
+                    <Route
+                        path="/avira"
+                        render={() => <Admin editMode={editMode} />}
+                    />
                     <Route
                         exact path="/"
                         render={() => <Timeline toggleSouls={this.toggleSouls} />}
@@ -179,7 +181,7 @@ class App extends Component {
                     />
                     <Route
                         path="/group/:id"
-                        render={props => <GroupPage match={props.match} />}
+                        render={props => <GroupPage match={props.match} admin={false} />}
                     />
                     <Route path="/impressum" component={Impressum} />
                     <Route path="/contact" component={Contact} />

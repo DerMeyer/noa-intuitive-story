@@ -18,6 +18,7 @@ const createSoulDisplay = (soulNameTranslation, key, style) => {
             <img
                 className="group-display-box-soul-gif"
                 src={`/images/${soulName}.gif`}
+                alt=""
             />
         </div>
     );

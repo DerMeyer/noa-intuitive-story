@@ -90,8 +90,8 @@
 }
 
 .create-group-image {
-    width: 5.5vh;
-    margin-bottom: 1vh;
+    width: 4.5vh;
+    margin-bottom: 0.2vh;
 }
 
 .page-container button,
@@ -132,6 +132,7 @@
     height: 23vh;
     width: 48vw;
     padding: 1vw;
+    margin-top: 20px;
 }
 
 .manage-groups-container .overlay_container {

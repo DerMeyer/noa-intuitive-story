@@ -4,9 +4,11 @@ import axios from '../../js/axios';
 import { SoulNamesTranslation } from '../../js/enums';
 import '../../css/page.css';
 import '../../css/groupPage.css';
-import { getGroups } from '../../js/actions';
+import { getGroups, getPages } from '../../js/actions';
 import GroupDisplayBox from '../partials/GroupDisplayBox';
 import TextBlock from '../partials/TextBlock';
+import PageEditor from './dynamic/PageEditor';
+import Page from './dynamic/Page';
 
 const textBlockTitle = 'SYNOPSIS:';
 
@@ -20,7 +22,18 @@ const displayBoxStyle = {
 
 const textBlockStyle = {
     left: '50%',
-    transform: 'translateX(4%)'
+    transform: 'translateX(4%)',
+    height: '350px',
+    overflow: 'scroll'
+};
+
+const dynamicPageStyle = {
+    position: 'relative',
+    left: '0',
+    top: '30px',
+    width: '100%',
+    padding: '0',
+    minHeight: '100px'
 };
 
 
@@ -28,23 +41,45 @@ class GroupPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            groupMap: null
+            groupMap: null,
+            dynamicPage: null,
+            isScrolledDown: false
         };
         this.groupData = null;
     }
 
     componentDidMount() {
         window.scroll(0, 0);
-        this.getGroupData();
+        this.getState();
     }
 
     componentDidUpdate() {
+        window.addEventListener('scroll', this.checkIfScrolledDown);
+        this.getState();
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.checkIfScrolledDown);
+    }
+
+    getState() {
         if (!this.groupData) {
             this.getGroupData();
         } else if (!this.state.groupMap) {
             this.mapGroupData(this.groupData);
         }
+        if (!this.state.dynamicPage) {
+            this.getDynamicPage();
+        }
     }
+
+    checkIfScrolledDown = () => {
+        const isScrolledDown = window.scrollY > 50;
+        if (isScrolledDown === this.state.isScrolledDown) {
+            return;
+        }
+        this.setState({ isScrolledDown });
+    };
 
     getGroupData = async () => {
         if (!this.props.groups) {
@@ -64,11 +99,10 @@ class GroupPage extends Component {
     };
 
     mapGroupData(groupData) {
-        const { name, time_period, story } = groupData;
         const groupMap = {
-            name,
-            time_period,
-            story
+            name: groupData.name,
+            time_period: groupData.time_period,
+            story: groupData.story
         };
         Object.keys(SoulNamesTranslation).forEach(soulKey => {
             const soulName = SoulNamesTranslation[soulKey];
@@ -79,6 +113,16 @@ class GroupPage extends Component {
         });
         this.setState({ groupMap });
     }
+
+    getDynamicPage = async () => {
+        if (!this.props.pages) {
+            await this.props.dispatch(getPages());
+        }
+        const dynamicPage =
+            this.props.pages.find(page => page.page_path.join('') === `group${this.props.match.params.id}`)
+            || { page_path: ['group', String(this.props.match.params.id)] };
+        this.setState({ dynamicPage });
+    };
 
     render() {
         const groupMap = this.state.groupMap || {};
@@ -104,8 +148,26 @@ class GroupPage extends Component {
                 [roundedTimeBefore, roundedTimeAfter] = [roundedTimeAfter, roundedTimeBefore];
             }
         }
+        let pageForRender = null;
+        if (this.state.dynamicPage) {
+            if (this.props.admin) {
+                pageForRender = (
+                    <PageEditor
+                        page={this.state.dynamicPage}
+                        style={dynamicPageStyle}
+                    />
+                );
+            } else {
+                pageForRender = (
+                    <Page
+                        page={this.state.dynamicPage}
+                        style={dynamicPageStyle}
+                    />
+                );
+            }
+        }
         return (
-            <section className="page-container">
+            <section className="page-container" style={this.props.style || {}}>
                 <div className="group-page-header">
                     <div className="group-page-name">
                         {name}
@@ -120,14 +182,24 @@ class GroupPage extends Component {
                         {roundedTimeAfter}
                     </div>
                 </div>
+
                 <GroupDisplayBox style={displayBoxStyle} { ...groupMap } />
                 <TextBlock style={textBlockStyle} headline={textBlockTitle} text={story} />
+
+                <div
+                    className="group-page-arrow"
+                    style={this.state.isScrolledDown ? { opacity: '0', marginTop: '0' } : {}}
+                >
+                    &#8595;
+                </div>
+
+                {pageForRender}
             </section>
         );
     }
 }
 
-const mapStateToProps = state => state;
+const mapStateToProps = ({ groups, pages }) => ({ groups, pages });
 
 const ConnectedGroupPage = connect(mapStateToProps)(GroupPage);
 
