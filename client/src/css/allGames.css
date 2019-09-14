@@ -37,7 +37,8 @@
     width: 16%;
     height: 100%;
     background-color: rgba(255, 255, 255, 0.5);
-    border: 1px solid var(--beige);
+    border: 2px solid var(--beige);
+    border-radius: 5px;
 }
 
 .all-games-line__character {

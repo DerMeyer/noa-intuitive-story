@@ -3,20 +3,21 @@ import { connect } from 'react-redux';
 import '../../../css/allGames.css';
 import { getGroups } from '../../../js/actions';
 import { SoulNamesTranslation, SoulTranslationColorMap } from '../../../js/enums';
+import { Link } from 'react-router-dom';
 
 const createGameForRender = (gameData, index) => (
     <div
         className="all-games-line"
         key={`all-games-line-${index}`}
     >
-        <div className="all-games-line__info">
+        <Link className="all-games-line__info" to={`group/${gameData.id}`}>
             <div className="all-games-line__info--name">
                 {gameData.name}
             </div>
             <div className="all-games-line__info--date">
                 {gameData.time_period}
             </div>
-        </div>
+        </Link>
         <div className="all-games-line__player all-games-line__rebel">
             <div className="all-games-line__character">
                 {gameData[`${SoulNamesTranslation.REBEL}_character`]}

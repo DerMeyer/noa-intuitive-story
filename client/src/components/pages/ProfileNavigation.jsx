@@ -13,9 +13,9 @@ class ProfileNavigation extends Component {
     signOut = () => {
         this.props.dispatch(signOut());
         // find a better way to reload app after sign out
-        setTimeout(() => {
-            window.location.replace('/');
-        }, 1000);
+        //setTimeout(() => {
+        //    window.location.replace('/');
+        //}, 1000);
     };
 
     render() {
