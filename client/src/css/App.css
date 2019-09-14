@@ -5,6 +5,11 @@
     --lightColor: rgb(146, 157, 170);
     --mediumColor: rgb(71, 71, 71);
     --darkColor: rgb(29, 29, 29);
+    --orange: 'orange';
+    --green: 'green';
+    --red: 'red';
+    --blue: 'blue';
+    --purple: 'purple';
 }
 
 /* cookies */
@@ -215,7 +220,7 @@
 }
 
 .soul-gif {
-    width: 50px;
+    width: 40px;
 }
 
 .page-video-container {

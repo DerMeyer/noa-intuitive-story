@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Group from '../partials/Group';
+import Game from '../partials/Game';
 
 import { getGroups } from '../../js/actions';
 
@@ -208,7 +208,7 @@ class Timeline extends Component {
                 return (
                     <div key={group.id}>
                         <section style={groupStyle} className="group_on_timeline">
-                            <Group { ...group } />
+                            <Game { ...group } />
                         </section>
                         <section style={arrowStyle}></section>
                     </div>

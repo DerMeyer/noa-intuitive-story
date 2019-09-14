@@ -12,7 +12,7 @@ import SignUp from './pages/SignUp';
 import Verify from './pages/Verify';
 import Admin from './pages/Admin';
 import ProfilePage from './pages/ProfilePage';
-import GroupPage from './pages/GroupPage';
+import GamePage from './pages/GamePage';
 import Impressum from './pages/Impressum';
 import Contact from './pages/Contact';
 import Cookies from './partials/Cookies';
@@ -181,7 +181,7 @@ class App extends Component {
                     />
                     <Route
                         path="/group/:id"
-                        render={props => <GroupPage match={props.match} admin={false} />}
+                        render={props => <GamePage match={props.match} admin={false} />}
                     />
                     <Route path="/impressum" component={Impressum} />
                     <Route path="/contact" component={Contact} />

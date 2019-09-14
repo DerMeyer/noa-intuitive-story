@@ -29,7 +29,7 @@ class ProfileNavigation extends Component {
                 src="/images/fb-icon.png"
                 alt=""
             />
-        </a>
+        </a>;
         if (this.props.signedIn) {
             return (
                 <nav className="profile__nav inline-flex">

@@ -37,7 +37,7 @@ const dynamicPageStyle = {
 };
 
 
-class GroupPage extends Component {
+class GamePage extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -188,7 +188,7 @@ class GroupPage extends Component {
 
                 <div
                     className="group-page-arrow"
-                    style={this.state.isScrolledDown ? { opacity: '0', marginTop: '0' } : {}}
+                    style={this.state.isScrolledDown ? { opacity: '0', margin: '0' } : {}}
                 >
                     &#8595;
                 </div>
@@ -201,6 +201,6 @@ class GroupPage extends Component {
 
 const mapStateToProps = ({ groups, pages }) => ({ groups, pages });
 
-const ConnectedGroupPage = connect(mapStateToProps)(GroupPage);
+const ConnectedGamePage = connect(mapStateToProps)(GamePage);
 
-export default ConnectedGroupPage;
+export default ConnectedGamePage;

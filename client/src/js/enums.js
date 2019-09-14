@@ -13,3 +13,19 @@ export const SoulNamesTranslation = {
     REALIST: 'bezrechu',
     MESSIAH: 'sagol'
 };
+
+export const SoulColorMap = {
+    [SoulNames.REBEL]: 'orange',
+    [SoulNames.LEADER]: 'green',
+    [SoulNames.ROMANTIC]: 'red',
+    [SoulNames.REALIST]: 'blue',
+    [SoulNames.MESSIAH]: 'purple'
+};
+
+export const SoulTranslationColorMap = {
+    [SoulNamesTranslation.REBEL]: 'orange',
+    [SoulNamesTranslation.LEADER]: 'green',
+    [SoulNamesTranslation.ROMANTIC]: 'red',
+    [SoulNamesTranslation.REALIST]: 'blue',
+    [SoulNamesTranslation.MESSIAH]: 'purple'
+};

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import axios from '../../js/axios';
 import { setMessage, getGroups, getHistory } from '../../js/actions';
 
-import GroupPage from './GroupPage';
+import GroupPage from './GamePage';
 
 class Admin extends Component {
     constructor(props) {
