@@ -14,7 +14,7 @@ export const menuItemTypes = {
     PAGE: 'page'
 };
 
-class Navigation extends Component {
+class Routes extends Component {
     constructor(props) {
         super(props);
         // list readyRoutes
@@ -98,7 +98,7 @@ class Navigation extends Component {
                         )
                     );
                     const page_path = [...currentPath, menuItemKey];
-                    if (!updatedPages.some(page => Navigation.compareArrays(page.page_path, page_path))) {
+                    if (!updatedPages.some(page => Routes.compareArrays(page.page_path, page_path))) {
                         updatedPages.push({ page_path });
                     }
                     break;
@@ -121,10 +121,10 @@ class Navigation extends Component {
         const { menu, routes } = this.createNavigationFromMap(menuMap, pages);
         return (
             <div>
-                {menu}
+                {routes}
             </div>
         );
     }
 }
 
-export default Navigation;
+export default Routes;

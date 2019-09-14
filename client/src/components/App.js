@@ -20,6 +20,7 @@ import Cookies from './partials/Cookies';
 
 // get state before rendering the App
 import { getPages, getMenu } from '../js/actions';
+import Routes from './partials/Routes';
 
 class App extends Component {
     constructor(props) {
@@ -149,6 +150,11 @@ class App extends Component {
                             />
                         </Link>
                     </div>
+                    <Routes
+                        editMode={editMode}
+                        menuMap={menuMap}
+                        pages={pages}
+                    />
                     <Route
                         path="/avira"
                         render={() => <Admin editMode={editMode} />}
