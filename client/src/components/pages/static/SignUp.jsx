@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { signUp, deleteMessage } from '../../js/actions';
+import { signUp, deleteMessage } from '../../../js/actions';
 
 class SignUp extends Component {
     constructor(props) {

@@ -90,8 +90,8 @@
 }
 
 .create-group-image {
-    width: 5.5vh;
-    margin-bottom: 1vh;
+    width: 4.5vh;
+    margin-bottom: 0.2vh;
 }
 
 .page-container button,
@@ -129,9 +129,10 @@
     font-family: 'NTR', sans-serif;
     font-size: 2vh;
     line-height: 1.2;
-    height: 23vh;
-    width: 48vw;
+    height: 100px;
+    width: 65%;
     padding: 1vw;
+    margin: 20px 0 0 28%;
 }
 
 .manage-groups-container .overlay_container {
@@ -248,24 +249,4 @@
 
 #fileInput {
     display: none;
-}
-
-.group-page {
-    display: grid;
-    grid-template: 46vh auto / 1fr 3fr;
-    width: 70vw;
-}
-
-.group-preview {
-    justify-self: center;
-    align-self: center;
-    transform: scale(1.5);
-}
-
-.group-info-container {
-
-}
-
-.group-text-container {
-    grid-column: 1 / 3;
 }

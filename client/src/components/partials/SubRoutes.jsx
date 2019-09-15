@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Route, Redirect, NavLink} from 'react-router-dom';
-import {menuItemTypes} from "./Navigation";
+import {menuItemTypes} from "../../js/NavigationCreator";
 
 import Page from '../pages/dynamic/Page';
 import PageEditor from '../pages/dynamic/PageEditor';

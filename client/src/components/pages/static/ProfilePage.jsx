@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import '../../css/page.css';
+import '../../../css/page.css';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import axios from '../../js/axios';
+import axios from '../../../js/axios';
 
-import Group from '../partials/Group';
+import Game from '../../partials/Game';
 
-import { deleteMessage, getGroups, updateProfile, updateIconUrl } from '../../js/actions';
+import { deleteMessage, getGroups, updateProfile, updateIconUrl } from '../../../js/actions';
 
 class ProfilePage extends Component {
     constructor(props) {
@@ -104,7 +104,7 @@ class ProfilePage extends Component {
                     return (
                         <section key={group.id} style={this.style.row}>
                             <section style={this.style.group}>
-                                <Group {...group} />
+                                <Game {...group} />
                             </section>
                             <p style={this.style.story}>{group.story || 'More soon...'}</p>
                         </section>

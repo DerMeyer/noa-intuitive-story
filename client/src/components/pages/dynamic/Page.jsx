@@ -15,7 +15,7 @@ class Page extends Component {
     render() {
         const { pageContent } = this.state;
         return (
-            <div className="page-container">
+            <div className="page-container" style={this.props.style || {}}>
                 {PageInterpreter.getJSX(pageContent)}
             </div>
         );

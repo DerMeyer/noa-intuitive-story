@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Route, NavLink } from 'react-router-dom';
 
-import Page from '../pages/dynamic/Page';
-import PageEditor from '../pages/dynamic/PageEditor';
-import SubRoutes from './SubRoutes';
+import Page from '../components/pages/dynamic/Page';
+import PageEditor from '../components/pages/dynamic/PageEditor';
+import SubRoutes from '../components/partials/SubRoutes';
 
 // import readyRoutes
-import AllGames from '../pages/user/AllGames';
+import AllGames from '../components/pages/user/AllGames';
 
 export const menuItemTypes = {
     COMPONENT: 'component',
@@ -14,9 +14,8 @@ export const menuItemTypes = {
     PAGE: 'page'
 };
 
-class Navigation extends Component {
-    constructor(props) {
-        super(props);
+class NavigationCreator  {
+    constructor() {
         // list readyRoutes
         this.readyRoutes = {
             'All Games': <Route key="groups-ready-route" path="/all_games" component={AllGames} />
@@ -33,7 +32,7 @@ class Navigation extends Component {
         return arr1.length === numIdenticalItems && arr2.length === numIdenticalItems;
     }
 
-    createNavigationFromMap(menuMap, pages, currentPath = []) {
+    createNavigationFromMap(menuMap, pages, editMode, currentPath = []) {
         const updatedPages = [...pages];
         const menu = [];
         const routes = [];
@@ -61,7 +60,7 @@ class Navigation extends Component {
                             key={routePath + '_sub_route'}
                             path={routePath}
                             render={() => <SubRoutes
-                                editMode={this.props.editMode}
+                                editMode={editMode}
                                 rootPath={routePath}
                                 cmsSubMenu={menuItem.menu}
                                 pages={updatedPages.filter(page => page.page_path[0] === menuItemKey) || []}
@@ -74,7 +73,7 @@ class Navigation extends Component {
                         menu: lowerLevelMenu,
                         routes: lowerLevelRoutes,
                         links: lowerLevelLinks
-                    } = this.createNavigationFromMap(menuItem.menu, updatedPages, [...currentPath, menuItemKey]);
+                    } = this.createNavigationFromMap(menuItem.menu, updatedPages, editMode, [...currentPath, menuItemKey]);
                     updatedPages.push(...lowerLevelPages);
                     menu.push(...lowerLevelMenu);
                     routes.push(...lowerLevelRoutes);
@@ -83,7 +82,7 @@ class Navigation extends Component {
                 case menuItemTypes.PAGE:
                     const page = updatedPages.filter(page => page.page_path[0] === menuItemKey)[0] || {};
                     routes.push(
-                        this.props.editMode ? (
+                        editMode ? (
                             <Route
                                 key={routePath + '_editMode'}
                                 path={routePath}
@@ -98,7 +97,7 @@ class Navigation extends Component {
                         )
                     );
                     const page_path = [...currentPath, menuItemKey];
-                    if (!updatedPages.some(page => Navigation.compareArrays(page.page_path, page_path))) {
+                    if (!updatedPages.some(page => NavigationCreator.compareArrays(page.page_path, page_path))) {
                         updatedPages.push({ page_path });
                     }
                     break;
@@ -112,20 +111,6 @@ class Navigation extends Component {
             links
         };
     };
-
-    render() {
-        const { menuMap, pages } = this.props;
-        if (!menuMap || !pages) {
-            return null;
-        }
-        const { menu, routes } = this.createNavigationFromMap(menuMap, pages);
-        return (
-            <div>
-                {menu}
-                {routes}
-            </div>
-        );
-    }
 }
 
-export default Navigation;
+export default NavigationCreator;

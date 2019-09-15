@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import axios from '../../js/axios';
+import axios from '../../../js/axios';
 
-import { signIn, deleteMessage } from '../../js/actions';
+import { signIn, deleteMessage } from '../../../js/actions';
 
 class SignIn extends Component {
     constructor(props) {

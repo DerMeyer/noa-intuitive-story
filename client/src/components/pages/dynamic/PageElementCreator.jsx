@@ -62,7 +62,7 @@ class PageElementCreator extends Component {
 
     setColor = name => {
         const style = name !== 'default'
-            ? { color: name }
+            ? { color: `var(--${name})` }
             : {};
         this.setState(({ content }) => ({
             content: {

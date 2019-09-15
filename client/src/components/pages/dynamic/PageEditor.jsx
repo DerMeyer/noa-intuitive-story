@@ -129,7 +129,7 @@ class PageEditor extends Component {
         }));
 
         return (
-            <div className="page-container">
+            <div className="page-container" style={this.props.style || {}}>
                 <div className="page-container__message">
                     {this.props.message}
                 </div>
