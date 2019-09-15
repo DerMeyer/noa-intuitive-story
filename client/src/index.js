@@ -6,10 +6,10 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import reduxPromise from 'redux-promise';
 import { Provider } from 'react-redux';
 
-import reducer from './reducer';
-import './index.css';
+import reducer from './js/reducer';
+import './css/index.css';
 
-import App from './App';
+import App from './components/App';
 
 const store = createStore(
     reducer,

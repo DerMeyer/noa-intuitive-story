@@ -1,0 +1,252 @@
+.page-container {
+    position: absolute;
+    left: 20%;
+    top: 170px;
+    min-height: 80vh;
+    width: 60%;
+    line-height: 1.6;
+    padding: 30px 5vw;
+    border-radius: 4px;
+    margin-bottom: 9vh;
+    background-color: var(--beige);
+}
+
+@media only screen and (max-width: 1400px) {
+    .page-container {
+        left: 13%;
+        width: 74%;
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+    .page-container {
+        left: 5%;
+        width: 90%;
+    }
+}
+
+.page-container__message {
+    position: absolute;
+    left: 50%;
+    top: 5px;
+    transform: translateX(-50%);
+    font-size: 16px;
+}
+
+.page-container > section {
+    width: 66vw;
+    margin-bottom: 2vw;
+}
+
+.page-container h1 {
+    position: absolute;
+    top: -12vh;
+    left: 0;
+    font-size: 4.5vh;
+    color: whitesmoke;
+}
+
+.page-container h2 {
+    width: 66vw;
+    margin-top: 2vw;
+}
+
+.page-container h3 {
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.page-container p {
+    margin: 27px 0;
+}
+
+.page-container span {
+    font-weight: bold;
+}
+
+/* profile page and admin */
+
+.create-group-article {
+    display: flex;
+    flex-direction: column;
+}
+
+.page-container input,
+.page-container h4 {
+    font-size: 14px;
+    width: 250px;
+    height: 30px;
+    margin: 3px 0;
+    padding: 0 0 0 5px;
+    color: var(--darkColor);
+}
+
+.page-container h4 {
+    width: 4vw;
+    margin: 0 0 3vh 0;
+    color: gray;
+}
+
+.create-group-image {
+    width: 4.5vh;
+    margin-bottom: 0.2vh;
+}
+
+.page-container button,
+.page-container label {
+    cursor: pointer;
+    outline: none;
+    text-decoration: none;
+    text-align: center;
+    padding: 8px 20px;
+    border-radius: 6px;
+    margin: 0 10px;
+    color: var(--darkColor);
+    white-space: nowrap;
+}
+
+.page-container label {
+    text-align: center;
+    padding-top: .9vh;
+}
+
+.manage-groups-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    transform: scale(.8);
+    margin-left: -8vw;
+}
+
+.manage-groups-container section {
+    display: flex;
+    flex-direction: column;
+}
+
+.manage-groups-container textarea {
+    font-family: 'NTR', sans-serif;
+    font-size: 2vh;
+    line-height: 1.2;
+    height: 100px;
+    width: 65%;
+    padding: 1vw;
+    margin: 20px 0 0 28%;
+}
+
+.manage-groups-container .overlay_container {
+    position: relative;
+}
+
+.manage-groups-container .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 4.5vh;
+    width: 20vw;
+    background-color: rgba(255, 255, 255, .6);
+}
+
+.manage-groups-container .search_menu {
+    position: absolute;
+    top: 4.7vh;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    max-height: 35vh;
+    background-color: rgb(230, 237, 255);
+    z-index: 50;
+    overflow: scroll;
+}
+
+.manage-groups-container .search_menu p {
+    cursor: pointer;
+    font-size: 2.5vh;
+    width: 20vw;
+    padding: .5vh 0 .5vh .5vw;
+    border-bottom: .3vh solid gray;
+    margin: 0;
+    color: rgb(80, 80, 80);
+    transition-duration: .15s;
+}
+
+.manage-groups-container .search_menu p:hover {
+    background-color: lightgray;
+}
+
+.manage-user {
+    transform: scale(.8);
+    margin-left: -8vw;
+}
+
+.manage-user-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 2fr 1.5fr 1fr .5fr 1fr;
+}
+
+.manage-user-container h4,
+.manage-history-container h4 {
+    padding: 0;
+    margin: 0 0 2vh 0;
+}
+
+.manage-user-container p,
+.manage-history-container p {
+    max-width: 10vw;
+    max-height: 10vh;
+    overflow: auto;
+}
+
+.manage-user-container button,
+.manage-history-container button {
+    justify-self: end;
+    width: 5vw;
+    transform: translateY(10%);
+}
+
+.manage-history-container {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 2fr 2fr 1fr 1fr 1fr;
+}
+
+.profile-edit-container {
+    display: flex;
+    justify-content: space-around;
+    transform: scale(.8);
+    margin-left: -8vw;
+}
+
+.profile-edit-container > section {
+    width: 33vw;
+}
+
+.profile-edit-container p {
+    font-size: 2.5vh;
+    line-height: 1;
+    margin: 1vh 0 4vh 0;
+    color: gray;
+}
+
+.profile-edit-container div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.profile-image-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 22vw !important;
+}
+
+.profile-image-container > img {
+    max-height: 17vw;
+    max-width: 17vw;
+    border: 1vh solid white;
+    margin-bottom: 3vh;
+}
+
+#fileInput {
+    display: none;
+}

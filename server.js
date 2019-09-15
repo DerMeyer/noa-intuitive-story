@@ -24,6 +24,7 @@ const {
     createHistory,
     createGroup,
     updateGroup,
+    getUser,
     getUsers,
     getPages,
     getMenu,
@@ -465,6 +466,11 @@ app.post('/api/create_group', async (req, res) => {
             req.body.vermel_role,
             req.body.bezrechu_role,
             req.body.sagol_role,
+            req.body.gul_text,
+            req.body.grun_text,
+            req.body.vermel_text,
+            req.body.bezrechu_text,
+            req.body.sagol_text,
             req.body.gul_character,
             req.body.grun_character,
             req.body.vermel_character,
@@ -502,6 +508,11 @@ app.post('/api/update_group', async (req, res) => {
             req.body.vermel_role,
             req.body.bezrechu_role,
             req.body.sagol_role,
+            req.body.gul_text,
+            req.body.grun_text,
+            req.body.vermel_text,
+            req.body.bezrechu_text,
+            req.body.sagol_text,
             req.body.gul_character,
             req.body.grun_character,
             req.body.vermel_character,
@@ -514,6 +525,21 @@ app.post('/api/update_group', async (req, res) => {
     } catch (err) {
         console.log(err);
         res.json({
+            success: false
+        });
+    }
+});
+
+app.post('/api/get_user', async (req, res) => {
+    try {
+        const result = await getUser(req.body.userId);
+        await res.json({
+            success: true,
+            user: result.rows
+        });
+    } catch (err) {
+        console.log(err);
+        await res.json({
             success: false
         });
     }

@@ -10,61 +10,64 @@ INSERT INTO menu (
 ) VALUES (
     '{
         "About": {
-            "subMenu": {
+            "type": "menu",
+            "menu": {
                 "Video": {
-                    "page": true
+                    "type": "page"
                 },
                 "How the Game works": {
-                    "page": true
+                    "type": "page"
                 },
                 "Purpose and Vision": {
-                    "page": true
-                },
-                "The five Souls": {
-                    "page": true
+                    "type": "page"
                 },
                 "About me": {
-                    "page": true
+                    "type": "page"
                 },
                 "Inspirations": {
-                    "page": true
+                    "type": "page"
+                },
+                "Reviews": {
+                    "type": "page"
                 }
             }
         },
         "Join the Game": {
-            "subMenu": {
+            "type": "menu",
+            "menu": {
                 "Create a Game": {
-                    "page": true
+                    "type": "page"
                 },
                 "Join a Game": {
-                    "page": true
+                    "type": "page"
                 }
             }
         },
         "All Games": {
-            "component": true
+            "type": "component"
         },
         "All Characters": {
-            "subMenu": {
-                "Rebel": {
-                    "page": true
+            "type": "menu",
+            "menu": {
+                "Rebels": {
+                    "type": "page"
                 },
-                "Leader": {
-                    "page": true
+                "Leaders": {
+                    "type": "page"
                 },
-                "Romantic": {
-                    "page": true
+                "Romantics": {
+                    "type": "page"
                 },
-                "Realist": {
-                    "page": true
+                "Realists": {
+                    "type": "page"
                 },
-                "Messiah": {
-                    "page": true
+                "Messiahs": {
+                    "type": "page"
                 }
             }
         },
         "Q & A": {
-            "page": true
+            "type": "page"
         }
     }'::json
 );
