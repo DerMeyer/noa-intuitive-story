@@ -3,29 +3,11 @@ import { connect } from 'react-redux';
 import axios from '../../js/axios';
 import { SoulNamesTranslation } from '../../js/enums';
 import '../../css/page.css';
-import '../../css/groupPage.css';
+import '../../css/gamePage.css';
 import { getGroups, getPages } from '../../js/actions';
 import GroupDisplayBox from '../partials/GroupDisplayBox';
-import TextBlock from '../partials/TextBlock';
 import PageEditor from './dynamic/PageEditor';
 import Page from './dynamic/Page';
-
-const textBlockTitle = 'SYNOPSIS:';
-
-const displayBoxStyle = {
-    left: '50%',
-    top: '150px',
-    transform: 'translateX(-104%)',
-    width: '330px',
-    height: '330px'
-};
-
-const textBlockStyle = {
-    left: '50%',
-    transform: 'translateX(4%)',
-    height: '350px',
-    overflow: 'scroll'
-};
 
 const dynamicPageStyle = {
     position: 'relative',
@@ -126,7 +108,7 @@ class GamePage extends Component {
 
     render() {
         const groupMap = this.state.groupMap || {};
-        const { name, time_period, story } = groupMap;
+        const { name, time_period } = groupMap;
         let time, mathSign;
         if (typeof time_period === 'number') {
             time = String(Math.abs(time_period));
@@ -183,8 +165,7 @@ class GamePage extends Component {
                     </div>
                 </div>
 
-                <GroupDisplayBox style={displayBoxStyle} { ...groupMap } />
-                <TextBlock style={textBlockStyle} headline={textBlockTitle} text={story} />
+                <GroupDisplayBox { ...groupMap } />
 
                 <div
                     className="group-page-arrow"

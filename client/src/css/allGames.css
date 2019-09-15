@@ -7,6 +7,7 @@
 
 .all-games-line div {
     white-space: nowrap;
+    overflow: hidden;
 }
 
 .all-games-line__info {
@@ -37,7 +38,8 @@
     width: 16%;
     height: 100%;
     background-color: rgba(255, 255, 255, 0.5);
-    border: 2px solid var(--beige);
+    border-left: 2px solid var(--beige);
+    border-right: 2px solid var(--beige);
     border-radius: 5px;
 }
 

@@ -29,3 +29,11 @@ export const SoulTranslationColorMap = {
     [SoulNamesTranslation.REALIST]: 'blue',
     [SoulNamesTranslation.MESSIAH]: 'purple'
 };
+
+export const SoulDirectTranslations = {
+    [SoulNamesTranslation.REBEL]: 'Rebel',
+    [SoulNamesTranslation.LEADER]: 'Leader',
+    [SoulNamesTranslation.ROMANTIC]: 'Romantic',
+    [SoulNamesTranslation.REALIST]: 'Realist',
+    [SoulNamesTranslation.MESSIAH]: 'Messiah'
+};
