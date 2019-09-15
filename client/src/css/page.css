@@ -129,10 +129,10 @@
     font-family: 'NTR', sans-serif;
     font-size: 2vh;
     line-height: 1.2;
-    height: 23vh;
-    width: 48vw;
+    height: 100px;
+    width: 65%;
     padding: 1vw;
-    margin-top: 20px;
+    margin: 20px 0 0 28%;
 }
 
 .manage-groups-container .overlay_container {

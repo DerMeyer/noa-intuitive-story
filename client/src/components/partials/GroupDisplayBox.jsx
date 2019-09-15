@@ -24,10 +24,13 @@ const createSoulDisplay = (soulNameTranslation, style) => {
     );
 };
 
-const createCharacterDisplay = (characterName, style) => (
+const createCharacterDisplay = (characterName, description, style) => (
     <div className="character-display" style={style}>
         <div className="character-name">
             {characterName}
+        </div>
+        <div className="description-text">
+            {description}
         </div>
     </div>
 );
@@ -43,49 +46,27 @@ class GroupDisplayBox extends Component {
             if (this.props[soulName]) {
                 row.role = this.props[soulName].role;
                 row.character = this.props[soulName].character;
+                row.description = this.props[soulName].description;
             }
             rows.push(row);
         });
         return (
             <div className="group-display-box" style={this.props.style}>
                 {rows.map((row, index) => {
-                    const borderStyle = index === rows.length - 1
-                        ? { borderBottom: 'none' }
+                    const lastElementStyle = index === rows.length - 1
+                        ? { borderBottom: 'none', height: '170px' }
                         : {};
                     return (
                         <div
                             className="group-display-box-row"
                             key={`group-display-box-row-${index}`}
                         >
-                            {createSoulDisplay(row.soul, { ...borderStyle })}
-                            {createSoulDisplay(row.role, { left: '10%', ...borderStyle })}
-                            {createCharacterDisplay(row.character, { left: '20%', ...borderStyle })}
+                            {createSoulDisplay(row.soul, { ...lastElementStyle })}
+                            {createSoulDisplay(row.role, { left: '10%', ...lastElementStyle })}
+                            {createCharacterDisplay(row.character, row.description, { left: '20%', ...lastElementStyle })}
                         </div>
                     );
                 })}
-                {/*{souls.map((soul, index) => {
-                    const key = `group-display-box-soul-${index}`;
-                    const style = {
-                        top: `${index * 20.1}%`
-                    };
-                    return createSoulDisplay(soul, key, style);
-                })}
-                {roles.map((role, index) => {
-                    const key = `group-display-box-role-${index}`;
-                    const style = {
-                        left: '10%',
-                        top: `${index * 20.1}%`
-                    };
-                    return createSoulDisplay(role, key, style);
-                })}
-                {characters.map((character, index) => {
-                    const key = `group-display-box-character-${index}`;
-                    const style = {
-                        left: '20%',
-                        top: `${index * 20.1}%`
-                    };
-                    return createCharacterDisplay(character, key, style);
-                })}*/}
             </div>
         );
     }

@@ -3,7 +3,8 @@ import '../../css/page.css';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import axios from '../../js/axios';
-import { setMessage, getGroups, getHistory } from '../../js/actions';
+import { setMessage, getGroups } from '../../js/actions';
+import { SoulNamesTranslation } from '../../js/enums';
 
 import GroupPage from './GamePage';
 
@@ -29,6 +30,11 @@ class Admin extends Component {
             vermel_name: '',
             bezrechu_name: '',
             sagol_name: '',
+            gul_text: '',
+            grun_text: '',
+            vermel_text: '',
+            bezrechu_text: '',
+            sagol_text: '',
             soul_search_gul: false,
             soul_search_grun: false,
             soul_search_vermel: false,
@@ -76,7 +82,6 @@ class Admin extends Component {
         window.scroll(0, 0);
         this.getUsers();
         this.props.dispatch(getGroups());
-        this.props.dispatch(getHistory());
     }
 
     getUsers = async () => {
@@ -209,6 +214,11 @@ class Admin extends Component {
             vermel_role,
             bezrechu_role,
             sagol_role,
+            gul_text,
+            grun_text,
+            vermel_text,
+            bezrechu_text,
+            sagol_text,
             gul_character,
             grun_character,
             vermel_character,
@@ -230,6 +240,11 @@ class Admin extends Component {
             vermel_role,
             bezrechu_role,
             sagol_role,
+            gul_text,
+            grun_text,
+            vermel_text,
+            bezrechu_text,
+            sagol_text,
             gul_character,
             grun_character,
             vermel_character,
@@ -279,6 +294,11 @@ class Admin extends Component {
             vermel_role,
             bezrechu_role,
             sagol_role,
+            gul_text,
+            grun_text,
+            vermel_text,
+            bezrechu_text,
+            sagol_text,
             gul_character,
             grun_character,
             vermel_character,
@@ -310,6 +330,11 @@ class Admin extends Component {
                 vermel_role,
                 bezrechu_role,
                 sagol_role,
+                gul_text,
+                grun_text,
+                vermel_text,
+                bezrechu_text,
+                sagol_text,
                 gul_character,
                 grun_character,
                 vermel_character,
@@ -337,6 +362,11 @@ class Admin extends Component {
                     vermel_name: '',
                     bezrechu_name: '',
                     sagol_name: '',
+                    gul_text: '',
+                    grun_text: '',
+                    vermel_text: '',
+                    bezrechu_text: '',
+                    sagol_text: '',
                     soul_search_gul: false,
                     soul_search_grun: false,
                     soul_search_vermel: false,
@@ -371,6 +401,11 @@ class Admin extends Component {
             vermel_role,
             bezrechu_role,
             sagol_role,
+            gul_text,
+            grun_text,
+            vermel_text,
+            bezrechu_text,
+            sagol_text,
             gul_character,
             grun_character,
             vermel_character,
@@ -403,6 +438,11 @@ class Admin extends Component {
                 vermel_role,
                 bezrechu_role,
                 sagol_role,
+                gul_text,
+                grun_text,
+                vermel_text,
+                bezrechu_text,
+                sagol_text,
                 gul_character,
                 grun_character,
                 vermel_character,
@@ -411,7 +451,7 @@ class Admin extends Component {
             });
             if (resp.data.success) {
                 this.props.dispatch(setMessage(`${name} ${time_period} has been updated.`, 'white'));
-                this.setState({
+                /*this.setState({
                     name: '',
                     time_period: '',
                     story: '',
@@ -430,6 +470,11 @@ class Admin extends Component {
                     vermel_name: '',
                     bezrechu_name: '',
                     sagol_name: '',
+                    gul_text: '',
+                    grun_text: '',
+                    vermel_text: '',
+                    bezrechu_text: '',
+                    sagol_text: '',
                     soul_search_gul: false,
                     soul_search_grun: false,
                     soul_search_vermel: false,
@@ -444,7 +489,7 @@ class Admin extends Component {
                     group_search_overlay: false,
                     group_search: [],
                     group_for_edit: {}
-                });
+                });*/
                 this.props.dispatch(getGroups());
             } else {
                 this.props.dispatch(setMessage(`The group couldn't be updated.`, 'red'));
@@ -474,6 +519,11 @@ class Admin extends Component {
             vermel_name: '',
             bezrechu_name: '',
             sagol_name: '',
+            gul_text: '',
+            grun_text: '',
+            vermel_text: '',
+            bezrechu_text: '',
+            sagol_text: '',
             soul_search_gul: false,
             soul_search_grun: false,
             soul_search_vermel: false,
@@ -664,7 +714,11 @@ class Admin extends Component {
                                 <p key={i} onClick={this.setName}>{result}</p>))}</div>}
                         </div>
                     </section>
-                    <textarea name="story" value={this.state.story} onChange={this.compileData}></textarea>
+                    <textarea name={`${SoulNamesTranslation.REBEL}_text`} value={this.state[`${SoulNamesTranslation.REBEL}_text`]} onChange={this.compileData} />
+                    <textarea name={`${SoulNamesTranslation.LEADER}_text`} value={this.state[`${SoulNamesTranslation.LEADER}_text`]} onChange={this.compileData} />
+                    <textarea name={`${SoulNamesTranslation.ROMANTIC}_text`} value={this.state[`${SoulNamesTranslation.ROMANTIC}_text`]} onChange={this.compileData} />
+                    <textarea name={`${SoulNamesTranslation.REALIST}_text`} value={this.state[`${SoulNamesTranslation.REALIST}_text`]} onChange={this.compileData} />
+                    <textarea name={`${SoulNamesTranslation.MESSIAH}_text`} value={this.state[`${SoulNamesTranslation.MESSIAH}_text`]} onChange={this.compileData} />
                 </section>
 
                 {this.state.group_for_edit.id && (

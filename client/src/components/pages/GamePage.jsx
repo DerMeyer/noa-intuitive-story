@@ -90,7 +90,8 @@ class GamePage extends Component {
             const soulName = SoulNamesTranslation[soulKey];
             groupMap[soulName] = {
                 role: groupData[`${soulName}_role`],
-                character: groupData[`${soulName}_character`]
+                character: groupData[`${soulName}_character`],
+                description: groupData[`${soulName}_text`]
             };
         });
         this.setState({ groupMap });
