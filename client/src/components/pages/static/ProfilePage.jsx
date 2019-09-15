@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import '../../css/page.css';
+import '../../../css/page.css';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import axios from '../../js/axios';
+import axios from '../../../js/axios';
 
-import Game from '../partials/Game';
+import Game from '../../partials/Game';
 
-import { deleteMessage, getGroups, updateProfile, updateIconUrl } from '../../js/actions';
+import { deleteMessage, getGroups, updateProfile, updateIconUrl } from '../../../js/actions';
 
 class ProfilePage extends Component {
     constructor(props) {

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Game from '../partials/Game';
+import Game from '../../partials/Game';
 
-import { getGroups } from '../../js/actions';
+import { getGroups } from '../../../js/actions';
 
 class Timeline extends Component {
     constructor(props) {

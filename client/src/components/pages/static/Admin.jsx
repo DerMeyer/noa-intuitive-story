@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import '../../css/page.css';
+import '../../../css/page.css';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import axios from '../../js/axios';
-import { setMessage, getGroups } from '../../js/actions';
-import { SoulNamesTranslation } from '../../js/enums';
+import axios from '../../../js/axios';
+import { setMessage, getGroups } from '../../../js/actions';
+import { SoulNamesTranslation } from '../../../js/enums';
 
 import GroupPage from './GamePage';
 

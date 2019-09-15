@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import axios from '../../js/axios';
-import { SoulNamesTranslation } from '../../js/enums';
-import '../../css/page.css';
-import '../../css/gamePage.css';
-import { getGroups, getPages } from '../../js/actions';
-import GroupDisplayBox from '../partials/GroupDisplayBox';
-import PageEditor from './dynamic/PageEditor';
-import Page from './dynamic/Page';
+import axios from '../../../js/axios';
+import { SoulNamesTranslation } from '../../../js/enums';
+import '../../../css/page.css';
+import '../../../css/gamePage.css';
+import { getGroups, getPages } from '../../../js/actions';
+import GroupDisplayBox from '../../partials/GroupDisplayBox';
+import PageEditor from '../dynamic/PageEditor';
+import Page from '../dynamic/Page';
 
 const dynamicPageStyle = {
     position: 'relative',

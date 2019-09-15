@@ -1,26 +1,25 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter, Route, Redirect, Link, NavLink } from 'react-router-dom';
+import NavigationCreator from '../js/NavigationCreator';
 
 import '../css/App.css';
 
-import Navigation from './partials/Navigation';
-import ProfileNavigation from './pages/ProfileNavigation';
-import Timeline from './pages/Timeline';
-import SignIn from './pages/SignIn';
-import SignUp from './pages/SignUp';
-import Verify from './pages/Verify';
-import Admin from './pages/Admin';
-import ProfilePage from './pages/ProfilePage';
-import GamePage from './pages/GamePage';
-import Impressum from './pages/Impressum';
-import Contact from './pages/Contact';
+import ProfileNavigation from './partials/ProfileNavigation';
+import Timeline from './pages/static/Timeline';
+import SignIn from './pages/static/SignIn';
+import SignUp from './pages/static/SignUp';
+import Verify from './pages/static/Verify';
+import Admin from './pages/static/Admin';
+import ProfilePage from './pages/static/ProfilePage';
+import GamePage from './pages/static/GamePage';
+import Impressum from './pages/static/Impressum';
+import Contact from './pages/static/Contact';
 import Cookies from './partials/Cookies';
 
 
 // get state before rendering the App
 import { getPages, getMenu } from '../js/actions';
-import Routes from './partials/Routes';
 
 class App extends Component {
     constructor(props) {
@@ -32,6 +31,7 @@ class App extends Component {
             editMode: false,
             positionCookiesFooter: {}
         };
+        this.navigationCreator = new NavigationCreator();
     }
 
     componentDidMount() {
@@ -81,7 +81,12 @@ class App extends Component {
         const { soulsTop, editMode } = this.state;
         const { pages, menu: menuMap } = this.props;
 
+        if (!pages || !menuMap) {
+            return null;
+        }
+
         const admin = this.props.verified === 2;
+        const { menu, routes } = this.navigationCreator.createNavigationFromMap(menuMap, pages, editMode);
 
         return (
             <BrowserRouter>
@@ -96,11 +101,7 @@ class App extends Component {
                                     alt="Logo"
                                 />
                             </NavLink>
-                            <Navigation
-                                editMode={editMode}
-                                menuMap={menuMap}
-                                pages={pages}
-                            />
+                            {menu}
                         </nav>
                         {admin && (
                             <div
@@ -150,11 +151,7 @@ class App extends Component {
                             />
                         </Link>
                     </div>
-                    <Routes
-                        editMode={editMode}
-                        menuMap={menuMap}
-                        pages={pages}
-                    />
+                    {routes}
                     <Route
                         path="/avira"
                         render={() => <Admin editMode={editMode} />}

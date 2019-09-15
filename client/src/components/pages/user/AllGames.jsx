@@ -114,7 +114,6 @@ class AllGames extends Component {
     };
 
     render() {
-        console.log(SoulTranslationColorMap.REBEL);
         return (
             <section className="page-container">
                 <div className="all-games-line" style={{ margin: '20px 0 40px 0' }}>
