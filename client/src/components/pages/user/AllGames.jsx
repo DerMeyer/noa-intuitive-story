@@ -5,6 +5,13 @@ import { getGroups } from '../../../js/actions';
 import { SoulNamesTranslation, SoulTranslationColorMap, SoulDirectTranslations } from '../../../js/enums';
 import { Link } from 'react-router-dom';
 
+const getFirstWord = sentence => {
+    if (!sentence || typeof sentence !== 'string') {
+        return '';
+    }
+    return sentence.split(' ')[0];
+};
+
 const createGameForRender = (gameData, index) => (
     <div
         className="all-games-line"
@@ -24,7 +31,7 @@ const createGameForRender = (gameData, index) => (
         </Link>
         <div className="all-games-line__player all-games-line__rebel">
             <div className="all-games-line__character">
-                {gameData[`${SoulNamesTranslation.REBEL}_character`]}
+                {getFirstWord(gameData[`${SoulNamesTranslation.REBEL}_character`])}
             </div>
             <div
                 className="all-games-line__soul"
@@ -35,7 +42,7 @@ const createGameForRender = (gameData, index) => (
         </div>
         <div className="all-games-line__player all-games-line__leader">
             <div className="all-games-line__character">
-                {gameData[`${SoulNamesTranslation.LEADER}_character`]}
+                {getFirstWord(gameData[`${SoulNamesTranslation.LEADER}_character`])}
             </div>
             <div
                 className="all-games-line__soul"
@@ -46,7 +53,7 @@ const createGameForRender = (gameData, index) => (
         </div>
         <div className="all-games-line__player all-games-line__romantic">
             <div className="all-games-line__character">
-                {gameData[`${SoulNamesTranslation.ROMANTIC}_character`]}
+                {getFirstWord(gameData[`${SoulNamesTranslation.ROMANTIC}_character`])}
             </div>
             <div
                 className="all-games-line__soul"
@@ -57,7 +64,7 @@ const createGameForRender = (gameData, index) => (
         </div>
         <div className="all-games-line__player all-games-line__realist">
             <div className="all-games-line__character">
-                {gameData[`${SoulNamesTranslation.REALIST}_character`]}
+                {getFirstWord(gameData[`${SoulNamesTranslation.REALIST}_character`])}
             </div>
             <div
                 className="all-games-line__soul"
@@ -68,7 +75,7 @@ const createGameForRender = (gameData, index) => (
         </div>
         <div className="all-games-line__player all-games-line__messiah">
             <div className="all-games-line__character">
-                {gameData[`${SoulNamesTranslation.MESSIAH}_character`]}
+                {getFirstWord(gameData[`${SoulNamesTranslation.MESSIAH}_character`])}
             </div>
             <div
                 className="all-games-line__soul"
