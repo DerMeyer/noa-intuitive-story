@@ -80,6 +80,10 @@ class NavigationCreator  {
                     links.push(...lowerLevelLinks);
                     break;
                 case menuItemTypes.PAGE:
+                    const page_path = [...currentPath, menuItemKey];
+                    if (!updatedPages.some(page => NavigationCreator.compareArrays(page.page_path, page_path))) {
+                        updatedPages.push({ page_path });
+                    }
                     const page = updatedPages.filter(page => page.page_path[0] === menuItemKey)[0] || {};
                     routes.push(
                         editMode ? (
@@ -96,10 +100,6 @@ class NavigationCreator  {
                             />
                         )
                     );
-                    const page_path = [...currentPath, menuItemKey];
-                    if (!updatedPages.some(page => NavigationCreator.compareArrays(page.page_path, page_path))) {
-                        updatedPages.push({ page_path });
-                    }
                     break;
                 default:
             }

@@ -46,25 +46,8 @@ INSERT INTO menu (
         "All Games": {
             "type": "component"
         },
-        "All Characters": {
-            "type": "menu",
-            "menu": {
-                "Rebels": {
-                    "type": "page"
-                },
-                "Leaders": {
-                    "type": "page"
-                },
-                "Romantics": {
-                    "type": "page"
-                },
-                "Realists": {
-                    "type": "page"
-                },
-                "Messiahs": {
-                    "type": "page"
-                }
-            }
+        "TIS Lab": {
+            "type": "page"
         },
         "Q & A": {
             "type": "page"
